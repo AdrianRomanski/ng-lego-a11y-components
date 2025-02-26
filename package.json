@@ -2,7 +2,9 @@
   "name": "@a11y-components/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build-storybook": "nx run a11y-components:build-storybook"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~19.1.0",
