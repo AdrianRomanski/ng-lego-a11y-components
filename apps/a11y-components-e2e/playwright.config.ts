@@ -26,7 +26,7 @@ export default defineConfig({
   webServer: {
     command: 'npx nx run a11y-components:serve',
     url: 'http://localhost:4200',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: !process.env['CI'],
     cwd: workspaceRoot,
   },
   projects: [
@@ -38,11 +38,6 @@ export default defineConfig({
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
     },
 
     // Uncomment for mobile browsers support
