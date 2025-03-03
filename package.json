@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build-storybook": "nx run a11y-components:build-storybook"
+    "build-storybook": "nx run a11y-components:build-storybook",
+    "coverage": "jest --coverage"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular-devkit/build-angular": "~19.1.0",
     "@angular-devkit/core": "~19.1.0",
     "@angular-devkit/schematics": "~19.1.0",
+    "@angular/cdk": "^19.2.1",
     "@angular/cli": "~19.1.0",
     "@angular/compiler-cli": "~19.1.0",
     "@angular/language-service": "~19.1.0",
@@ -52,6 +54,7 @@
     "@types/node": "18.16.9",
     "@typescript-eslint/utils": "^8.19.0",
     "angular-eslint": "^19.0.2",
+    "codecov": "^3.8.3",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-playwright": "^1.6.2",

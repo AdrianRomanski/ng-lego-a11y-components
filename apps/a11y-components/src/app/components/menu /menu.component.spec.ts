@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
 import { MenuComponentHarness } from './menu.component.harness';
 import { Component, viewChild } from '@angular/core';
 import { MenuComponent } from './menu.component';
@@ -13,7 +12,7 @@ describe('TestMenuWrapperComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [],
-      imports: [MatButtonModule],
+      imports: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestMenuWrapperComponent);
