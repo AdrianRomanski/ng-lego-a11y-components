@@ -22,15 +22,26 @@ describe('TestMenuWrapperComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should toggle menu open and close', async () => {
-    expect(await harness.getMenuItemCount()).toBe(0);
-
+  /**
+   * A menu generally represents a grouping of common actions or functions that the user can invoke.
+   * The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.
+   * Submenus, also known as pop-up menus, also have the role menu.
+   */
+  it('should have menu role for list of menu items', async () => {
     await harness.toggleMenu();
-    expect(await harness.getMenuItemCount()).toBeGreaterThan(0);
-
-    await harness.toggleMenu();
-    expect(await harness.getMenuItemCount()).toBe(0);
+    const lists = await harness.getLists();
+    const attribute = await lists[0].getAttribute('role');
+    expect(attribute).toBe('menu');
   });
+
+  it('should have menu role for sub menus', async () => {
+    await harness.toggleMenu();
+    await harness.openSubmenu(2);
+    const lists = await harness.getLists();
+    const attribute = await lists[0].getAttribute('role');
+    expect(attribute).toBe('menu');
+  });
+
 });
 @Component({
   selector: 'app-test-menu-wrapper',

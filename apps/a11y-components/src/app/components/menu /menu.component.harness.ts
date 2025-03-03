@@ -8,11 +8,16 @@ export class MenuComponentHarness extends ComponentHarness {
   }
 
   private get menuList() {
-    return this.locatorFor('ul');
+    return this.locatorForAll('ul');
   }
 
   private get menuItems() {
     return this.locatorForAll('li');
+  }
+
+  /** Returns every list */
+  async getLists() {
+    return this.menuList();
   }
 
   async toggleMenu(): Promise<void> {

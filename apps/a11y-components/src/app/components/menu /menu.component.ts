@@ -7,6 +7,26 @@ interface MenuItem {
   submenu?: MenuItem[];
 }
 
+/**
+ *
+ * While the term "menu" is a generically used term to describe site navigation,
+ * the menu role is for a list of actions or functions that require complex functionality,
+ * such as composite widget focus management and first-character navigation
+ *
+ * When a user activates a choice in a menu that has been opened, the menu usually closes.
+ * If the menu choice action invokes a submenu, the menu will remain open and the submenu is displayed.
+ *
+ * When a menu opens, keyboard focus is placed on the first menu item.
+ * To be keyboard accessible, you need to manage focus for all descendants: all menu items within the menu are focusable.
+ * The menu button which opens the menu and the menu items, rather than the menu itself, are the focusable elements.
+ *
+ * Menu items include menuitem, menuitemcheckbox, and menuitemradio. Disabled menu items are focusable but cannot be activated.
+ *
+ * Menu items can be grouped in elements with the group role,
+ * and separated by elements with role separator. Neither group nor separator receive focus or are interactive.
+ *
+ */
+
 @Component({
   selector: 'app-components-menu',
   imports: [CommonModule],
@@ -15,11 +35,13 @@ interface MenuItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  @ViewChild('menuButton') menuButton!: ElementRef;
+  @ViewChild('menuTrigger') menuTrigger!: ElementRef;
   @ViewChild('menu') menu!: ElementRef;
 
   isOpen = false;
-  menuItems = [
+
+  // that will be an input in the future [im planning content-projection component as separate beeing]
+  menuItems: MenuItem[] = [
     { label: 'Home', isOpen: false },
     { label: 'About', isOpen: false },
     { label: 'Services', isOpen: false, submenu: [
@@ -29,9 +51,33 @@ export class MenuComponent {
     { label: 'Contact', isOpen: false }
   ];
 
+  // that should be a separate directive, something like onBackDropClick or outsideClickListener
+  @HostListener('document:click', ['$event'])
+  closeMenu(event: Event): void {
+    if (
+      this.isOpen &&
+      !this.menuTrigger.nativeElement.contains(event.target) &&
+      !this.menu.nativeElement.contains(event.target)
+    ) {
+      this.isOpen = false;
+    }
+  }
+
+  protected onMenuTriggerKeyDown(event: KeyboardEvent): void {
+    event.preventDefault();
+    console.log('event', event.key);
+    if (event.key === 'Enter' || event.key === ' ') {
+      console.log('inside if');
+      this.toggleMenu();
+    }
+  }
+
   toggleMenu(): void {
+    console.log('toggleMenu');
     this.isOpen = !this.isOpen;
+    console.log('this.isOpen', this.isOpen);
     if (this.isOpen) {
+      console.log('inside if this.isOpen');
       setTimeout(() => this.menu?.nativeElement.focus(), 0);
     }
   }
@@ -76,16 +122,7 @@ export class MenuComponent {
     setTimeout(() => event.currentTarget['parentElement']['parentElement']?.focus(), 0);
   }
 
-  @HostListener('document:click', ['$event'])
-  closeMenu(event: Event): void {
-    if (
-      this.isOpen &&
-      !this.menuButton.nativeElement.contains(event.target) &&
-      !this.menu.nativeElement.contains(event.target)
-    ) {
-      this.isOpen = false;
-    }
-  }
+
 
   onKeydown(event: KeyboardEvent): void {
     const items = this.menu.nativeElement.querySelectorAll('li');
@@ -98,7 +135,7 @@ export class MenuComponent {
       items[index].focus();
     } else if (event.key === 'Escape') {
       this.isOpen = false;
-      this.menuButton.nativeElement.focus();
+      this.menuTrigger.nativeElement.focus();
     }
   }
 }
