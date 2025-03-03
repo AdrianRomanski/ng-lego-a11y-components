@@ -1,6 +1,6 @@
 # Angular Perfect A11y Components
 
-![Coverage](https://codecov.io/gh/your-username/angular-perfect-a11y-components/branch/main/graph/badge.svg)
+[![codecov](https://codecov.io/gh/AdrianRomanski/a11y-components/graph/badge.svg?token=jOtJbsVtl5)](https://codecov.io/gh/AdrianRomanski/a11y-components)
 
 🚀 A collection of **accessible (a11y) UI components** for Angular, designed with **performance, usability, and inclusivity** in mind.
 
