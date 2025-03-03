@@ -9,6 +9,10 @@ interface MenuItem {
 
 /**
  *
+ * A menu generally represents a grouping of common actions or functions that the user can invoke.
+ * The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.
+ * Submenus, also known as pop-up menus, also have the role menu.
+ *
  * While the term "menu" is a generically used term to describe site navigation,
  * the menu role is for a list of actions or functions that require complex functionality,
  * such as composite widget focus management and first-character navigation

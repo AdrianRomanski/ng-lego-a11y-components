@@ -1,4 +1,4 @@
-import { ComponentHarness } from '@angular/cdk/testing';
+import { ComponentHarness, TestElement } from '@angular/cdk/testing';
 
 export class MenuComponentHarness extends ComponentHarness {
   static hostSelector = 'app-components-menu';
@@ -15,8 +15,7 @@ export class MenuComponentHarness extends ComponentHarness {
     return this.locatorForAll('li');
   }
 
-  /** Returns every list */
-  async getLists() {
+  async getLists(): Promise<TestElement[]> {
     return this.menuList();
   }
 
@@ -24,23 +23,13 @@ export class MenuComponentHarness extends ComponentHarness {
     await (await this.menuButton()).click();
   }
 
-  async getMenuItemCount(): Promise<number> {
-    const items = await this.menuItems();
-    return items?.length;
-  }
-
-  async openSubmenu(itemIndex: number): Promise<void> {
-    const item = (await this.menuItems())[itemIndex];
+  async clickSubmenu(): Promise<void> {
+    const item = (await this.menuItems())[2];
     await item.click();
   }
 
-  async closeSubmenu(itemIndex: number): Promise<void> {
+  async clickItem(itemIndex: number): Promise<void> {
     const item = (await this.menuItems())[itemIndex];
     await item.click();
-  }
-
-  async getMenuItemLabel(itemIndex: number): Promise<string> {
-    const item = (await this.menuItems())[itemIndex];
-    return (await item.text()).trim();
   }
 }
