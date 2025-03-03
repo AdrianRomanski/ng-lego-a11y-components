@@ -72,5 +72,4 @@ describe('TestMenuWrapperComponent', () => {
 })
 export class TestMenuWrapperComponent {
   menuComponent = viewChild.required(MenuComponent);
-
 }

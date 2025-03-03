@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface MenuItem {
@@ -39,19 +39,22 @@ interface MenuItem {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  @ViewChild('menuTrigger') menuTrigger!: ElementRef;
-  @ViewChild('menu') menu!: ElementRef;
+  @ViewChild('menuTrigger')
+  menuTrigger!: ElementRef;
 
-  isOpen = false;
+  @ViewChild('menu')
+  menu!: ElementRef;
 
-  // that will be an input in the future [im planning content-projection component as separate beeing]
+  @Input()
   menuItems: MenuItem[] = [
     { label: 'Home', isOpen: false },
     { label: 'About', isOpen: false },
-    { label: 'Services', isOpen: false, submenu: [
-        { label: 'Web Design' },
+    { label: 'Services', isOpen: false,
+      submenu: [
+        { label: 'Web Design' , submenu: [ {label: 'Expensive'}, {label: 'Cheap'}]},
         { label: 'SEO' }
-      ] },
+      ]
+    },
     { label: 'Contact', isOpen: false }
   ];
 
@@ -67,68 +70,35 @@ export class MenuComponent {
     }
   }
 
+  public isOpen = false;
+
+  protected onMenuTriggerClick(): void {
+    this.toggleMenu();
+  }
+
   protected onMenuTriggerKeyDown(event: KeyboardEvent): void {
     event.preventDefault();
-    console.log('event', event.key);
     if (event.key === 'Enter' || event.key === ' ') {
-      console.log('inside if');
       this.toggleMenu();
     }
   }
 
-  toggleMenu(): void {
-    console.log('toggleMenu');
-    this.isOpen = !this.isOpen;
-    console.log('this.isOpen', this.isOpen);
-    if (this.isOpen) {
-      console.log('inside if this.isOpen');
-      setTimeout(() => this.menu?.nativeElement.focus(), 0);
+  protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
+    if (event.key === 'Enter' || event.key === ' ') {
+      if(item?.submenu?.length != undefined) {
+        if(item?.submenu?.length > 0) {
+          item.isOpen = !item.isOpen;
+        }
+      } else {
+        this.selectItem();
+      }
+    } else if (event.key === 'Escape') {
+      this.isOpen = false;
+      this.menuTrigger.nativeElement.focus();
     }
   }
 
-  selectItem(item: any): void {
-    console.log('Selected:', item.label);
-    this.isOpen = false;
-  }
-
-  onSelectItem(event: KeyboardEvent, item: any): void {
-    event.preventDefault();
-    this.selectItem(item);
-  }
-
-  toggleSubmenu(item: MenuItem): void {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    if(item?.submenu?.length > 0) {
-      item.isOpen = !item.isOpen;
-    } else {
-      this.selectItem(item);
-    }
-  }
-
-  openSubmenu(item: any): void {
-    if (item.submenu) {
-      item.isOpen = true;
-    }
-  }
-
-  closeSubmenu(item: any): void {
-    if (item.submenu) {
-      item.isOpen = false;
-    }
-  }
-
-  closeSubmenuAndFocus(item: any, event: KeyboardEvent): void {
-    event.preventDefault();
-    this.closeSubmenu(item);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    setTimeout(() => event.currentTarget['parentElement']['parentElement']?.focus(), 0);
-  }
-
-
-
-  onKeydown(event: KeyboardEvent): void {
+  protected onMenuKeydown(event: KeyboardEvent): void {
     const items = this.menu.nativeElement.querySelectorAll('li');
     let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
     if (event.key === 'ArrowDown') {
@@ -140,6 +110,27 @@ export class MenuComponent {
     } else if (event.key === 'Escape') {
       this.isOpen = false;
       this.menuTrigger.nativeElement.focus();
+    }
+  }
+
+  protected selectItem(): void {
+    this.isOpen = false;
+  }
+
+  protected onListItemClick(item: MenuItem): void {
+    if(item?.submenu?.length != undefined) {
+      if(item?.submenu?.length > 0) {
+        item.isOpen = !item.isOpen;
+      }
+    } else {
+      this.selectItem();
+    }
+  }
+
+  private toggleMenu(): void {
+    this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      this.menu?.nativeElement.focus()
     }
   }
 }

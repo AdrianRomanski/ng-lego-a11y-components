@@ -2,26 +2,27 @@
   #menuTrigger
   aria-haspopup="true"
   [attr.aria-expanded]="isOpen"
-  (click)="toggleMenu()"
+  (click)="onMenuTriggerClick()"
   (keydown)="onMenuTriggerKeyDown($event)"
 >
   Menu
 </button>
 <ul
-  #menu
   *ngIf="isOpen"
+  #menu
   role="menu"
   tabindex="-1"
-  (keydown)="onKeydown($event)"
+  (keydown)="onMenuKeydown($event)"
 >
-  <li role="menuitem" tabindex="0" *ngFor="let item of menuItems"
-      (click)="toggleSubmenu(item)"
-      (keydown.enter)="toggleSubmenu(item)"
-      (keydown.space)="toggleSubmenu(item)"
-      [attr.aria-haspopup]="item.submenu ? 'true' : null"
-      [attr.aria-expanded]="item.isOpen ? 'true' : null"
-      (keydown.arrowright)="openSubmenu(item)"
-      (keydown.arrowleft)="closeSubmenu(item)">
+  <li
+    *ngFor="let item of menuItems"
+    role="menuitem"
+    tabindex="0"
+    (click)="onListItemClick(item)"
+    (keydown)="onListItemKeyDown($event, item)"
+    [attr.aria-haspopup]="item.submenu ? 'true' : null"
+    [attr.aria-expanded]="item.isOpen ? 'true' : null"
+    >
     {{ item.label }}
     @if (item.submenu) {
       <svg width="15px" height="15px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,10 +31,8 @@
     }
     <ul *ngIf="item.isOpen && item.submenu" role="menu" class="submenu">
       <li role="menuitem" tabindex="0" *ngFor="let subItem of item.submenu"
-          (click)="selectItem(subItem)"
-          (keydown.enter)="onSelectItem($event, subItem)"
-          (keydown.space)="onSelectItem($event, subItem)"
-          (keydown.escape)="closeSubmenuAndFocus(item, $event)">
+          (click)="onListItemClick(subItem)"
+          (keydown)="onListItemKeyDown($event, item)">
         {{ subItem.label }}
       </li>
     </ul>
