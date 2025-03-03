@@ -1,0 +1,37 @@
+<button
+  #menuButton
+  aria-haspopup="true"
+  [attr.aria-expanded]="isOpen"
+  (click)="toggleMenu()"
+  (keydown.enter)="toggleMenu()"
+  (keydown.space)="toggleMenu()"
+>
+  Menu
+</button>
+<ul
+  #menu
+  *ngIf="isOpen"
+  role="menu"
+  tabindex="-1"
+  (keydown)="onKeydown($event)"
+>
+  <li role="menuitem" tabindex="0" *ngFor="let item of menuItems"
+      (click)="toggleSubmenu(item)"
+      (keydown.enter)="toggleSubmenu(item)"
+      (keydown.space)="toggleSubmenu(item)"
+      [attr.aria-haspopup]="item.submenu ? 'true' : null"
+      [attr.aria-expanded]="item.isOpen ? 'true' : null"
+      (keydown.arrowright)="openSubmenu(item)"
+      (keydown.arrowleft)="closeSubmenu(item)">
+    {{ item.label }}
+    <ul *ngIf="item.isOpen && item.submenu" role="menu" class="submenu">
+      <li role="menuitem" tabindex="0" *ngFor="let subItem of item.submenu"
+          (click)="selectItem(subItem)"
+          (keydown.enter)="onSelectItem($event, subItem)"
+          (keydown.space)="onSelectItem($event, subItem)"
+          (keydown.escape)="closeSubmenuAndFocus(item, $event)">
+        {{ subItem.label }}
+      </li>
+    </ul>
+  </li>
+</ul>
