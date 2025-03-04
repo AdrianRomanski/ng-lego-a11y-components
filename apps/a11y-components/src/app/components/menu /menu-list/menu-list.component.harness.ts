@@ -23,9 +23,4 @@ export class MenuListComponentHarness extends ComponentHarness {
     const item = (await this.menuItems())[2];
     await item.click();
   }
-
-  async clickItem(itemIndex: number): Promise<void> {
-    const item = (await this.menuItems())[itemIndex];
-    await item.click();
-  }
 }
