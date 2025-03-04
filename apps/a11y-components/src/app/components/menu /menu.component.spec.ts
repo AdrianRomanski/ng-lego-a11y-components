@@ -1,16 +1,40 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponentHarness } from './menu.component.harness';
 import { Component, viewChild } from '@angular/core';
-import { MenuComponent } from './menu.component';
+import { MenuComponent, MenuItem } from './menu.component';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 
 @Component({
   selector: 'app-test-menu-wrapper',
   imports: [MenuComponent],
-  template: ` <app-components-menu></app-components-menu> `,
+  template: `
+    <app-components-menu
+      [menuItems]="menuItems"
+    ></app-components-menu> `,
 })
 export class TestMenuWrapperComponent {
   menuComponent = viewChild.required(MenuComponent);
+
+  menuItems: MenuItem[] = [
+    { label: 'Home', isOpen: false },
+    { label: 'About', isOpen: false },
+    {
+      label: 'Services',
+      isOpen: false,
+      submenu: [
+        {
+          label: 'Web Design', submenu: [
+            {
+              label: 'Black White',
+            },
+            { label: 'Color' },
+          ],
+        },
+        { label: 'SEO' },
+      ],
+    },
+    { label: 'Contact', isOpen: false },
+  ]
 }
 
 describe('TestMenuWrapperComponent', () => {
@@ -30,14 +54,14 @@ describe('TestMenuWrapperComponent', () => {
 
   it('should open the menu after clicking the button', async () => {
     await harness.toggleMenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(true);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   });
 
   it('should close the menu after clicking the button', async () => {
     await harness.toggleMenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(true);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
     await harness.toggleMenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(false);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
   });
 
   /**
@@ -46,16 +70,16 @@ describe('TestMenuWrapperComponent', () => {
    */
   it('should close the menu after clicking item', async () => {
     await harness.toggleMenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(true);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
     await harness.clickItem(1);
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(false);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
   });
 
   it('should not close the menu if clicked on submenu', async () => {
     await harness.toggleMenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(true);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
     await harness.clickSubmenu();
-    expect(fixture.componentInstance.menuComponent().isOpen).toBe(true);
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   });
 });
 

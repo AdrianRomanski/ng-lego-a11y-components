@@ -1,5 +1,5 @@
-import { ComponentHarness, TestElement } from '@angular/cdk/testing';
-import { MenuListComponentHarness } from './menu-list/menu-list.component.harness';
+import { ComponentHarness } from '@angular/cdk/testing';
+import { MenuListComponentHarness } from './menu-list';
 
 export class MenuComponentHarness extends ComponentHarness {
   static hostSelector = 'app-components-menu';
@@ -10,10 +10,6 @@ export class MenuComponentHarness extends ComponentHarness {
 
   private get menuListHarness() {
     return this.locatorFor(MenuListComponentHarness)
-  }
-
-  async getLists(): Promise<TestElement[]> {
-    return (await this.menuListHarness()).getLists();
   }
 
   async toggleMenu(): Promise<void> {

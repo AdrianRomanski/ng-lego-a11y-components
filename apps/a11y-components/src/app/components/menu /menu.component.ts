@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  signal,
+  Signal,
+  viewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuListComponent } from './menu-list/menu-list.component';
 
@@ -31,56 +38,34 @@ export interface MenuItem {
  * and separated by elements with role separator. Neither group nor separator receive focus or are interactive.
  *
  */
-
 @Component({
   selector: 'app-components-menu',
   imports: [CommonModule, MenuListComponent],
-  templateUrl: './menu.component.html',
+  template: `
+      <button
+        aria-haspopup="true"
+        [attr.aria-expanded]="isOpen"
+        (click)="onMenuTriggerClick()"
+        (keydown)="onMenuTriggerKeyDown($event)"
+      > Menu
+      </button>
+      <app-menu-list
+        #menuList
+        [menuItems]="menuItems()"
+        [open]="isOpen()"
+        (openChange)="isOpen.set($event)"
+      >
+      </app-menu-list>
+  `,
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  @ViewChild('menuTrigger')
-  menuTrigger!: ElementRef;
+  private menuListComponent: Signal<MenuListComponent> = viewChild.required<MenuListComponent>('menuList');
 
-  @ViewChild('menu')
-  menuListComponent!: MenuListComponent;
+  public menuItems = input.required<MenuItem[]>();
 
-  @Input()
-  menuItems: MenuItem[] = [
-    { label: 'Home', isOpen: false },
-    { label: 'About', isOpen: false },
-    {
-      label: 'Services',
-      isOpen: false,
-      submenu: [
-        {
-          label: 'Web Design', submenu: [
-            {
-              label: 'Black White',
-            },
-            { label: 'Color' },
-          ],
-        },
-        { label: 'SEO' },
-      ],
-    },
-    { label: 'Contact', isOpen: false },
-  ];
-
-  // that should be a separate directive, something like onBackDropClick or outsideClickListener
-  @HostListener('document:click', ['$event'])
-  closeMenu(event: Event): void {
-    if (
-      this.isOpen &&
-      !this.menuTrigger.nativeElement.contains(event.target) &&
-      !this.menuListComponent.menu()?.nativeElement.contains(event.target)
-    ) {
-      this.isOpen = false;
-    }
-  }
-
-  public isOpen = false;
+  public isOpen = signal(false);
 
   protected onMenuTriggerClick(): void {
     this.toggleMenu();
@@ -94,9 +79,9 @@ export class MenuComponent {
   }
 
   private toggleMenu(): void {
-    this.isOpen = !this.isOpen;
-    if (this.isOpen) {
-      this.menuListComponent?.menu()?.nativeElement.focus();
+    this.isOpen.set(!this.isOpen());
+    if (this.isOpen()) {
+      this.menuListComponent().menu()?.nativeElement.focus();
     }
   }
 }
