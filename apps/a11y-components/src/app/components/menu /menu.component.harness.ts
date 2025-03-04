@@ -1,4 +1,5 @@
 import { ComponentHarness, TestElement } from '@angular/cdk/testing';
+import { MenuListComponentHarness } from './menu-list/menu-list.component.harness';
 
 export class MenuComponentHarness extends ComponentHarness {
   static hostSelector = 'app-components-menu';
@@ -7,16 +8,12 @@ export class MenuComponentHarness extends ComponentHarness {
     return this.locatorFor('button');
   }
 
-  private get menuList() {
-    return this.locatorForAll('ul');
-  }
-
-  private get menuItems() {
-    return this.locatorForAll('li');
+  private get menuListHarness() {
+    return this.locatorFor(MenuListComponentHarness)
   }
 
   async getLists(): Promise<TestElement[]> {
-    return this.menuList();
+    return (await this.menuListHarness()).getLists();
   }
 
   async toggleMenu(): Promise<void> {
@@ -24,12 +21,14 @@ export class MenuComponentHarness extends ComponentHarness {
   }
 
   async clickSubmenu(): Promise<void> {
-    const item = (await this.menuItems())[2];
+    const menuList = await this.menuListHarness();
+    const item = (await menuList.getItems())[2];
     await item.click();
   }
 
   async clickItem(itemIndex: number): Promise<void> {
-    const item = (await this.menuItems())[itemIndex];
+    const menuList = await this.menuListHarness();
+    const item = (await menuList.getItems())[itemIndex];
     await item.click();
   }
 }

@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MenuListComponent } from './menu-list/menu-list.component';
 
-interface MenuItem {
+export interface MenuItem {
   label: string;
   isOpen?: boolean;
   submenu?: MenuItem[];
@@ -33,7 +34,7 @@ interface MenuItem {
 
 @Component({
   selector: 'app-components-menu',
-  imports: [CommonModule],
+  imports: [CommonModule, MenuListComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -43,19 +44,24 @@ export class MenuComponent {
   menuTrigger!: ElementRef;
 
   @ViewChild('menu')
-  menu!: ElementRef;
+  menuListComponent!: MenuListComponent;
 
   @Input()
   menuItems: MenuItem[] = [
     { label: 'Home', isOpen: false },
     { label: 'About', isOpen: false },
-    { label: 'Services', isOpen: false,
+    {
+      label: 'Services',
+      isOpen: false,
       submenu: [
-        { label: 'Web Design' , submenu: [ {label: 'Expensive'}, {label: 'Cheap'}]},
-        { label: 'SEO' }
-      ]
+        {
+          label: 'Web Design',
+          submenu: [{ label: 'Expensive' }, { label: 'Cheap' }],
+        },
+        { label: 'SEO' },
+      ],
     },
-    { label: 'Contact', isOpen: false }
+    { label: 'Contact', isOpen: false },
   ];
 
   // that should be a separate directive, something like onBackDropClick or outsideClickListener
@@ -64,7 +70,7 @@ export class MenuComponent {
     if (
       this.isOpen &&
       !this.menuTrigger.nativeElement.contains(event.target) &&
-      !this.menu.nativeElement.contains(event.target)
+      !this.menuListComponent.menu.nativeElement.contains(event.target)
     ) {
       this.isOpen = false;
     }
@@ -83,43 +89,13 @@ export class MenuComponent {
     }
   }
 
-  protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-    if (event.key === 'Enter' || event.key === ' ') {
-      if(item?.submenu?.length != undefined) {
-        if(item?.submenu?.length > 0) {
-          item.isOpen = !item.isOpen;
-        }
-      } else {
-        this.selectItem();
-      }
-    } else if (event.key === 'Escape') {
-      this.isOpen = false;
-      this.menuTrigger.nativeElement.focus();
-    }
-  }
-
-  protected onMenuKeydown(event: KeyboardEvent): void {
-    const items = this.menu.nativeElement.querySelectorAll('li');
-    let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
-    if (event.key === 'ArrowDown') {
-      index = (index + 1) % items.length;
-      items[index].focus();
-    } else if (event.key === 'ArrowUp') {
-      index = (index - 1 + items.length) % items.length;
-      items[index].focus();
-    } else if (event.key === 'Escape') {
-      this.isOpen = false;
-      this.menuTrigger.nativeElement.focus();
-    }
-  }
-
   protected selectItem(): void {
     this.isOpen = false;
   }
 
   protected onListItemClick(item: MenuItem): void {
-    if(item?.submenu?.length != undefined) {
-      if(item?.submenu?.length > 0) {
+    if (item?.submenu?.length != undefined) {
+      if (item?.submenu?.length > 0) {
         item.isOpen = !item.isOpen;
       }
     } else {
@@ -130,7 +106,7 @@ export class MenuComponent {
   private toggleMenu(): void {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      this.menu?.nativeElement.focus()
+      this.menuListComponent?.menu?.nativeElement.focus();
     }
   }
 }
