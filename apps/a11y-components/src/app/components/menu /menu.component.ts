@@ -55,8 +55,12 @@ export class MenuComponent {
       isOpen: false,
       submenu: [
         {
-          label: 'Web Design',
-          submenu: [{ label: 'Expensive' }, { label: 'Cheap' }],
+          label: 'Web Design', submenu: [
+            {
+              label: 'Black White',
+            },
+            { label: 'Color' },
+          ],
         },
         { label: 'SEO' },
       ],
@@ -70,7 +74,7 @@ export class MenuComponent {
     if (
       this.isOpen &&
       !this.menuTrigger.nativeElement.contains(event.target) &&
-      !this.menuListComponent.menu.nativeElement.contains(event.target)
+      !this.menuListComponent.menu()?.nativeElement.contains(event.target)
     ) {
       this.isOpen = false;
     }
@@ -89,24 +93,10 @@ export class MenuComponent {
     }
   }
 
-  protected selectItem(): void {
-    this.isOpen = false;
-  }
-
-  protected onListItemClick(item: MenuItem): void {
-    if (item?.submenu?.length != undefined) {
-      if (item?.submenu?.length > 0) {
-        item.isOpen = !item.isOpen;
-      }
-    } else {
-      this.selectItem();
-    }
-  }
-
   private toggleMenu(): void {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      this.menuListComponent?.menu?.nativeElement.focus();
+      this.menuListComponent?.menu()?.nativeElement.focus();
     }
   }
 }

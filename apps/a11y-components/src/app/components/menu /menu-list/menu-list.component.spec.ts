@@ -8,13 +8,13 @@ import { MenuItem } from '../menu.component';
 @Component({
   selector: 'app-test-menu-list-wrapper',
   imports: [MenuListComponent],
-  template: ` <app-menu-list
-                [menuItems]="menuItems"
-                [isOpen]="true">
-              </app-menu-list>
+  template: `
+    <app-menu-list
+      [menuItems]="menuItems"
+      [open]="true"
+    />
   `,
 })
-
 export class TestMenuListWrapperComponent {
   menuListComponent = viewChild.required(MenuListComponent);
 
@@ -78,8 +78,8 @@ describe('MenuListComponent', () => {
    */
   it('should open submenu after clicking it', async () => {
     await harness.clickSubmenu();
-    expect(component.menuListComponent().isOpen).toBe(true);
-    expect(component.menuListComponent().menuItems[2].isOpen).toBe(true);
+    expect(component.menuListComponent().isOpen()).toBe(true);
+    expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
   });
 });
 
