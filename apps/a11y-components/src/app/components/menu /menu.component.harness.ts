@@ -27,4 +27,8 @@ export class MenuComponentHarness extends ComponentHarness {
     const item = (await menuList.getItems())[itemIndex];
     await item.click();
   }
+
+  async clickOutside(): Promise<void> {
+    document.body.click();
+  }
 }

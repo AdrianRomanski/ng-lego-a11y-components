@@ -7,7 +7,8 @@ import {
   viewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuListComponent } from './menu-list/menu-list.component';
+import { MenuListComponent } from './menu-list';
+import { ClickOutsideDirective } from '../click-outside.directive';
 
 export interface MenuItem {
   label: string;
@@ -40,11 +41,13 @@ export interface MenuItem {
  */
 @Component({
   selector: 'app-components-menu',
-  imports: [CommonModule, MenuListComponent],
+  imports: [CommonModule, MenuListComponent, ClickOutsideDirective],
   template: `
       <button
         aria-haspopup="true"
         [attr.aria-expanded]="isOpen"
+        appClickOutside
+        (clickOutside)="onOutsideClick($event)"
         (click)="onMenuTriggerClick()"
         (keydown)="onMenuTriggerKeyDown($event)"
       > Menu
@@ -76,6 +79,11 @@ export class MenuComponent {
     if (event.key === 'Enter' || event.key === ' ') {
       this.toggleMenu();
     }
+  }
+
+  protected onOutsideClick(event: Event): void {
+    event.stopPropagation();
+    this.isOpen.set(false);
   }
 
   private toggleMenu(): void {

@@ -64,6 +64,13 @@ describe('TestMenuWrapperComponent', () => {
     expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
   });
 
+  it('should close the menu when clicked outside of it', async () => {
+    await harness.toggleMenu();
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+    await harness.clickOutside();
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
+  });
+
   /**
    * When a user activates a choice in a menu that has been opened, the menu usually closes.
    * If the menu choice action invokes a submenu, the menu will remain open and the submenu is displayed.
