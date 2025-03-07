@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, effect,
   input,
   signal,
   Signal,
@@ -52,44 +52,46 @@ export interface MenuItem {
         (keydown)="onMenuTriggerKeyDown($event)"
       > Menu
       </button>
-      <app-menu-list
-        #menuList
-        [menuItems]="menuItems()"
-        [open]="isOpen()"
-        (openChange)="isOpen.set($event)"
-      >
-      </app-menu-list>
+      @if (isOpen()) {
+        <app-menu-list
+          #menuList
+          [menuItems]="menuItems()"
+          (openChange)="isOpen.set($event)"
+        >
+        </app-menu-list>
+      }
   `,
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  private menuListComponent: Signal<MenuListComponent> = viewChild.required<MenuListComponent>('menuList');
+  private menuListComponent: Signal<MenuListComponent | undefined> = viewChild<MenuListComponent>('menuList');
 
   public menuItems = input.required<MenuItem[]>();
 
   public isOpen = signal(false);
 
+  constructor() {
+    effect(() => {
+      if(this.isOpen()) {
+        this.menuListComponent()?.focusFirstListItem();
+      }
+    });
+  }
+
   protected onMenuTriggerClick(): void {
-    this.toggleMenu();
+    this.isOpen.set(!this.isOpen());
   }
 
   protected onMenuTriggerKeyDown(event: KeyboardEvent): void {
     event.preventDefault();
     if (event.key === 'Enter' || event.key === ' ') {
-      this.toggleMenu();
+      this.isOpen.set(!this.isOpen());
     }
   }
 
   protected onOutsideClick(event: Event): void {
     event.stopPropagation();
     this.isOpen.set(false);
-  }
-
-  private toggleMenu(): void {
-    this.isOpen.set(!this.isOpen());
-    if (this.isOpen()) {
-      this.menuListComponent().menu()?.nativeElement.focus();
-    }
   }
 }

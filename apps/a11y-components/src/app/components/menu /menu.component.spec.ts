@@ -88,5 +88,18 @@ describe('TestMenuWrapperComponent', () => {
     await harness.clickSubmenu();
     expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   });
+
+  /**
+   * When a menu opens, keyboard focus is placed on the first menu item.
+   */
+  it('should focus first item in list after opening menu', async () => {
+    await harness.toggleMenu();
+    expect(await harness.isItemFocused(0)).toBe(true);
+  });
+
+  /**
+   * To be keyboard accessible, you need to manage focus for all descendants: all menu items within the menu are focusable.
+   * The menu button which opens the menu and the menu items, rather than the menu itself, are the focusable elements.
+   */
 });
 

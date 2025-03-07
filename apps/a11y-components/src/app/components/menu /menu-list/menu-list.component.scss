@@ -19,6 +19,12 @@ li {
   display: block;
 }
 li:focus {
-  outline: none;
+  outline: violet;
   background: #ddd;
+}
+
+li:focus-visible {
+  outline: 3px solid indianred;
+  outline-offset: 4px;
+  border-radius: 4px;
 }

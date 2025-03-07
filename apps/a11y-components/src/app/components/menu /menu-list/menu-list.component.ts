@@ -1,12 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
   ElementRef,
+  Signal,
   input,
   output,
-  signal,
-  Signal,
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,8 +14,8 @@ import { MenuItem } from '../menu.component';
   selector: 'app-menu-list',
   imports: [CommonModule],
   template: `
-    @if (isOpen()) {
       <ul
+        #menu
         role="menu"
         tabindex="-1"
         (keydown)="onMenuKeydown($event)"
@@ -40,31 +38,25 @@ import { MenuItem } from '../menu.component';
             @if (item.isOpen && item.submenu) {
               <app-menu-list
                 class="submenu"
-                [open]=item.isOpen
                 [menuItems]="item.submenu"
               />
             }
           </li>
         }
       </ul>
-    }`,
+    `,
   styleUrl: './menu-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuListComponent {
-  menu: Signal<ElementRef | undefined> = viewChild('ul');
+  menu: Signal<ElementRef> = viewChild.required('menu');
 
   menuItems = input.required<MenuItem[]>();
-  open = input.required<boolean>();
 
   openChange = output<boolean>();
 
-  isOpen= signal(false);
-
-  constructor() {
-    effect((): void => {
-      this.isOpen.set(this.open());
-    });
+  public focusFirstListItem(): void {
+    this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
@@ -77,7 +69,7 @@ export class MenuListComponent {
         this.selectItem();
       }
     } else if (event.key === 'Escape') {
-      this.isOpen.set(false);
+      this.openChange.emit(false);
     }
   }
 
@@ -91,12 +83,11 @@ export class MenuListComponent {
       index = (index - 1 + items.length) % items.length;
       items[index].focus();
     } else if (event.key === 'Escape') {
-      this.isOpen.set(false);
+      this.openChange.emit(false);
     }
   }
 
   protected selectItem(): void {
-    this.isOpen.set(false);
     this.openChange.emit(false);
   }
 
