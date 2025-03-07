@@ -3,6 +3,10 @@ import { ComponentHarness, TestElement } from '@angular/cdk/testing';
 export class MenuListComponentHarness extends ComponentHarness {
   static hostSelector = 'app-menu-list';
 
+  private get menuListHarness() {
+    return this.locatorFor(MenuListComponentHarness)
+  }
+
   private get menuList() {
     return this.locatorForAll('ul');
   }
@@ -24,8 +28,14 @@ export class MenuListComponentHarness extends ComponentHarness {
     await item.click();
   }
 
-  async pressKey(key: string) {
-    const element = await this.host();
+  async pressKeyOnListItem(key: string, index: number) {
+    const element = (await this.menuItems())[index];
     await element.dispatchEvent('keydown', { key });
+  }
+
+  async pressKeyOnSubListItem(key: string, index: number) {
+    const menuList = (await this.menuListHarness());
+    const elements = await menuList.menuItems()
+    await elements[index].dispatchEvent('keydown', { key });
   }
 }

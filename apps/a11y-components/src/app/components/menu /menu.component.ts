@@ -61,6 +61,7 @@ export interface OpenChange {
       @if (isOpen()) {
         <app-menu-list
           #menuList
+          [isTopList]="true"
           [menuItems]="items()"
           (openChange)="onOpenChange($event)"
         >

@@ -36,13 +36,13 @@ export class MenuComponentHarness extends ComponentHarness {
     document.body.click();
   }
 
-  async pressKey(key: string): Promise<void> {
-    const element = await this.host();
-    await element.dispatchEvent('keydown', { key });
+  async pressKeyOnListItem(key: string, index: number): Promise<void> {
+    const menuList = await this.menuListHarness();
+    await menuList.pressKeyOnListItem(key, index);
   }
 
-  async pressKeyInSubmenu(key: string): Promise<void> {
+  async pressKeyInSubmenu(key: string, index: number): Promise<void> {
     const menuList = await this.menuListHarness();
-    await menuList.pressKey(key);
+    await menuList.pressKeyOnSubListItem(key, index);
   }
 }

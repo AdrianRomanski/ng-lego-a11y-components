@@ -37,6 +37,7 @@ import { MenuItem, OpenChange } from '../menu.component';
             @if (item.isOpen && item.submenu) {
               <app-menu-list
                 class="submenu"
+                [isTopList]="false"
                 [menuItems]="item.submenu"
                 (openChange)="onOpenChange($event)"
               />
@@ -52,6 +53,7 @@ export class MenuListComponent {
   menu: Signal<ElementRef> = viewChild.required('menu');
 
   menuItems = input.required<MenuItem[]>();
+  isTopList = input.required<boolean>();
 
   openChange = output<OpenChange>();
 
@@ -60,7 +62,6 @@ export class MenuListComponent {
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-    event.stopPropagation();
     if (event.key === 'Enter' || event.key === ' ') {
       if(item?.submenu?.length != undefined) {
         if(item?.submenu?.length > 0) {
@@ -70,11 +71,11 @@ export class MenuListComponent {
         this.selectItem();
       }
     } else if (event.key === 'Escape') {
-      if(item.submenu) {
-        this.openChange.emit({isOpen: false, focusFirst: true});
-      } else {
-        this.openChange.emit({isOpen: false});
-      }
+      // there is a bug with menu that have more deep of nesting
+      // by aria it should focus on it's father after pressing Escape
+      event.stopPropagation();
+      console.log('escape', item);
+      this.openChange.emit({isOpen: false, focusFirst: !this.isTopList()});
     }
   }
 
@@ -98,6 +99,7 @@ export class MenuListComponent {
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
     event.stopPropagation();
+    console.log('onListItemClick', item);
     if(item?.submenu?.length != undefined) {
       if(item?.submenu?.length > 0) {
         item.isOpen = !item.isOpen;
@@ -111,6 +113,5 @@ export class MenuListComponent {
     if(openChange.focusFirst) {
       this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
     }
-    this.openChange.emit(openChange);
   }
 }
