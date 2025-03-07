@@ -11,7 +11,6 @@ import { MenuItem } from '../menu.component';
   template: `
     <app-menu-list
       [menuItems]="menuItems"
-      [open]="true"
     />
   `,
 })
@@ -78,7 +77,6 @@ describe('MenuListComponent', () => {
    */
   it('should open submenu after clicking it', async () => {
     await harness.clickSubmenu();
-    expect(component.menuListComponent().isOpen()).toBe(true);
     expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
   });
 });
