@@ -8,7 +8,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuItem } from '../menu.component';
+import { MenuItem, OpenChange } from '../menu.component';
 
 @Component({
   selector: 'app-menu-list',
@@ -18,7 +18,6 @@ import { MenuItem } from '../menu.component';
         #menu
         role="menu"
         tabindex="-1"
-        (keydown)="onMenuKeydown($event)"
       >
         @for (item of menuItems(); track item.label) {
           <li
@@ -39,6 +38,7 @@ import { MenuItem } from '../menu.component';
               <app-menu-list
                 class="submenu"
                 [menuItems]="item.submenu"
+                (openChange)="onOpenChange($event)"
               />
             }
           </li>
@@ -53,13 +53,14 @@ export class MenuListComponent {
 
   menuItems = input.required<MenuItem[]>();
 
-  openChange = output<boolean>();
+  openChange = output<OpenChange>();
 
   public focusFirstListItem(): void {
     this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
+    event.stopPropagation();
     if (event.key === 'Enter' || event.key === ' ') {
       if(item?.submenu?.length != undefined) {
         if(item?.submenu?.length > 0) {
@@ -69,26 +70,30 @@ export class MenuListComponent {
         this.selectItem();
       }
     } else if (event.key === 'Escape') {
-      this.openChange.emit(false);
+      if(item.submenu) {
+        this.openChange.emit({isOpen: false, focusFirst: true});
+      } else {
+        this.openChange.emit({isOpen: false});
+      }
     }
   }
 
-  protected onMenuKeydown(event: KeyboardEvent): void {
-    const items = this.menu()?.nativeElement.querySelectorAll('li');
-    let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
-    if (event.key === 'ArrowDown') {
-      index = (index + 1) % items.length;
-      items[index].focus();
-    } else if (event.key === 'ArrowUp') {
-      index = (index - 1 + items.length) % items.length;
-      items[index].focus();
-    } else if (event.key === 'Escape') {
-      this.openChange.emit(false);
-    }
-  }
+  // protected onMenuKeydown(event: KeyboardEvent): void {
+  //   const items = this.menu()?.nativeElement.querySelectorAll('li');
+  //   let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
+  //   if (event.key === 'ArrowDown') {
+  //     index = (index + 1) % items.length;
+  //     items[index].focus();
+  //   } else if (event.key === 'ArrowUp') {
+  //     index = (index - 1 + items.length) % items.length;
+  //     items[index].focus();
+  //   } else if (event.key === 'Escape') {
+  //     this.openChange.emit({isOpen: false, focusFirst: true});
+  //   }
+  // }
 
   protected selectItem(): void {
-    this.openChange.emit(false);
+    this.openChange.emit({isOpen: false});
   }
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
@@ -100,5 +105,12 @@ export class MenuListComponent {
     } else {
       this.selectItem();
     }
+  }
+
+  protected onOpenChange(openChange: OpenChange): void {
+    if(openChange.focusFirst) {
+      this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+    }
+    this.openChange.emit(openChange);
   }
 }

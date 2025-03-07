@@ -79,5 +79,48 @@ describe('MenuListComponent', () => {
     await harness.clickSubmenu();
     expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
   });
+
+  /**
+   * Keyboard interactions
+   * Space / Enter
+   * If the item is a parent menu item, it opens the submenu and moves focus to the first item in the submenu.
+   * Otherwise, activates the menu item, which loads new content and places focus on the heading that titles the content.
+   */
+
+
+
+
+
+  /***
+   *
+   *
+   *
+   * Right Arrow
+   * In a menubar, moves focus to the next item in the menubar. If focus is on the last item, it moves focus to the first item.
+   * If in a submenu, if focus is on an item that does not have a submenu, it closes the submenu and moves focus to the next item in the menubar.
+   * Otherwise, it opens the submenu of the newly focused menubar item, keeping focus on that parent menubar item.
+   * If not in a menubar or submenu and not on a menuitem with a submenu, if focus is not the last focusable element in the menu, it optionally moves focus to the next focusable element.
+   *
+   * Left Arrow
+   * Moves focus to the previous item in the menubar.
+   * If focus is on the first item, it moves focus to the last item.
+   * If in a submenu, it closes the submenu and moves focus to the parent menu item.
+   * If not in a menubar or submenu, if focus is not the first focusable element in the menu, it optionally moves focus to the last focusable element.
+   *
+   * Down Arrow
+   * Opens submenu and moves focus to the first item in the submenu.
+   *
+   * Up Arrow
+   * Opens submenu and moves focus to the last item in the submenu.
+   *
+   * Home
+   * Moves focus to the first item in the menubar.
+   *
+   * End
+   * Moves focus to the last item in the menubar.
+   *
+   * Any character key
+   * Moves focus to the next item in the menubar having a name that starts with the typed character. If none of the items have a name starting with the typed character, focus does not move.
+   */
 });
 

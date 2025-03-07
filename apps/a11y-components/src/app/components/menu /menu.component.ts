@@ -9,11 +9,17 @@ import {
 import { CommonModule } from '@angular/common';
 import { MenuListComponent } from './menu-list';
 import { ClickOutsideDirective } from '../click-outside.directive';
+import { isAllClosed } from './menu.component.spec';
 
 export interface MenuItem {
   label: string;
   isOpen?: boolean;
   submenu?: MenuItem[];
+}
+
+export interface OpenChange {
+  isOpen: boolean;
+  focusFirst?: boolean;
 }
 
 /**
@@ -55,8 +61,8 @@ export interface MenuItem {
       @if (isOpen()) {
         <app-menu-list
           #menuList
-          [menuItems]="menuItems()"
-          (openChange)="isOpen.set($event)"
+          [menuItems]="items()"
+          (openChange)="onOpenChange($event)"
         >
         </app-menu-list>
       }
@@ -71,11 +77,16 @@ export class MenuComponent {
 
   public isOpen = signal(false);
 
+  public items = signal<MenuItem[]>([]);
+
   constructor() {
     effect(() => {
       if(this.isOpen()) {
         this.menuListComponent()?.focusFirstListItem();
       }
+    });
+    effect(() => {
+      this.items.set(this.menuItems())
     });
   }
 
@@ -93,5 +104,17 @@ export class MenuComponent {
   protected onOutsideClick(event: Event): void {
     event.stopPropagation();
     this.isOpen.set(false);
+  }
+
+  protected onOpenChange(openChange: OpenChange): void {
+    this.items.set(this.items().map((menuItem: MenuItem) => {
+        return { ...menuItem, isOpen: false }
+      }
+    ));
+    if(openChange.focusFirst) {
+      this.menuListComponent()?.focusFirstListItem();
+    } else {
+      this.isOpen.set(openChange.isOpen);
+    }
   }
 }

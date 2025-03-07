@@ -101,5 +101,45 @@ describe('TestMenuWrapperComponent', () => {
    * To be keyboard accessible, you need to manage focus for all descendants: all menu items within the menu are focusable.
    * The menu button which opens the menu and the menu items, rather than the menu itself, are the focusable elements.
    */
+
+  /** Escape
+   * When in a submenu, it closes the submenu and moves focus to the parent menu or menubar item.
+   * When in main menu, it closes it
+   */
+  it('should close the menu when pressed escape when not in a submenu', async () => {
+    await harness.toggleMenu();
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+    await harness.pressKey('Escape');
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
+  })
+
+  it('should not close the menu when pressed escape in a submenu', async () => {
+    await harness.toggleMenu();
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+    await harness.pressKeyInSubmenu('Escape');
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+  })
+
+  it('should close the sub menu and all it submenus when pressed escape in a submenu', async () => {
+    await harness.toggleMenu();
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+    await harness.pressKeyInSubmenu('Escape');
+    expect(isAllClosed(fixture.componentInstance.menuItems)).toBe(true);
+  })
+  /**
+   * Missing tests for focus first item!
+   */
 });
+
+export function isAllClosed(menuItems: MenuItem[]): boolean {
+  for (const item of menuItems) {
+    if (item.isOpen === true) {
+      return false;
+    }
+    if (item.submenu && !isAllClosed(item.submenu)) {
+      return false;
+    }
+  }
+  return true;
+}
 

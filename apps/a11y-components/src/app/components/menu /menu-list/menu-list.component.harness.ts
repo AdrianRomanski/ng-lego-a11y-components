@@ -23,4 +23,9 @@ export class MenuListComponentHarness extends ComponentHarness {
     const item = (await this.menuItems())[2];
     await item.click();
   }
+
+  async pressKey(key: string) {
+    const element = await this.host();
+    await element.dispatchEvent('keydown', { key });
+  }
 }
