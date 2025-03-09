@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component, effect,
-  input,
+  input, output,
   signal,
   Signal,
   viewChild
@@ -9,7 +9,6 @@ import {
 import { CommonModule } from '@angular/common';
 import { MenuListComponent } from './menu-list';
 import { ClickOutsideDirective } from '../click-outside.directive';
-import { isAllClosed } from './menu.component.spec';
 
 export interface MenuItem {
   label: string;
@@ -17,9 +16,11 @@ export interface MenuItem {
   submenu?: MenuItem[];
 }
 
+// that interface name is a total GARBAGE
 export interface OpenChange {
   isOpen: boolean;
   focusFirst?: boolean;
+  item?: MenuItem;
 }
 
 /**
@@ -76,8 +77,9 @@ export class MenuComponent {
 
   public menuItems = input.required<MenuItem[]>();
 
-  public isOpen = signal(false);
+  public select = output<string>();
 
+  public isOpen = signal(false);
   public items = signal<MenuItem[]>([]);
 
   constructor() {
@@ -108,14 +110,19 @@ export class MenuComponent {
   }
 
   protected onOpenChange(openChange: OpenChange): void {
+    //  im not sure if this logic is working... It should be tested asap
     this.items.set(this.items().map((menuItem: MenuItem) => {
         return { ...menuItem, isOpen: false }
       }
     ));
-    if(openChange.focusFirst) {
-      this.menuListComponent()?.focusFirstListItem();
-    } else {
+    // is open is horrible name also
+    if(openChange.item){
+      this.select.emit(openChange.item.label);
+    }
+    if(!openChange.isOpen) {
       this.isOpen.set(openChange.isOpen);
+    } else {
+      this.menuListComponent()?.focusFirstListItem();
     }
   }
 }

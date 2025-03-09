@@ -68,7 +68,7 @@ export class MenuListComponent {
           item.isOpen = !item.isOpen;
         }
       } else {
-        this.selectItem();
+        this.selectItem(item);
       }
     } else if (event.key === 'Escape') {
       // there is a bug with menu that have more deep of nesting
@@ -93,8 +93,8 @@ export class MenuListComponent {
   //   }
   // }
 
-  protected selectItem(): void {
-    this.openChange.emit({isOpen: false});
+  protected selectItem(item: MenuItem): void {
+    this.openChange.emit({isOpen: false, item: item});
   }
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
@@ -105,13 +105,15 @@ export class MenuListComponent {
         item.isOpen = !item.isOpen;
       }
     } else {
-      this.selectItem();
+      this.selectItem(item);
     }
   }
 
   protected onOpenChange(openChange: OpenChange): void {
     if(openChange.focusFirst) {
       this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+    } else if (openChange.item) {
+      this.selectItem(openChange.item);
     }
   }
 }

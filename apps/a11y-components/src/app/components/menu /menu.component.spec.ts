@@ -10,6 +10,7 @@ import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
   template: `
     <app-components-menu
       [menuItems]="menuItems"
+      (select)="onSelect()"
     ></app-components-menu> `,
 })
 export class TestMenuWrapperComponent {
@@ -35,6 +36,9 @@ export class TestMenuWrapperComponent {
     },
     { label: 'Contact', isOpen: false },
   ]
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  onSelect() {}
 }
 
 describe('TestMenuWrapperComponent', () => {
@@ -120,16 +124,40 @@ describe('TestMenuWrapperComponent', () => {
     await harness.pressKeyInSubmenu('Escape', 0);
     expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   })
+
   /**
-   * That test need to be done
+   * That test need to be done, i should check the is open of EVERY item that is nested in submenu, and every item if pressed escape from top
    */
   it('should close the sub menu and all it submenus when pressed escape in a submenu', async () => {
     const thisToBeDone = true;
     expect(thisToBeDone).toBe(true);
+
   })
   /**
    * Missing tests for focus first item!
    */
+
+  it('should emit select when clicked on item in menu', async () => {
+    const spy = jest.spyOn(fixture.componentInstance, 'onSelect');
+    await harness.toggleMenu();
+    await harness.clickItem(1);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should emit select when clicked on item in sub menu', async () => {
+    const spy = jest.spyOn(fixture.componentInstance, 'onSelect');
+    await harness.toggleMenu();
+    await harness.clickItem(2);
+    await harness.clickOnSubListItem(1);
+    expect(spy).toHaveBeenCalled();
+  })
+
+  it('should not emit select when clicked on sub menu', async () => {
+    const spy = jest.spyOn(fixture.componentInstance, 'onSelect');
+    await harness.toggleMenu();
+    await harness.clickSubmenu();
+    expect(spy).toHaveBeenCalledTimes(0);
+  })
 });
 
 export function isAllClosed(menuItems: MenuItem[]): boolean {

@@ -38,4 +38,11 @@ export class MenuListComponentHarness extends ComponentHarness {
     const elements = await menuList.menuItems()
     await elements[index].dispatchEvent('keydown', { key });
   }
+
+  async clickOnSubListItem(index: number) {
+    const menuList = (await this.menuListHarness());
+    const elements = await menuList.menuItems();
+    // console.log('elements', elements);
+    await elements[index].click();
+  }
 }

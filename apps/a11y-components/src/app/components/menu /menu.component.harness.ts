@@ -28,6 +28,11 @@ export class MenuComponentHarness extends ComponentHarness {
     await item.click();
   }
 
+  async clickOnSubListItem(itemIndex: number): Promise<void> {
+    const menuList = await this.menuListHarness();
+    return await menuList.clickOnSubListItem(itemIndex);
+  }
+
   async isItemFocused(itemIndex: number): Promise<boolean> {
     return (await (await this.menuListHarness()).getItems())[itemIndex].isFocused();
   }
