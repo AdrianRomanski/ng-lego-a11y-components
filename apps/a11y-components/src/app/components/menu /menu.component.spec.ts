@@ -126,17 +126,14 @@ describe('TestMenuWrapperComponent', () => {
     expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   })
 
-  /**
-   * That test need to be done, i should check the is open of EVERY item that is nested in submenu, and every item if pressed escape from top
-   */
-  it('should close the sub menu and all it submenus when pressed escape in a submenu', async () => {
-    const thisToBeDone = true;
-    expect(thisToBeDone).toBe(true);
 
+  it('should focus first item after closing submenu', async () => {
+    await harness.toggleMenu();
+    await harness.clickItem(2);
+    await harness.clickOnSubListItem(0);
+    await harness.pressKeyInSubmenu('Escape', 0);
+    expect(await harness.isItemFocused(0)).toBe(true);
   })
-  /**
-   * Missing tests for focus first item!
-   */
 
   it('should emit select when clicked on item in menu', async () => {
     const spy = jest.spyOn(fixture.componentInstance, 'onSelect');
@@ -205,8 +202,6 @@ describe('TestMenuWrapperComponent', () => {
     await harness.pressKeyOnMenuButton(' ');
     expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
   });
-
-
 });
 
 
