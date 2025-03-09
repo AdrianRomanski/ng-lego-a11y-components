@@ -50,4 +50,9 @@ export class MenuComponentHarness extends ComponentHarness {
     const menuList = await this.menuListHarness();
     await menuList.pressKeyOnSubListItem(key, index);
   }
+
+  async pressKeyOnMenuButton(key: string): Promise<void> {
+    const menuButton = await this.menuButton();
+    await menuButton.dispatchEvent('keydown', { key });
+  }
 }

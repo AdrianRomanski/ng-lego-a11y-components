@@ -192,6 +192,21 @@ describe('TestMenuWrapperComponent', () => {
     await harness.pressKeyInSubmenu('Escape', 0);
     expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
   })
+
+  /**KEYBOARD NAVIGATION*/
+  it('should open the menu if pressed enter on menu button', async () => {
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
+    await harness.pressKeyOnMenuButton('Enter');
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+  });
+
+  it('should open the menu if pressed space on menu button', async () => {
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);
+    await harness.pressKeyOnMenuButton(' ');
+    expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
+  });
+
+
 });
 
 
