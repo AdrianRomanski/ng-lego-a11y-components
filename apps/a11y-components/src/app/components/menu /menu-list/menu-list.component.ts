@@ -101,10 +101,13 @@ export class MenuListComponent {
   }
 
   protected onOpenChange(openChange: SelectChange): void {
-    console.log('onOpenChange() menu-list', openChange);
     if(openChange.focusFirst) {
-      this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
-      this.items.set(closeAllSubmenus(this.items()))
+      if(!this.isTopList()) {
+        this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+        this.items.set(closeAllSubmenus(this.items()))
+      } else {
+        this.openChange.emit(openChange);
+      }
     } else if (openChange.item) {
       this.selectItem(openChange.item);
     }
