@@ -8,7 +8,7 @@ import {
   viewChild, signal, effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MenuItem, OpenChange } from '../menu.component';
+import { MenuItem, SelectChange } from '../menu.component';
 import { closeAllSubmenus } from '../util/menu.functions';
 
 @Component({
@@ -56,7 +56,7 @@ export class MenuListComponent {
   menuItems = input.required<MenuItem[]>();
   isTopList = input.required<boolean>();
 
-  openChange = output<OpenChange>();
+  openChange = output<SelectChange>();
 
   items = signal<MenuItem[]>([]);
 
@@ -72,24 +72,21 @@ export class MenuListComponent {
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
     if (event.key === 'Enter' || event.key === ' ') {
-      if(item?.submenu?.length != undefined) {
-        if(item?.submenu?.length > 0) {
+        if(item.submenu && item?.submenu?.length > 0) {
           item.isOpen = !item.isOpen;
+        } else {
+          this.selectItem(item);
         }
-      } else {
-        this.selectItem(item);
-      }
     } else if (event.key === 'Escape') {
       // there is a bug with menu that have more deep of nesting
       // by aria it should focus on it's father after pressing Escape
       event.stopPropagation();
-      console.log('escape', item);
-      this.openChange.emit({isOpen: false, focusFirst: !this.isTopList()});
+      this.openChange.emit({focusFirst: !this.isTopList()});
     }
   }
 
   protected selectItem(item: MenuItem): void {
-    this.openChange.emit({isOpen: false, item: item});
+    this.openChange.emit({item});
   }
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
@@ -103,7 +100,8 @@ export class MenuListComponent {
     }
   }
 
-  protected onOpenChange(openChange: OpenChange): void {
+  protected onOpenChange(openChange: SelectChange): void {
+    console.log('onOpenChange() menu-list', openChange);
     if(openChange.focusFirst) {
       this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
       this.items.set(closeAllSubmenus(this.items()))

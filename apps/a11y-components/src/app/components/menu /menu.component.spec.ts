@@ -128,11 +128,17 @@ describe('TestMenuWrapperComponent', () => {
 
 
   it('should focus first item after closing submenu', async () => {
-    await harness.toggleMenu();
-    await harness.clickItem(2);
-    await harness.clickOnSubListItem(0);
-    await harness.pressKeyInSubmenu('Escape', 0);
-    expect(await harness.isItemFocused(0)).toBe(true);
+    const menuComponent = fixture.componentInstance.menuComponent();
+    const menuListComponent = menuComponent.menuListComponent();
+    if(menuListComponent) {
+      const spy = jest.spyOn(menuListComponent, 'focusFirstListItem');
+      await harness.toggleMenu();
+      await harness.clickItem(2)
+      await harness.clickOnSubListItem(0);
+      await harness.pressKeyInSubmenu('Escape', 0);
+      expect(await harness.isItemFocused(0)).toBe(true);
+      expect(spy).toHaveBeenCalled();
+    }
   })
 
   it('should emit select when clicked on item in menu', async () => {

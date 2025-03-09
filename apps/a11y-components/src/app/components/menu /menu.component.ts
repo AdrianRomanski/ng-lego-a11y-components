@@ -17,9 +17,7 @@ export interface MenuItem {
   submenu?: MenuItem[];
 }
 
-// that interface name is a total GARBAGE
-export interface OpenChange {
-  isOpen: boolean;
+export interface SelectChange {
   focusFirst?: boolean;
   item?: MenuItem;
 }
@@ -74,7 +72,7 @@ export interface OpenChange {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  private menuListComponent: Signal<MenuListComponent | undefined> = viewChild<MenuListComponent>('menuList');
+  public menuListComponent: Signal<MenuListComponent | undefined> = viewChild<MenuListComponent>('menuList');
 
   public menuItems = input.required<MenuItem[]>();
 
@@ -110,16 +108,15 @@ export class MenuComponent {
     this.isOpen.set(false);
   }
 
-  protected onOpenChange(openChange: OpenChange): void {
-    // is open is horrible name also
-    if(openChange.item){
-      this.select.emit(openChange.item.label);
+  protected onOpenChange(selectChange: SelectChange): void {
+    if(selectChange.item){
+      this.select.emit(selectChange.item.label);
     }
-    if(!openChange.isOpen) {
-      this.items.set(closeAllSubmenus(this.items()))
-      this.isOpen.set(openChange.isOpen);
-    } else {
+    if(selectChange.focusFirst) {
       this.menuListComponent()?.focusFirstListItem();
+    } else {
+      this.items.set(closeAllSubmenus(this.items()))
+      this.isOpen.set(false);
     }
   }
 }
