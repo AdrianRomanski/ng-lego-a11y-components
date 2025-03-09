@@ -5,10 +5,11 @@ import {
   Signal,
   input,
   output,
-  viewChild,
+  viewChild, signal, effect
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, OpenChange } from '../menu.component';
+import { closeAllSubmenus } from '../util/menu.functions';
 
 @Component({
   selector: 'app-menu-list',
@@ -19,7 +20,7 @@ import { MenuItem, OpenChange } from '../menu.component';
         role="menu"
         tabindex="-1"
       >
-        @for (item of menuItems(); track item.label) {
+        @for (item of items(); track item.label) {
           <li
             role="menuitem"
             tabindex="0"
@@ -57,6 +58,14 @@ export class MenuListComponent {
 
   openChange = output<OpenChange>();
 
+  items = signal<MenuItem[]>([]);
+
+  constructor() {
+    effect(() => {
+      this.items.set(this.menuItems());
+    });
+  }
+
   public focusFirstListItem(): void {
     this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
   }
@@ -79,27 +88,12 @@ export class MenuListComponent {
     }
   }
 
-  // protected onMenuKeydown(event: KeyboardEvent): void {
-  //   const items = this.menu()?.nativeElement.querySelectorAll('li');
-  //   let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
-  //   if (event.key === 'ArrowDown') {
-  //     index = (index + 1) % items.length;
-  //     items[index].focus();
-  //   } else if (event.key === 'ArrowUp') {
-  //     index = (index - 1 + items.length) % items.length;
-  //     items[index].focus();
-  //   } else if (event.key === 'Escape') {
-  //     this.openChange.emit({isOpen: false, focusFirst: true});
-  //   }
-  // }
-
   protected selectItem(item: MenuItem): void {
     this.openChange.emit({isOpen: false, item: item});
   }
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
     event.stopPropagation();
-    console.log('onListItemClick', item);
     if(item?.submenu?.length != undefined) {
       if(item?.submenu?.length > 0) {
         item.isOpen = !item.isOpen;
@@ -112,8 +106,23 @@ export class MenuListComponent {
   protected onOpenChange(openChange: OpenChange): void {
     if(openChange.focusFirst) {
       this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+      this.items.set(closeAllSubmenus(this.items()))
     } else if (openChange.item) {
       this.selectItem(openChange.item);
     }
   }
 }
+
+// protected onMenuKeydown(event: KeyboardEvent): void {
+//   const items = this.menu()?.nativeElement.querySelectorAll('li');
+//   let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
+//   if (event.key === 'ArrowDown') {
+//     index = (index + 1) % items.length;
+//     items[index].focus();
+//   } else if (event.key === 'ArrowUp') {
+//     index = (index - 1 + items.length) % items.length;
+//     items[index].focus();
+//   } else if (event.key === 'Escape') {
+//     this.openChange.emit({isOpen: false, focusFirst: true});
+//   }
+// }

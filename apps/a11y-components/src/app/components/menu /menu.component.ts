@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuListComponent } from './menu-list';
-import { ClickOutsideDirective } from '../click-outside.directive';
+import { closeAllSubmenus } from './util/menu.functions';
+import { ClickOutsideDirective } from './util/click-outside.directive';
 
 export interface MenuItem {
   label: string;
@@ -110,16 +111,12 @@ export class MenuComponent {
   }
 
   protected onOpenChange(openChange: OpenChange): void {
-    //  im not sure if this logic is working... It should be tested asap
-    this.items.set(this.items().map((menuItem: MenuItem) => {
-        return { ...menuItem, isOpen: false }
-      }
-    ));
     // is open is horrible name also
     if(openChange.item){
       this.select.emit(openChange.item.label);
     }
     if(!openChange.isOpen) {
+      this.items.set(closeAllSubmenus(this.items()))
       this.isOpen.set(openChange.isOpen);
     } else {
       this.menuListComponent()?.focusFirstListItem();

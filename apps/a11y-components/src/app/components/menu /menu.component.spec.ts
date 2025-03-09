@@ -3,6 +3,7 @@ import { MenuComponentHarness } from './menu.component.harness';
 import { Component, viewChild } from '@angular/core';
 import { MenuComponent, MenuItem } from './menu.component';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+import { isAllClosed } from './util/menu.functions';
 
 @Component({
   selector: 'app-test-menu-wrapper',
@@ -158,17 +159,39 @@ describe('TestMenuWrapperComponent', () => {
     await harness.clickSubmenu();
     expect(spy).toHaveBeenCalledTimes(0);
   })
+
+  it('should close all the submenus after clicking escape on main menu', async () => {
+    await harness.toggleMenu();
+    await harness.clickSubmenu();
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
+    await harness.pressKeyOnListItem('Escape', 2);
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(true);
+  })
+
+  it('should close all the submenus after clicking escape on submenu', async () => {
+    await harness.toggleMenu();
+    await harness.clickSubmenu();
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
+    await harness.pressKeyInSubmenu('Escape', 0);
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items()[2].submenu || [])).toBe(true);
+  })
+
+  it('should close all the submenus after selecting item', async () => {
+    await harness.toggleMenu();
+    await harness.clickSubmenu();
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
+    await harness.clickOnSubListItem(1);
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items()[2].submenu || [])).toBe(true);
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(true);
+  })
+
+  it('should not close top level menus when clicking escape on submenu', async () => {
+    await harness.toggleMenu();
+    await harness.clickSubmenu();
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
+    await harness.pressKeyInSubmenu('Escape', 0);
+    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
+  })
 });
 
-export function isAllClosed(menuItems: MenuItem[]): boolean {
-  for (const item of menuItems) {
-    if (item.isOpen === true) {
-      return false;
-    }
-    if (item.submenu && !isAllClosed(item.submenu)) {
-      return false;
-    }
-  }
-  return true;
-}
 
