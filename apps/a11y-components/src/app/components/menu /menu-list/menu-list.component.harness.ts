@@ -23,6 +23,10 @@ export class MenuListComponentHarness extends ComponentHarness {
     return this.menuItems();
   }
 
+  async getSubmenu(): Promise<MenuListComponentHarness> {
+    return this.menuListHarness();
+  }
+
   async clickSubmenu(): Promise<void> {
     const item = (await this.menuItems())[2];
     await item.click();

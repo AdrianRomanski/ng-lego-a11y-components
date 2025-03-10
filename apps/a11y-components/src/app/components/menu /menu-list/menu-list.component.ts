@@ -37,6 +37,7 @@ import { closeAllSubmenus } from '../util/menu.functions';
             }
             @if (item.isOpen && item.submenu) {
               <app-menu-list
+                #submenu
                 class="submenu"
                 [isTopList]="false"
                 [menuItems]="item.submenu"
@@ -52,6 +53,7 @@ import { closeAllSubmenus } from '../util/menu.functions';
 })
 export class MenuListComponent {
   menu: Signal<ElementRef> = viewChild.required('menu');
+  subMenu: Signal<MenuListComponent | undefined> = viewChild('submenu');
 
   menuItems = input.required<MenuItem[]>();
   isTopList = input.required<boolean>();
@@ -87,12 +89,26 @@ export class MenuListComponent {
           // by aria it should focus on it's father after pressing Escape
           event.stopPropagation();
           this.openChange.emit({focusFirst: !this.isTopList()});
-      } else if (event.key === 'ArrowRight') {
+      } else if (event.key === 'ArrowDown') {
           items[index].classList.remove('focus-visible');
           index = (index + 1) % items.length;
           console.log('new index',index);
           items[index].focus();
           items[index].classList.add('focus-visible');
+      } else if (event.key === 'ArrowRight') {
+        if(item.submenu && item?.submenu?.length > 0) {
+          // const itemsMapped = this.items().map((item, index) =>
+          //   index === index ? { ...item, isOpen: true } : item
+          // );
+          // this.items.set(itemsMapped)
+          item.isOpen = true;
+          items[index].classList.remove('focus-visible');
+          // to later refactor, i think i need some signal in effect, that will trigger this
+          setTimeout(() => {
+            this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+            this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].classList.add('focus-visible');
+          })
+        }
       }
   }
 
@@ -124,17 +140,3 @@ export class MenuListComponent {
     }
   }
 }
-
-// protected onMenuKeydown(event: KeyboardEvent): void {
-//   const items = this.menu()?.nativeElement.querySelectorAll('li');
-//   let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
-//   if (event.key === 'ArrowDown') {
-//     index = (index + 1) % items.length;
-//     items[index].focus();
-//   } else if (event.key === 'ArrowUp') {
-//     index = (index - 1 + items.length) % items.length;
-//     items[index].focus();
-//   } else if (event.key === 'Escape') {
-//     this.openChange.emit({isOpen: false, focusFirst: true});
-//   }
-// }

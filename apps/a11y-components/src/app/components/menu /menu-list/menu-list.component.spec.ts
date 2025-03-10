@@ -100,12 +100,14 @@ describe('MenuListComponent', () => {
   describe('Keyboard interactions', (): void => {
     /**
      *
+     * Keyboard interactions
+     * Enter and Space
+     * If the menuitem has a submenu, opens the submenu and places focus on its first item. Otherwise, activates the item and closes the menu.
+     *
      * Up Arrow
      * Moves focus to the previous item, optionally wrapping from the first to the last. Optionally, if the menuitem is in a menubar and has a submenu, opens the submenu and places focus on the last item in the submenu.
      *
-     * Right Arrow
-     * If in a menu opened with a menubutton and not in a menubar, if the menuitem does not have a submenu, does nothing. When focus is in a menubar, moves focus to the next item, optionally wrapping from the last to the first. When focus is in a menu and on a menuitem that has a submenu, opens the submenu and places focus on its first item. When focus is in a menu and on an item that does not have a submenu, closes the submenu and any parent menus, moves focus to the next item in the menubar, and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu, or opens the submenu of that menuitem and places focus on the first item in the submenu.
-     *
+
      * Left Arrow
      * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last. When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem. When focus is in a submenu of an item in a menubar, closes the submenu, moves focus to the previous item in the menubar, and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu, or opens the submenu of that menuitem and places focus on the first item in the submenu.
      *
@@ -182,18 +184,44 @@ describe('MenuListComponent', () => {
      * On a menuitem that has a submenu in a menubar, opens the submenu and places focus on the first item in the submenu.
      * Otherwise, moves focus to the next item, optionally wrapping from the last to the first.
      */
-    it('should focus the next item after pressing right arrow', async () => {
+    it('should focus the next item after pressing down arrow', async () => {
       await harness.focusElement(0);
       expect(await harness.isItemFocused(0)).toBe(true)
-      await harness.pressKeyOnFocusedItem('ArrowRight');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(1)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowRight');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(2)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowRight');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(3)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowRight');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(0)).toBe(true);
     });
-  })
+
+    /**
+     * Right Arrow
+     * If the menu item does not have a submenu:
+     * Nothing happens (e.g., pressing the right arrow does nothing) because there’s no submenu to open. The focus stays on the same item.
+     *
+     * If the menu item has a submenu:
+     * The submenu opens and focus moves to the first item in that submenu.
+     */
+    it('should not move focus if pressed RightArrow when focus on item without submenu', async () => {
+      await harness.focusElement(0);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(await harness.isItemFocused(1)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowRight');
+      expect(await harness.isItemFocused(1)).toBe(true);
+    });
+
+    it('should open submenu and moved focus when pressed RightArrow on item with submenu', async () => {
+      await harness.focusElement(0);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(component.menuListComponent().items()[2].isOpen).toBe(false);
+      await harness.pressKeyOnFocusedItem('ArrowRight');
+      expect(component.menuListComponent().items()[2].isOpen).toBe(true);
+      expect(await (await harness.getSubmenu()).isItemFocused(0)).toBe(true);
+    });
+   })
 });
 
