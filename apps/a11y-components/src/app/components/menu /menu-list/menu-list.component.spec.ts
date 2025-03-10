@@ -229,13 +229,13 @@ describe('MenuListComponent', () => {
     it('should focus the previous item after pressing down arrow', async () => {
       await harness.focusElement(0);
       expect(await harness.isItemFocused(0)).toBe(true)
-      await harness.pressKeyOnFocusedItem('ArrowDown');
-      expect(await harness.isItemFocused(1)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowDown');
-      expect(await harness.isItemFocused(2)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowUp');
       expect(await harness.isItemFocused(3)).toBe(true);
-      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowUp');
+      expect(await harness.isItemFocused(2)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowUp');
+      expect(await harness.isItemFocused(1)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowUp');
       expect(await harness.isItemFocused(0)).toBe(true);
     });
   })
