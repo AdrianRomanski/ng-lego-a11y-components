@@ -18,25 +18,25 @@ export class TestMenuWrapperComponent {
   menuComponent = viewChild.required(MenuComponent);
 
   menuItems: MenuItem[] = [
-    { label: 'Home', isOpen: false },
-    { label: 'About', isOpen: false },
+    { label: 'Azeroth', isOpen: false },
+    { label: 'Kalimdor', isOpen: false },
     {
-      label: 'Services',
+      label: 'Dungeons',
       isOpen: false,
       submenu: [
         {
-          label: 'Web Design', submenu: [
-            {
-              label: 'Black White',
-            },
-            { label: 'Color' },
+          label: 'Classic',
+          isOpen: false,
+          submenu: [
+            { label: 'Deadmines' },
+            { label: 'Shadowfang Keep' },
           ],
         },
-        { label: 'SEO' },
+        { label: 'Burning Crusade' },
       ],
     },
-    { label: 'Contact', isOpen: false },
-  ]
+    { label: 'Battlegrounds', isOpen: false },
+  ];
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onSelect() {}

@@ -12,33 +12,87 @@ export default meta;
 type Story = StoryObj<MenuComponent>;
 
 const menuItems: MenuItem[] = [
-  { label: 'Home', isOpen: false },
-  { label: 'About', isOpen: false },
+  { label: 'Azeroth', isOpen: false },
+  { label: 'Kalimdor', isOpen: false },
   {
-    label: 'Services',
+    label: 'Dungeons',
     isOpen: false,
     submenu: [
       {
-        label: 'Web Design',
+        label: 'Classic',
+        isOpen: false,
         submenu: [
-          { label: 'Black White' },
-          { label: 'Color' },
+          { label: 'Deadmines' },
+          { label: 'Shadowfang Keep' },
         ],
       },
-      { label: 'SEO' },
+      { label: 'Burning Crusade' },
     ],
   },
-  { label: 'Contact', isOpen: false },
+  { label: 'Battlegrounds', isOpen: false },
 ];
 
-export const NestedMenu: Story = {
+export const AzerothMenu: Story = {
   args: { menuItems },
 };
 
-export const OnlyHeading: Story = {
+export const OnlyOrgrimmar: Story = {
   args: {
     menuItems: [
-      { label: 'Only Heading', isOpen: false },
+      { label: 'Orgrimmar', isOpen: false },
     ],
   },
 };
+
+export const NestedFactions: Story = {
+  args: {
+    menuItems: [
+      {
+        label: 'Factions',
+        isOpen: false,
+        submenu: [
+          {
+            label: 'Alliance',
+            submenu: [
+              { label: 'Stormwind' },
+              { label: 'Ironforge' },
+            ],
+          },
+          {
+            label: 'Horde',
+            submenu: [
+              { label: 'Orgrimmar' },
+              { label: 'Thunder Bluff' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export const DeepRaidMenu: Story = {
+  args: {
+    menuItems: [
+      {
+        label: 'Raids',
+        isOpen: false,
+        submenu: [
+          {
+            label: 'Wrath of the Lich King',
+            submenu: [
+              {
+                label: 'Icecrown Citadel',
+                submenu: [
+                  { label: 'The Lower Spire' },
+                  { label: 'The Frozen Throne' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+};
+

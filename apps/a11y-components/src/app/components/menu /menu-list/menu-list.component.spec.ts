@@ -21,20 +21,24 @@ export class TestMenuListWrapperComponent {
   menuListComponent = viewChild.required(MenuListComponent);
 
   menuItems: MenuItem[] = [
-    { label: 'Home', isOpen: false },
-    { label: 'About', isOpen: false },
+    { label: 'Azeroth', isOpen: false },
+    { label: 'Kalimdor', isOpen: false },
     {
-      label: 'Services',
+      label: 'Dungeons',
       isOpen: false,
       submenu: [
         {
-          label: 'Web Design',
-          submenu: [{ label: 'Expensive' }, { label: 'Cheap' }],
+          label: 'Classic',
+          isOpen: false,
+          submenu: [
+            { label: 'Deadmines' },
+            { label: 'Shadowfang Keep' },
+          ],
         },
-        { label: 'SEO' },
+        { label: 'Burning Crusade' },
       ],
     },
-    { label: 'Contact', isOpen: false },
+    { label: 'Battlegrounds', isOpen: false },
   ];
 }
 
