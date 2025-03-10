@@ -28,11 +28,6 @@ export class MenuListComponentHarness extends ComponentHarness {
     await item.click();
   }
 
-  async focusSubmenu(): Promise<void> {
-    const item = (await this.menuItems())[2];
-    await item.focus();
-  }
-
   async pressKeyOnListItem(key: string, index: number) {
     const element = (await this.menuItems())[index];
     await element.dispatchEvent('keydown', { key });
