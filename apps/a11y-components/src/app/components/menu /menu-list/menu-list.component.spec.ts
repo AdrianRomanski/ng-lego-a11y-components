@@ -100,6 +100,21 @@ describe('MenuListComponent', () => {
    */
 
 
+  // to be refactored later, i can't be clicking in keyboard navigation tests... cmon
+  it('should call select item when pressed enter, and its not submenu', async () => {
+    const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+    await harness.clickSubmenu();
+    await harness.pressKeyOnSubListItem('Enter', 1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should open submenu when pressed enter, and its submenu ', async () => {
+    const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+    await harness.clickSubmenu();
+    await harness.pressKeyOnSubListItem('Enter', 0);
+    expect(spy).toHaveBeenCalledTimes(0);
+    expect(component.menuListComponent().items()[2].isOpen).toBe(true)
+  });
 
 
 

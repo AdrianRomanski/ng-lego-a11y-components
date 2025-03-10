@@ -85,7 +85,7 @@ export class MenuListComponent {
     }
   }
 
-  protected selectItem(item: MenuItem): void {
+  public selectItem(item: MenuItem): void {
     this.openChange.emit({item});
   }
 
