@@ -112,10 +112,10 @@ export class MenuComponent {
     if(selectChange.item){
       this.select.emit(selectChange.item.label);
     }
+    this.items.set(closeAllSubmenus(this.items()));
     if(selectChange.focusFirst) {
       this.menuListComponent()?.focusFirstListItem();
     } else {
-      this.items.set(closeAllSubmenus(this.items()))
       this.isOpen.set(false);
     }
   }

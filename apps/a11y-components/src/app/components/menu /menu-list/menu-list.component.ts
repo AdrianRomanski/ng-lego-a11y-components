@@ -73,8 +73,7 @@ export class MenuListComponent {
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-      console.log('event',event);
-      console.log('item',item);
+      event.stopPropagation();
       const items = this.menu()?.nativeElement.querySelectorAll('li');
       let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
       console.log('index',index);
@@ -87,12 +86,10 @@ export class MenuListComponent {
       } else if (event.key === 'Escape') {
           // there is a bug with menu that have more deep of nesting
           // by aria it should focus on it's father after pressing Escape
-          event.stopPropagation();
           this.openChange.emit({focusFirst: !this.isTopList()});
       } else if (event.key === 'ArrowDown') {
           items[index].classList.remove('focus-visible');
           index = (index + 1) % items.length;
-          console.log('new index',index);
           items[index].focus();
           items[index].classList.add('focus-visible');
       } else if (event.key === 'ArrowRight') {
@@ -109,6 +106,11 @@ export class MenuListComponent {
             this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].classList.add('focus-visible');
           })
         }
+      } else if (event.key === 'ArrowUp') {
+        items[index].classList.remove('focus-visible');
+        index = (index - 1 + items.length) % items.length;
+        items[index].focus();
+        items[index].classList.add('focus-visible');
       }
   }
 

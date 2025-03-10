@@ -51,7 +51,6 @@ export class MenuListComponentHarness extends ComponentHarness {
   async clickOnSubListItem(index: number) {
     const menuList = (await this.menuListHarness());
     const elements = await menuList.menuItems();
-    // console.log('elements', elements);
     await elements[index].click();
   }
 

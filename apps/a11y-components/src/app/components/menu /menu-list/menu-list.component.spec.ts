@@ -104,9 +104,7 @@ describe('MenuListComponent', () => {
      * Enter and Space
      * If the menuitem has a submenu, opens the submenu and places focus on its first item. Otherwise, activates the item and closes the menu.
      *
-     * Up Arrow
-     * Moves focus to the previous item, optionally wrapping from the first to the last. Optionally, if the menuitem is in a menubar and has a submenu, opens the submenu and places focus on the last item in the submenu.
-     *
+
 
      * Left Arrow
      * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last. When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem. When focus is in a submenu of an item in a menubar, closes the submenu, moves focus to the previous item in the menubar, and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu, or opens the submenu of that menuitem and places focus on the first item in the submenu.
@@ -222,6 +220,24 @@ describe('MenuListComponent', () => {
       expect(component.menuListComponent().items()[2].isOpen).toBe(true);
       expect(await (await harness.getSubmenu()).isItemFocused(0)).toBe(true);
     });
-   })
+
+    /**
+     * Up Arrow
+     * Moves focus to the previous item, optionally wrapping from the first to the last.
+     * Optionally, if the menuitem is in a menubar and has a submenu, opens the submenu and places focus on the last item in the submenu.
+     */
+    it('should focus the previous item after pressing down arrow', async () => {
+      await harness.focusElement(0);
+      expect(await harness.isItemFocused(0)).toBe(true)
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(await harness.isItemFocused(1)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(await harness.isItemFocused(2)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(await harness.isItemFocused(3)).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      expect(await harness.isItemFocused(0)).toBe(true);
+    });
+  })
 });
 

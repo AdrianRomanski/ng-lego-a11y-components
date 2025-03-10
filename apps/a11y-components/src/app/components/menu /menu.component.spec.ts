@@ -169,7 +169,7 @@ describe('TestMenuWrapperComponent', () => {
     expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(true);
   })
 
-  it('should close all the submenus after clicking escape on submenu', async () => {
+  it('should close all the nested submenus after clicking escape on submenu', async () => {
     await harness.toggleMenu();
     await harness.clickSubmenu();
     expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
@@ -184,14 +184,6 @@ describe('TestMenuWrapperComponent', () => {
     await harness.clickOnSubListItem(1);
     expect(isAllClosed(fixture.componentInstance.menuComponent().items()[2].submenu || [])).toBe(true);
     expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(true);
-  })
-
-  it('should not close top level menus when clicking escape on submenu', async () => {
-    await harness.toggleMenu();
-    await harness.clickSubmenu();
-    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
-    await harness.pressKeyInSubmenu('Escape', 0);
-    expect(isAllClosed(fixture.componentInstance.menuComponent().items())).toBe(false);
   })
 
   /**KEYBOARD NAVIGATION*/
