@@ -5,12 +5,15 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MenuListComponentHarness } from './menu-list.component.harness';
 import { MenuItem } from '../menu.component';
 
+import * as functions from './../util/menu.functions';
+
 @Component({
   selector: 'app-test-menu-list-wrapper',
   imports: [MenuListComponent],
   template: `
     <app-menu-list
       [menuItems]="menuItems"
+      [isTopList]="false"
     />
   `,
 })
@@ -78,6 +81,15 @@ describe('MenuListComponent', () => {
   it('should open submenu after clicking it', async () => {
     await harness.clickSubmenu();
     expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
+  });
+
+  it('should select first item and close all submenus', async () => {
+    const spy =  jest.spyOn(functions, 'closeAllSubmenus');
+    await harness.clickSubmenu();
+    await harness.clickOnSubListItem(0);
+    await harness.pressKeyOnSubListItem('Escape', 0);
+    expect(await (await harness.getItems())[0].isFocused()).toBe(true);
+    expect(spy).toHaveBeenCalled();
   });
 
   /**
