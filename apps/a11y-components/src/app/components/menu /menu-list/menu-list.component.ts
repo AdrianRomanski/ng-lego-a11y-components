@@ -71,18 +71,29 @@ export class MenuListComponent {
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-    if (event.key === 'Enter' || event.key === ' ') {
-        if(item.submenu && item?.submenu?.length > 0) {
-          item.isOpen = !item.isOpen;
-        } else {
+      console.log('event',event);
+      console.log('item',item);
+      const items = this.menu()?.nativeElement.querySelectorAll('li');
+      let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
+      console.log('index',index);
+      if (event.key === 'Enter' || event.key === ' ') {
+          if(item.submenu && item?.submenu?.length > 0) {
+           item.isOpen = !item.isOpen;
+          } else {
           this.selectItem(item);
-        }
-    } else if (event.key === 'Escape') {
-      // there is a bug with menu that have more deep of nesting
-      // by aria it should focus on it's father after pressing Escape
-      event.stopPropagation();
-      this.openChange.emit({focusFirst: !this.isTopList()});
-    }
+          }
+      } else if (event.key === 'Escape') {
+          // there is a bug with menu that have more deep of nesting
+          // by aria it should focus on it's father after pressing Escape
+          event.stopPropagation();
+          this.openChange.emit({focusFirst: !this.isTopList()});
+      } else if (event.key === 'ArrowRight') {
+          items[index].classList.remove('focus-visible');
+          index = (index + 1) % items.length;
+          console.log('new index',index);
+          items[index].focus();
+          items[index].classList.add('focus-visible');
+      }
   }
 
   public selectItem(item: MenuItem): void {
