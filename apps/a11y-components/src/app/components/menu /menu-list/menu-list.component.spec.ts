@@ -56,42 +56,47 @@ describe('MenuListComponent', () => {
       .getHarness(MenuListComponentHarness);
   });
 
-  /**
-   * A menu generally represents a grouping of common actions or functions that the user can invoke.
-   * The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.
-   * Submenus, also known as pop-up menus, also have the role menu.
-   */
-  it('should have menu role for list of menu items', async () => {
-    const lists = await harness.getLists();
-    const attribute = await lists.getAttribute('role');
-    expect(attribute).toBe('menu');
-  });
 
-  it('should have menu role for sub menus', async () => {
-    await harness.clickSubmenu();
-    const lists = await harness.getLists();
-    const attribute = await lists.getAttribute('role');
-    expect(attribute).toBe('menu');
-  });
+  describe('Aria', () => {
+    /**
+     * A menu generally represents a grouping of common actions or functions that the user can invoke.
+     * The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.
+     * Submenus, also known as pop-up menus, also have the role menu.
+     */
+    it('should have menu role for list of menu items', async () => {
+      const lists = await harness.getList();
+      const attribute = await lists.getAttribute('role');
+      expect(attribute).toBe('menu');
+    });
 
-  /**
-   * When a user activates a choice in a menu that has been opened, the menu usually closes.
-   * If the menu choice action invokes a submenu, the menu will remain open and the submenu is displayed.
-   */
-  it('should open submenu after clicking it', async () => {
-    await harness.clickSubmenu();
-    expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
-  });
+    it('should have menu role for sub menus', async () => {
+      await harness.clickSubmenu();
+      const lists = await harness.getList();
+      const attribute = await lists.getAttribute('role');
+      expect(attribute).toBe('menu');
+    });
+  })
 
-  it('should select first item and close all submenus', async () => {
-    const spy =  jest.spyOn(functions, 'closeAllSubmenus');
-    await harness.clickSubmenu();
-    await harness.clickOnSubListItem(0);
-    await harness.pressKeyOnSubListItem('Escape', 0);
-    expect(await (await harness.getItems())[0].isFocused()).toBe(true);
-    expect(spy).toHaveBeenCalled();
-  });
 
+  describe('Mouse Navigation', () => {
+    /**
+     * When a user activates a choice in a menu that has been opened, the menu usually closes.
+     * If the menu choice action invokes a submenu, the menu will remain open and the submenu is displayed.
+     */
+    it('should open submenu after clicking it', async () => {
+      await harness.clickSubmenu();
+      expect(component.menuListComponent().menuItems()[2].isOpen).toBe(true);
+    });
+
+    it('should select first item and close all submenus', async () => {
+      const spy =  jest.spyOn(functions, 'closeAllSubmenus');
+      await harness.clickSubmenu();
+      await harness.clickOnSubListItem(0);
+      await harness.pressKeyOnSubListItem('Escape', 0);
+      expect(await (await harness.getItems())[0].isFocused()).toBe(true);
+      expect(spy).toHaveBeenCalled();
+    });
+  })
 
   /**
    * Keyboard interactions
@@ -183,7 +188,7 @@ describe('MenuListComponent', () => {
      * Otherwise, moves focus to the next item, optionally wrapping from the last to the first.
      */
     it('should focus the next item after pressing down arrow', async () => {
-      await harness.focusElement(0);
+      await harness.focusItem(0);
       expect(await harness.isItemFocused(0)).toBe(true)
       await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(1)).toBe(true);
@@ -204,7 +209,7 @@ describe('MenuListComponent', () => {
      * The submenu opens and focus moves to the first item in that submenu.
      */
     it('should not move focus if pressed RightArrow when focus on item without submenu', async () => {
-      await harness.focusElement(0);
+      await harness.focusItem(0);
       await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(await harness.isItemFocused(1)).toBe(true);
       await harness.pressKeyOnFocusedItem('ArrowRight');
@@ -212,7 +217,7 @@ describe('MenuListComponent', () => {
     });
 
     it('should open submenu and moved focus when pressed RightArrow on item with submenu', async () => {
-      await harness.focusElement(0);
+      await harness.focusItem(0);
       await harness.pressKeyOnFocusedItem('ArrowDown');
       await harness.pressKeyOnFocusedItem('ArrowDown');
       expect(component.menuListComponent().items()[2].isOpen).toBe(false);
@@ -227,7 +232,7 @@ describe('MenuListComponent', () => {
      * Optionally, if the menuitem is in a menubar and has a submenu, opens the submenu and places focus on the last item in the submenu.
      */
     it('should focus the previous item after pressing down arrow', async () => {
-      await harness.focusElement(0);
+      await harness.focusItem(0);
       expect(await harness.isItemFocused(0)).toBe(true)
       await harness.pressKeyOnFocusedItem('ArrowUp');
       expect(await harness.isItemFocused(3)).toBe(true);

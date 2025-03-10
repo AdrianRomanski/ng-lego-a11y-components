@@ -4,7 +4,7 @@ import { MenuListComponentHarness } from './menu-list';
 export class MenuComponentHarness extends ComponentHarness {
   static hostSelector = 'app-components-menu';
 
-  private get menuButton() {
+  private get button() {
     return this.locatorFor('button');
   }
 
@@ -12,47 +12,42 @@ export class MenuComponentHarness extends ComponentHarness {
     return this.locatorFor(MenuListComponentHarness)
   }
 
-  async toggleMenu(): Promise<void> {
-    await (await this.menuButton()).click();
+  /** Mouse */
+  async clickButton(): Promise<void> {
+    await (await this.button()).click();
   }
 
   async clickSubmenu(): Promise<void> {
-    const menuList = await this.menuListHarness();
-    const item = (await menuList.getItems())[2];
-    await item.click();
+    return (await (await this.menuListHarness()).getItems())[2].click()
   }
 
-  async clickItem(itemIndex: number): Promise<void> {
-    const menuList = await this.menuListHarness();
-    const item = (await menuList.getItems())[itemIndex];
-    await item.click();
+  async clickItem(index: number): Promise<void> {
+    return (await (await this.menuListHarness()).getItems())[index].click()
   }
 
-  async clickOnSubListItem(itemIndex: number): Promise<void> {
-    const menuList = await this.menuListHarness();
-    return await menuList.clickOnSubListItem(itemIndex);
-  }
-
-  async isItemFocused(itemIndex: number): Promise<boolean> {
-    return (await (await this.menuListHarness()).getItems())[itemIndex].isFocused();
+  async clickOnSubListItem(index: number): Promise<void> {
+    return (await this.menuListHarness()).clickOnSubListItem(index);
   }
 
   async clickOutside(): Promise<void> {
     document.body.click();
   }
 
+  /** Keyboard */
   async pressKeyOnListItem(key: string, index: number): Promise<void> {
-    const menuList = await this.menuListHarness();
-    await menuList.pressKeyOnListItem(key, index);
+    return (await this.menuListHarness()).pressKeyOnListItem(key, index);
   }
 
   async pressKeyInSubmenu(key: string, index: number): Promise<void> {
-    const menuList = await this.menuListHarness();
-    await menuList.pressKeyOnSubListItem(key, index);
+    return (await this.menuListHarness()).pressKeyOnSubListItem(key, index);
   }
 
   async pressKeyOnMenuButton(key: string): Promise<void> {
-    const menuButton = await this.menuButton();
-    await menuButton.dispatchEvent('keydown', { key });
+    return (await this.button()).dispatchEvent('keydown', { key });
+  }
+
+  /** Focus */
+  async isItemFocused(itemIndex: number): Promise<boolean> {
+    return (await (await this.menuListHarness()).getItems())[itemIndex].isFocused();
   }
 }

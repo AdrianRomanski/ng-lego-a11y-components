@@ -7,55 +7,46 @@ export class MenuListComponentHarness extends ComponentHarness {
     return this.locatorFor(MenuListComponentHarness)
   }
 
-  private get menuList() {
+  private get list() {
     return this.locatorFor('ul');
   }
 
-  private get menuItems() {
+  private get items() {
     return this.locatorForAll('li');
   }
 
-  async getLists(): Promise<TestElement> {
-    return this.menuList();
+  async getList(): Promise<TestElement> {
+    return this.list();
   }
 
   async getItems(): Promise<TestElement[]> {
-    return this.menuItems();
+    return this.items();
   }
 
   async getSubmenu(): Promise<MenuListComponentHarness> {
     return this.menuListHarness();
   }
 
+  /**  Mouse */
   async clickSubmenu(): Promise<void> {
-    const item = (await this.menuItems())[2];
-    await item.click();
-  }
-
-  async focusElement(index: number) {
-    const element = (await this.menuItems())[index];
-    return element.focus();
-  }
-
-  async pressKeyOnListItem(key: string, index: number) {
-    const element = (await this.menuItems())[index];
-    await element.dispatchEvent('keydown', { key });
-  }
-
-  async pressKeyOnSubListItem(key: string, index: number) {
-    const menuList = (await this.menuListHarness());
-    const elements = await menuList.menuItems()
-    await elements[index].dispatchEvent('keydown', { key });
+    return (await this.items())[2].click();
   }
 
   async clickOnSubListItem(index: number) {
-    const menuList = (await this.menuListHarness());
-    const elements = await menuList.menuItems();
-    await elements[index].click();
+    return (await (await this.menuListHarness()).items())[index].click();
+  }
+
+  /** Keyboard */
+  async pressKeyOnListItem(key: string, index: number) {
+    return (await this.items())[index].dispatchEvent('keydown', { key });
+  }
+
+  async pressKeyOnSubListItem(key: string, index: number) {
+    return (await (await this.menuListHarness()).items())[index].dispatchEvent('keydown', { key });
   }
 
   async pressKeyOnFocusedItem(key: string): Promise<void> {
-    const items = await this.menuItems();
+    const items = await this.items();
     for (const item of items) {
       if (await item.matchesSelector(':focus')) {
         await item.dispatchEvent('keydown', { key });
@@ -64,8 +55,12 @@ export class MenuListComponentHarness extends ComponentHarness {
     }
   }
 
+  /** Focus */
   async isItemFocused(index: number): Promise<boolean> {
-    const element = (await this.menuItems())[index];
-    return element.isFocused();
+    return (await this.items())[index].isFocused();
+  }
+
+  async focusItem(index: number): Promise<void> {
+    return (await this.items())[index].focus();
   }
 }
