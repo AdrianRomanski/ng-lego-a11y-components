@@ -1,9 +1,34 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular';
 import { MenuComponent, MenuItem } from './menu.component';
 
 const meta: Meta<MenuComponent> = {
   component: MenuComponent,
   title: 'MenuComponent',
+  decorators: [componentWrapperDecorator((story) => `
+        <div
+          style="
+            width: 70vw;
+            height: 60vh;
+            margin: 3em;
+            padding: 2em;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+          "
+        >
+          ${story}
+        </div>`)],
+  /**
+   * The second argument to a decorator function is the story context which contains the properties:
+   *
+   * args - the story arguments. You can use some args in your decorators and drop them in the story implementation itself.
+   * argTypes- Storybook's argTypes allow you to customize and fine-tune your stories args.
+   * globals - Storybook-wide globals. In particular you can use the toolbars feature to allow you to change these values using Storybook’s UI.
+   * hooks - Storybook's API hooks (e.g., useArgs).
+   * parameters- the story's static metadata, most commonly used to control Storybook's behavior of features and addons.
+   * viewMode- Storybook's current active window (e.g., canvas, docs).
+   */
   argTypes: {
     menuItems: { control: 'object' },
   },
