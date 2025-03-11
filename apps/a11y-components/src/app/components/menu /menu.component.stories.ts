@@ -1,4 +1,5 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular';
+import { within, userEvent, waitFor } from '@storybook/testing-library';
 import { MenuComponent, MenuItem } from './menu.component';
 
 const meta: Meta<MenuComponent> = {
@@ -19,16 +20,6 @@ const meta: Meta<MenuComponent> = {
         >
           ${story}
         </div>`)],
-  /**
-   * The second argument to a decorator function is the story context which contains the properties:
-   *
-   * args - the story arguments. You can use some args in your decorators and drop them in the story implementation itself.
-   * argTypes- Storybook's argTypes allow you to customize and fine-tune your stories args.
-   * globals - Storybook-wide globals. In particular you can use the toolbars feature to allow you to change these values using Storybook’s UI.
-   * hooks - Storybook's API hooks (e.g., useArgs).
-   * parameters- the story's static metadata, most commonly used to control Storybook's behavior of features and addons.
-   * viewMode- Storybook's current active window (e.g., canvas, docs).
-   */
   argTypes: {
     menuItems: { control: 'object' },
   },
@@ -57,42 +48,26 @@ const menuItems: MenuItem[] = [
   { label: 'Battlegrounds', isOpen: false },
 ];
 
-export const AzerothMenu: Story = {
-  args: { menuItems },
-};
-
-export const OnlyOrgrimmar: Story = {
-  args: {
-    menuItems: [
-      { label: 'Orgrimmar', isOpen: false },
-    ],
-  },
-};
-
 export const NestedFactions: Story = {
   args: {
-    menuItems: [
-      {
-        label: 'Factions',
-        isOpen: false,
-        submenu: [
-          {
-            label: 'Alliance',
-            submenu: [
-              { label: 'Stormwind' },
-              { label: 'Ironforge' },
-            ],
-          },
-          {
-            label: 'Horde',
-            submenu: [
-              { label: 'Orgrimmar' },
-              { label: 'Thunder Bluff' },
-            ],
-          },
-        ],
-      },
-    ],
+    menuItems
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const menuButton = await canvas.findByRole('button', { name: /menu/i });
+    await userEvent.click(menuButton);
+
+    const factionsItem = await canvas.findByText('Dungeons');
+    await userEvent.click(factionsItem);
+
+    await waitFor(() => canvas.getByText('Classic'));
+    const classicItem = await canvas.findByText('Classic');
+    await userEvent.click(classicItem);
+
+    await waitFor(() => canvas.getByText('Deadmines'));
+    const deadminesItem = await canvas.findByText('Deadmines');
+    await userEvent.click(deadminesItem);
   },
 };
 
@@ -119,5 +94,25 @@ export const DeepRaidMenu: Story = {
       },
     ],
   },
-};
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
+    const menuButton = await canvas.findByRole('button', { name: /menu/i });
+    await userEvent.click(menuButton);
+
+    const raidsItem = await canvas.findByText('Raids');
+    await userEvent.click(raidsItem);
+
+    await waitFor(() => canvas.getByText('Wrath of the Lich King'));
+    const wotlkItem = await canvas.findByText('Wrath of the Lich King');
+    await userEvent.click(wotlkItem);
+
+    await waitFor(() => canvas.getByText('Icecrown Citadel'));
+    const iccItem = await canvas.findByText('Icecrown Citadel');
+    await userEvent.click(iccItem);
+
+    await waitFor(() => canvas.getByText('The Frozen Throne'));
+    const frozenThroneItem = await canvas.findByText('The Frozen Throne');
+    await userEvent.click(frozenThroneItem);
+  },
+};

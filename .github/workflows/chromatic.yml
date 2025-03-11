@@ -1,4 +1,3 @@
-
 # Workflow name
 name: "Chromatic Deployment"
 
@@ -20,10 +19,31 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: npm ci
+      - name: Run Storybook tests
+        run: npm run test-storybook
+        env:
+          CI: true
+      - name: Upload test results (optional)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: storybook-test-results
+          path: storybook-test-results
+
+  deploy:
+    needs: test  # Ensures deployment runs only if tests pass
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: npm ci
       - name: "Run Chromatic"
         uses: chromaui/action@latest
-        # Options required for Chromatic's GitHub Action
         with:
-          #👇 Chromatic projectToken, see https://storybook.js.org/tutorials/intro-to-storybook/angular/en/deploy/ to obtain it
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
