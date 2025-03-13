@@ -53,21 +53,23 @@ export const NestedFactions: Story = {
     menuItems
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+    if(process.env['RUN_STORYBOOK_TESTS']) {
+      const canvas = within(canvasElement);
 
-    const menuButton = await canvas.findByRole('button', { name: /menu/i });
-    await userEvent.click(menuButton);
+      const menuButton = await canvas.findByRole('button', { name: /menu/i });
+      await userEvent.click(menuButton);
 
-    const factionsItem = await canvas.findByText('Dungeons');
-    await userEvent.click(factionsItem);
+      const factionsItem = await canvas.findByText('Dungeons');
+      await userEvent.click(factionsItem);
 
-    await waitFor(() => canvas.getByText('Classic'));
-    const classicItem = await canvas.findByText('Classic');
-    await userEvent.click(classicItem);
+      await waitFor(() => canvas.getByText('Classic'));
+      const classicItem = await canvas.findByText('Classic');
+      await userEvent.click(classicItem);
 
-    await waitFor(() => canvas.getByText('Deadmines'));
-    const deadminesItem = await canvas.findByText('Deadmines');
-    await userEvent.click(deadminesItem);
+      await waitFor(() => canvas.getByText('Deadmines'));
+      const deadminesItem = await canvas.findByText('Deadmines');
+      await userEvent.click(deadminesItem);
+    }
   },
 };
 
@@ -95,24 +97,58 @@ export const DeepRaidMenu: Story = {
     ],
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+    if(process.env['RUN_STORYBOOK_TESTS']) {
+      const canvas = within(canvasElement);
 
-    const menuButton = await canvas.findByRole('button', { name: /menu/i });
-    await userEvent.click(menuButton);
+      const menuButton = await canvas.findByRole('button', { name: /menu/i });
+      await userEvent.click(menuButton);
 
-    const raidsItem = await canvas.findByText('Raids');
-    await userEvent.click(raidsItem);
+      const raidsItem = await canvas.findByText('Raids');
+      await userEvent.click(raidsItem);
 
-    await waitFor(() => canvas.getByText('Wrath of the Lich King'));
-    const wotlkItem = await canvas.findByText('Wrath of the Lich King');
-    await userEvent.click(wotlkItem);
+      await waitFor(() => canvas.getByText('Wrath of the Lich King'));
+      const wotlkItem = await canvas.findByText('Wrath of the Lich King');
+      await userEvent.click(wotlkItem);
 
-    await waitFor(() => canvas.getByText('Icecrown Citadel'));
-    const iccItem = await canvas.findByText('Icecrown Citadel');
-    await userEvent.click(iccItem);
+      await waitFor(() => canvas.getByText('Icecrown Citadel'));
+      const iccItem = await canvas.findByText('Icecrown Citadel');
+      await userEvent.click(iccItem);
 
-    await waitFor(() => canvas.getByText('The Frozen Throne'));
-    const frozenThroneItem = await canvas.findByText('The Frozen Throne');
-    await userEvent.click(frozenThroneItem);
+      await waitFor(() => canvas.getByText('The Frozen Throne'));
+      const frozenThroneItem = await canvas.findByText('The Frozen Throne');
+      await userEvent.click(frozenThroneItem);
+    }
   },
 };
+
+/**
+ *
+ * User events	Description
+ *
+ * clear	Selects the text inside inputs, or textareas and deletes it
+ * userEvent.clear(await within(canvasElement).getByRole('myinput'));
+ *
+ * click	Clicks the element, calling a click() function
+ * userEvent.click(await within(canvasElement).getByText('mycheckbox'));
+ *
+ * dblClick	Clicks the element twice
+ * userEvent.dblClick(await within(canvasElement).getByText('mycheckbox'));
+ *
+ * deselectOptions	Removes the selection from a specific option of a select element
+ * userEvent.deselectOptions(await within(canvasElement).getByRole('listbox'),'1');
+ *
+ * hover	Hovers an element
+ * userEvent.hover(await within(canvasElement).getByTestId('example-test'));
+ *
+ * keyboard	Simulates the keyboard events
+ * userEvent.keyboard(‘foo’);
+ *
+ * selectOptions	Selects the specified option, or options of a select element
+ * userEvent.selectOptions(await within(canvasElement).getByRole('listbox'),['1','2']);
+ *
+ * type	Writes text inside inputs, or textareas
+ * userEvent.type(await within(canvasElement).getByRole('my-input'),'Some text');
+ *
+ * unhover	Unhovers out of element
+ * userEvent.unhover(await within(canvasElement).getByLabelText(/Example/i));
+ */

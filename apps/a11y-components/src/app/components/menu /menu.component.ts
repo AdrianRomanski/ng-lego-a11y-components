@@ -76,7 +76,7 @@ export class MenuComponent {
 
   public menuItems = input.required<MenuItem[]>();
 
-  public select = output<string>();
+  public selectItem = output<string>();
 
   public isOpen = signal(false);
   public items = signal<MenuItem[]>([]);
@@ -110,7 +110,7 @@ export class MenuComponent {
 
   protected onOpenChange(selectChange: SelectChange): void {
     if(selectChange.item){
-      this.select.emit(selectChange.item.label);
+      this.selectItem.emit(selectChange.item.label);
     }
     this.items.set(closeAllSubmenus(this.items()));
     if(selectChange.focusFirst) {

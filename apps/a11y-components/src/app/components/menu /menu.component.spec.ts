@@ -11,7 +11,7 @@ import { isAllClosed } from './util/menu.functions';
   template: `
     <app-components-menu
       [menuItems]="menuItems"
-      (select)="onSelect()"
+      (selectItem)="onSelect()"
     ></app-components-menu> `,
 })
 export class TestMenuWrapperComponent {

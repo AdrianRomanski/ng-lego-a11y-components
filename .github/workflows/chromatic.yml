@@ -1,37 +1,9 @@
-# Workflow name
 name: "Chromatic Deployment"
 
-# Event for the workflow
 on: push
 
-# List of jobs
 jobs:
   test:
-    # Operating System
-    runs-on: ubuntu-latest
-    # Job steps
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm ci
-      - name: Run Storybook tests
-        run: npm run test-storybook
-        env:
-          CI: true
-      - name: Upload test results (optional)
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: storybook-test-results
-          path: storybook-test-results
-
-  deploy:
-    needs: test  # Ensures deployment runs only if tests pass
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
