@@ -53,13 +53,12 @@ export const NestedFactions: Story = {
     menuItems
   },
   play: async ({ canvasElement }) => {
-    if(process.env['RUN_STORYBOOK_TESTS']) {
       const canvas = within(canvasElement);
 
       const menuButton = await canvas.findByRole('button', { name: /menu/i });
       await userEvent.click(menuButton);
 
-      const factionsItem = await canvas.findByText('Dungeons');
+      const factionsItem = await canvas.findByText('Checking if ci fail');
       await userEvent.click(factionsItem);
 
       await waitFor(() => canvas.getByText('Classic'));
@@ -70,7 +69,6 @@ export const NestedFactions: Story = {
       const deadminesItem = await canvas.findByText('Deadmines');
       await userEvent.click(deadminesItem);
     }
-  },
 };
 
 export const DeepRaidMenu: Story = {
