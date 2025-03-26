@@ -52,23 +52,6 @@ export const NestedFactions: Story = {
   args: {
     menuItems
   },
-  play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement);
-
-      const menuButton = await canvas.findByRole('button', { name: /menu/i });
-      await userEvent.click(menuButton);
-
-      const factionsItem = await canvas.findByText('Checking if ci fail');
-      await userEvent.click(factionsItem);
-
-      await waitFor(() => canvas.getByText('Classic'));
-      const classicItem = await canvas.findByText('Classic');
-      await userEvent.click(classicItem);
-
-      await waitFor(() => canvas.getByText('Deadmines'));
-      const deadminesItem = await canvas.findByText('Deadmines');
-      await userEvent.click(deadminesItem);
-    }
 };
 
 export const DeepRaidMenu: Story = {
@@ -93,30 +76,53 @@ export const DeepRaidMenu: Story = {
         ],
       },
     ],
+  }
+};
+
+export const KeyboardNavigation: Story = {
+  args: {
+    menuItems: [
+      {
+        label: 'Raids',
+        isOpen: false,
+        submenu: [
+          {
+            label: 'Wrath of the Lich King',
+            submenu: [
+              {
+                label: 'Icecrown Citadel',
+                submenu: [
+                  { label: 'The Lower Spire' },
+                  { label: 'The Frozen Throne' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
   play: async ({ canvasElement }) => {
-    if(process.env['RUN_STORYBOOK_TESTS']) {
-      const canvas = within(canvasElement);
+    const canvas = within(canvasElement);
 
-      const menuButton = await canvas.findByRole('button', { name: /menu/i });
-      await userEvent.click(menuButton);
+    const menuButton = await canvas.findByRole('button', { name: /menu/i });
+    await userEvent.click(menuButton);
 
-      const raidsItem = await canvas.findByText('Raids');
-      await userEvent.click(raidsItem);
+    const raidsItem = await canvas.findByText('Raids');
+    await userEvent.click(raidsItem);
 
-      await waitFor(() => canvas.getByText('Wrath of the Lich King'));
-      const wotlkItem = await canvas.findByText('Wrath of the Lich King');
-      await userEvent.click(wotlkItem);
+    await waitFor(() => canvas.getByText('Wrath of the Lich King'));
+    const wotlkItem = await canvas.findByText('Wrath of the Lich King');
+    await userEvent.click(wotlkItem);
 
-      await waitFor(() => canvas.getByText('Icecrown Citadel'));
-      const iccItem = await canvas.findByText('Icecrown Citadel');
-      await userEvent.click(iccItem);
+    await waitFor(() => canvas.getByText('Icecrown Citadel'));
+    const iccItem = await canvas.findByText('Icecrown Citadel');
+    await userEvent.click(iccItem);
 
-      await waitFor(() => canvas.getByText('The Frozen Throne'));
-      const frozenThroneItem = await canvas.findByText('The Frozen Throne');
-      await userEvent.click(frozenThroneItem);
-    }
-  },
+    await waitFor(() => canvas.getByText('The Frozen Throne'));
+    const frozenThroneItem = await canvas.findByText('The Frozen Throne');
+    await userEvent.click(frozenThroneItem);
+  }
 };
 
 /**

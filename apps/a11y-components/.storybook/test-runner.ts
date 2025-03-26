@@ -1,12 +1,12 @@
 import { getStoryContext, TestRunnerConfig } from '@storybook/test-runner';
 
 const shouldRunTests =
-  process.env['CI'] || process.env['RUN_STORYBOOK_TESTS'] === 'true';
+  process.env['CI'];
 
 const config: TestRunnerConfig = {
   async preVisit(page, context) {
     if (!shouldRunTests) {
-      console.log('Skipping Storybook tests. Set RUN_STORYBOOK_TESTS=true to run locally.');
+      console.log('Skipping Storybook tests');
       process.exit(0);
     }
   },
