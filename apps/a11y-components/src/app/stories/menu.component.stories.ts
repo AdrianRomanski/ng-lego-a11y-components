@@ -1,6 +1,6 @@
 import { componentWrapperDecorator, Meta, StoryObj } from '@storybook/angular';
 import { within, userEvent, waitFor } from '@storybook/testing-library';
-import { MenuComponent, MenuItem } from './menu.component';
+import { MenuComponent, MenuItem } from '@adrian-romanski/ng-lego-a11y';
 
 const meta: Meta<MenuComponent> = {
   component: MenuComponent,
