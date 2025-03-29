@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, inject, output } from '@angular/core';
 
 @Directive({
-  selector: '[appClickOutside]'
+  selector: '[legoComponentsClickOutside]'
 })
 export class ClickOutsideDirective {
   private readonly _elementRef = inject(ElementRef);

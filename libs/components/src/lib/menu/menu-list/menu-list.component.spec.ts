@@ -8,10 +8,10 @@ import { MenuItem } from '../menu.component';
 import * as functions from './../util/menu.functions';
 
 @Component({
-  selector: 'app-test-menu-list-wrapper',
+  selector: 'lego-components-test-menu-list-wrapper',
   imports: [MenuListComponent],
   template: `
-    <app-menu-list
+    <lego-components-menu-list
       [menuItems]="menuItems"
       [isTopList]="false"
     />

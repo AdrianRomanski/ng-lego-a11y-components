@@ -6,13 +6,13 @@ import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 import { isAllClosed } from './util/menu.functions';
 
 @Component({
-  selector: 'app-test-menu-wrapper',
+  selector: 'lego-components-test-menu-wrapper',
   imports: [MenuComponent],
   template: `
-    <app-components-menu
+    <lego-components-components-menu
       [menuItems]="menuItems"
       (selectItem)="onSelect()"
-    ></app-components-menu> `,
+    ></lego-components-components-menu> `,
 })
 export class TestMenuWrapperComponent {
   menuComponent = viewChild.required(MenuComponent);

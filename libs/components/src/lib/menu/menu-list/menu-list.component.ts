@@ -12,7 +12,7 @@ import { MenuItem, SelectChange } from '../menu.component';
 import { closeAllSubmenus } from '../util/menu.functions';
 
 @Component({
-  selector: 'app-menu-list',
+  selector: 'lego-components-menu-list',
   imports: [CommonModule],
   template: `
       <ul
@@ -36,7 +36,7 @@ import { closeAllSubmenus } from '../util/menu.functions';
               </svg>
             }
             @if (item.isOpen && item.submenu) {
-              <app-menu-list
+              <lego-components-menu-list
                 #submenu
                 class="submenu"
                 [isTopList]="false"

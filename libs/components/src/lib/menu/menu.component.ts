@@ -46,7 +46,7 @@ export interface SelectChange {
  *
  */
 @Component({
-  selector: 'app-components-menu',
+  selector: 'lego-components-components-menu',
   imports: [CommonModule, MenuListComponent, ClickOutsideDirective],
   template: `
       <button
@@ -59,13 +59,13 @@ export interface SelectChange {
       > Menu
       </button>
       @if (isOpen()) {
-        <app-menu-list
+        <lego-components-menu-list
           #menuList
           [isTopList]="true"
           [menuItems]="items()"
           (openChange)="onOpenChange($event)"
         >
-        </app-menu-list>
+        </lego-components-menu-list>
       }
   `,
   styleUrl: './menu.component.scss',
