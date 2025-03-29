@@ -52,7 +52,7 @@ export interface SelectChange {
       <button
         aria-haspopup="true"
         [attr.aria-expanded]="isOpen"
-        appClickOutside
+        legoComponentsClickOutside
         (clickOutside)="onOutsideClick($event)"
         (click)="onMenuTriggerClick()"
         (keydown)="onMenuTriggerKeyDown($event)"

@@ -2,7 +2,7 @@ import { ComponentHarness } from '@angular/cdk/testing';
 import { MenuListComponentHarness } from './menu-list';
 
 export class MenuComponentHarness extends ComponentHarness {
-  static hostSelector = 'app-components-menu';
+  static hostSelector = 'lego-components-components-menu';
 
   private get button() {
     return this.locatorFor('button');
