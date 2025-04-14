@@ -1,8 +1,8 @@
 export default {
-  displayName: 'storybook',
+  displayName: 'a11y-components',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/storybook',
+  coverageDirectory: '../../coverage/apps/a11y-components',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
