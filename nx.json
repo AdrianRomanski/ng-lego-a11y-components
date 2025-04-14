@@ -83,11 +83,6 @@
       }
     }
   ],
-  "pluginsConfig": {
-    "@nx/js": {
-      "analyzeSourceFiles": false
-    }
-  },
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",

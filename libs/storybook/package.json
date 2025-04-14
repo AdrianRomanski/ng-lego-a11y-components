@@ -1,8 +1,9 @@
 {
-  "name": "@ng-lego/storybook",
+  "name": "@a11y-components/storybook",
   "version": "0.0.1",
   "peerDependencies": {
-    "@ng-lego/components": "0.0.1"
+    "@angular/common": "^19.1.0",
+    "@angular/core": "^19.1.0"
   },
   "sideEffects": false
 }
