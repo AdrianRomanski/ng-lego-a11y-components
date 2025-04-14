@@ -4,7 +4,7 @@
   "sourceRoot": "libs/storybook/src",
   "prefix": "storybook",
   "projectType": "library",
-  "tags": [],
+  "tags": ["type:storybook"],
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",

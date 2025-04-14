@@ -4,7 +4,7 @@
   "sourceRoot": "libs/components/src",
   "prefix": "lego-components",
   "projectType": "library",
-  "tags": [],
+  "tags": ["type:ui"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
