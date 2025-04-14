@@ -3,6 +3,10 @@ name: Code Coverage
 on:
   push
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   test:
     name: Run tests and collect coverage
