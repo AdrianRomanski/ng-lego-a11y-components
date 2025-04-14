@@ -20,7 +20,7 @@
           "tsConfig": "libs/storybook/tsconfig.lib.json"
         }
       },
-      "defaultConfiguration": "production"
+      "dependsOn": ["^build"]
     },
     "test": {
       "executor": "@nx/jest:jest",

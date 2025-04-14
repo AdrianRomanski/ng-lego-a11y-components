@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@ng-lego/storybook": ["libs/storybook/src/index.ts"],
-      "@ng-lego/components/menu": ["libs/components/src/index.ts"]
+      "@ng-lego/components": ["libs/components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
