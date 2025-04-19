@@ -1,5 +1,5 @@
 import { ComponentHarness } from '@angular/cdk/testing';
-import { MenuListComponentHarness } from './menu-list';
+import { MenuListComponentHarness } from '../menu-list';
 
 export class MenuComponentHarness extends ComponentHarness {
   static hostSelector = 'lego-components-components-menu';

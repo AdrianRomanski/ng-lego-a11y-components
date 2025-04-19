@@ -15,7 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@adrian-romanski/ng-lego-a11y": ["libs/components/src/index.ts"]
+      "@ng-lego/components": ["libs/components/src/index.ts"],
+      "@ng-lego/components/menu": [
+        "libs/components/menu/src/index.ts"
+      ],
+      "@ng-lego/components/menu/test": [
+        "libs/components/menu/src/test/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

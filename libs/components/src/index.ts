@@ -1,1 +1,1 @@
-export * from './lib/menu/index';
+export default {};

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuComponentHarness } from './menu.component.harness';
+import { MenuComponentHarness } from './test/menu.component.harness';
 import { Component, viewChild } from '@angular/core';
 import { MenuComponent, MenuItem } from './menu.component';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
