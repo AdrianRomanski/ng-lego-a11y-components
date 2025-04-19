@@ -1,5 +1,5 @@
 {
-  "name": "@adrian-romanski/ng-lego-a11y",
+  "name": "@ng-lego/components",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^19.1.0",
