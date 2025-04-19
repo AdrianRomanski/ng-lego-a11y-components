@@ -1,28 +1,28 @@
 {
-  "name": "a11y-components",
+  "name": "storybook",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/a11y-components/src",
+  "sourceRoot": "apps/storybook/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/a11y-components",
-        "index": "apps/a11y-components/src/index.html",
-        "browser": "apps/a11y-components/src/main.ts",
+        "outputPath": "dist/apps/storybook",
+        "index": "apps/storybook/src/index.html",
+        "browser": "apps/storybook/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/a11y-components/tsconfig.app.json",
+        "tsConfig": "apps/storybook/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/a11y-components/public"
+            "input": "apps/storybook/public"
           }
         ],
-        "styles": ["apps/a11y-components/src/styles.scss"],
+        "styles": [],
         "scripts": []
       },
       "configurations": {
@@ -53,10 +53,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "a11y-components:build:production"
+          "buildTarget": "storybook:build:production"
         },
         "development": {
-          "buildTarget": "a11y-components:build:development"
+          "buildTarget": "storybook:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -64,7 +64,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "a11y-components:build"
+        "buildTarget": "storybook:build"
       }
     },
     "lint": {
@@ -74,24 +74,24 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/a11y-components/jest.config.ts"
+        "jestConfig": "apps/storybook/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "a11y-components:build",
+        "buildTarget": "storybook:build",
         "port": 4200,
-        "staticFilePath": "dist/apps/a11y-components/browser",
+        "staticFilePath": "dist/apps/storybook/browser",
         "spa": true
       }
     },
-    "storybook": {
+    "start-storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "port": 4400,
-        "configDir": "apps/a11y-components/.storybook",
-        "browserTarget": "a11y-components:build",
+        "configDir": "apps/storybook/.storybook",
+        "browserTarget": "storybook:build",
         "compodoc": false
       },
       "configurations": {
@@ -104,9 +104,9 @@
       "executor": "@storybook/angular:build-storybook",
       "outputs": ["{options.outputDir}"],
       "options": {
-        "outputDir": "dist/storybook/a11y-components",
-        "configDir": "apps/a11y-components/.storybook",
-        "browserTarget": "a11y-components:build",
+        "outputDir": "dist/storybook/storybook",
+        "configDir": "apps/storybook/.storybook",
+        "browserTarget": "storybook:build",
         "compodoc": false
       },
       "configurations": {
@@ -118,20 +118,20 @@
     "test-storybook": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "test-storybook -c apps/a11y-components/.storybook --url=http://localhost:4400"
+        "command": "test-storybook -c apps/storybook/.storybook --url=http://localhost:4400"
       }
     },
     "static-storybook": {
       "executor": "@nx/web:file-server",
       "dependsOn": ["build-storybook"],
       "options": {
-        "buildTarget": "a11y-components:build-storybook",
-        "staticFilePath": "dist/storybook/a11y-components",
+        "buildTarget": "storybook:build-storybook",
+        "staticFilePath": "dist/storybook/storybook",
         "spa": true
       },
       "configurations": {
         "ci": {
-          "buildTarget": "a11y-components:build-storybook:ci"
+          "buildTarget": "storybook:build-storybook:ci"
         }
       }
     }
