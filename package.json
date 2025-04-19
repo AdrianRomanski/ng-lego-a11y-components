@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build-storybook": "nx run a11y-components:build-storybook",
-    "start-storybook": "nx run a11y-components:storybook",
-    "test-storybook": "nx run a11y-components:test-storybook",
+    "build-storybook": "nx run storybook:build-storybook",
+    "start-storybook": "nx run storybook:start-storybook",
+    "test-storybook": "nx run storybook:test-storybook",
     "coverage": "jest --coverage"
   },
   "private": true,
