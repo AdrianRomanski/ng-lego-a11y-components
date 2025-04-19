@@ -1,1 +1,1 @@
-export * from '../menu/src/index';
+export * from './lib/menu/index';
