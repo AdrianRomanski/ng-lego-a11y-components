@@ -14,15 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {
-      "@ng-lego/components": ["libs/components/src/index.ts"],
-      "@ng-lego/components/menu": [
-        "libs/components/menu/src/index.ts"
-      ],
-      "@ng-lego/components/menu/test": [
-        "libs/components/menu/src/test/index.ts"
-      ]
-    }
+    "paths": {}
   },
   "exclude": ["node_modules", "tmp"]
 }
