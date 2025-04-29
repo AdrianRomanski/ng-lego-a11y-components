@@ -1,5 +1,5 @@
-button {
-  font-size: 44px;
+.content-trigger {
+  font-size: 88px;
   border: 2px solid #ff4fc6;
   background: linear-gradient(90deg, #ff4fc6 0%, #ff6ad5 100%);
   color: #ffd700;
@@ -12,8 +12,9 @@ button {
     outline-offset: 4px;
   }
 }
-ul {
-  font-size: 40px;
+
+.content-wrapper {
+  font-size: 70px;
   padding: 10px;
   border: 2px solid #ff4fc6;
   background: #ffe6f4;
@@ -21,7 +22,8 @@ ul {
   list-style: none;
   color: black;
 }
-li {
+
+.content {
   margin-left: 5px;
   cursor: pointer;
   border-radius: 5px;
@@ -35,7 +37,7 @@ li {
 }
 
 span {
-  font-size: 24px;
+  font-size: 54px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
