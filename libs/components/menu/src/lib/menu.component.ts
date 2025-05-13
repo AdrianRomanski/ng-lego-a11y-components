@@ -20,6 +20,7 @@ export interface MenuItem {
 export interface SelectChange {
   focusFirst?: boolean;
   item?: MenuItem;
+  focusIndex?: number;
 }
 
 /**
@@ -84,7 +85,7 @@ export class MenuComponent {
   constructor() {
     effect(() => {
       if(this.isOpen()) {
-        this.menuListComponent()?.focusFirstListItem();
+        this.menuListComponent()?.focusListItem(0);
       }
     });
     effect(() => {
@@ -114,7 +115,7 @@ export class MenuComponent {
     }
     this.items.set(closeAllSubmenus(this.items()));
     if(selectChange.focusFirst) {
-      this.menuListComponent()?.focusFirstListItem();
+      this.menuListComponent()?.focusListItem(selectChange.focusIndex || 0);
     } else {
       this.isOpen.set(false);
     }

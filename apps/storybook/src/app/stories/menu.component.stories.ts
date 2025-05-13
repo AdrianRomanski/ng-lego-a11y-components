@@ -42,7 +42,12 @@ const menuItems: MenuItem[] = [
           { label: 'Shadowfang Keep' },
         ],
       },
-      { label: 'Burning Crusade' },
+      { label: 'Burning Crusade',
+        isOpen: false,
+        submenu: [
+          { label: 'Burning 1' },
+          { label: 'Burning 2' },
+        ],},
     ],
   },
   { label: 'Battlegrounds', isOpen: false },
