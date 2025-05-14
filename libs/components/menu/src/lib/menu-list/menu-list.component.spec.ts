@@ -110,13 +110,13 @@ describe('MenuListComponent', () => {
     /**
      *
      * Keyboard interactions
-     * Enter and Space
-     * If the menuitem has a submenu, opens the submenu and places focus on its first item. Otherwise, activates the item and closes the menu.
-     *
-
-
+      
      * Left Arrow
-     * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last. When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem. When focus is in a submenu of an item in a menubar, closes the submenu, moves focus to the previous item in the menubar, and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu, or opens the submenu of that menuitem and places focus on the first item in the submenu.
+     * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last.
+     * When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem.
+     * When focus is in a submenu of an item in a menubar, closes the submenu, moves focus to the previous item in the menubar,
+     * and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu,
+     * or opens the submenu of that menuitem and places focus on the first item in the submenu.
      *
      * Home
      * If arrow key wrapping is not supported, moves focus to the first item in the current menu or menubar.
@@ -249,4 +249,20 @@ describe('MenuListComponent', () => {
     });
   })
 });
+
+// this one have to be changed to -> should focus the parent after closing submenu
+
+// When in submenu it closes it, but main menu remains opened
+// it('should focus first item after closing submenu', async () => {
+//   await harness.pressKeyOnMenuButton('Enter');
+//   await harness.pressKeyOnListItem('Enter', 2);
+//   const menuComponent = fixture.componentInstance.menuComponent();
+//   const menuListComponent = menuComponent.menuListComponent();
+//   if(menuListComponent) {
+//     const spy = jest.spyOn(menuListComponent, 'focusFirstListItem');
+//     await harness.pressKeyInSubmenu('Escape', 0);
+//     expect(await harness.isItemFocused(0)).toBe(true);
+//     expect(spy).toHaveBeenCalled();
+//   }
+// })
 

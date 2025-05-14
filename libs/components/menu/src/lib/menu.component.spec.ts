@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MenuComponentHarness } from './test/menu.component.harness';
 import { Component, viewChild } from '@angular/core';
-import { MenuComponent, MenuItem } from './menu.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
+
+import { MenuComponentHarness } from './test';
+import { MenuComponent, MenuItem } from './menu.component';
 import { isAllClosed } from './util/menu.functions';
 
 @Component({
@@ -190,49 +191,8 @@ describe('TestMenuWrapperComponent', () => {
       await harness.pressKeyInSubmenu('Escape', 0);
       expect(fixture.componentInstance.menuComponent().isOpen()).toBe(true);
     })
-
-    // this one have to be changed to -> should focus the parent after closing submenu
-
-    // When in submenu it closes it, but main menu remains opened
-
-    // it('should focus first item after closing submenu', async () => {
-    //   await harness.pressKeyOnMenuButton('Enter');
-    //   await harness.pressKeyOnListItem('Enter', 2);
-    //   const menuComponent = fixture.componentInstance.menuComponent();
-    //   const menuListComponent = menuComponent.menuListComponent();
-    //   if(menuListComponent) {
-    //     const spy = jest.spyOn(menuListComponent, 'focusFirstListItem');
-    //     await harness.pressKeyInSubmenu('Escape', 0);
-    //     expect(await harness.isItemFocused(0)).toBe(true);
-    //     expect(spy).toHaveBeenCalled();
-    //   }
-    // })
   })
 });
-
-/**
- * Keyboard interactions - they look like mostly for menu-bar variant
- * Space / Enter
- * If the item is a parent menu item, it opens the submenu and moves focus to the first item in the submenu. Otherwise, activates the menu item, which loads new content and places focus on the heading that titles the content.
- *
- * Escape
- * When in a submenu, it closes the submenu and moves focus to the parent menu or menubar item.
-
- * Down Arrow
- * When focus is in a menu, moves focus to the next item, optionally wrapping from the last to the first.
-
- * Arrow Up
- * When focus is in a menu, moves focus to the previous item, optionally wrapping from the first to the last.
- *
- * Home
- * Moves focus to the first item in the menubar.
- *
- * End
- * Moves focus to the last item in the menubar.
- *
- * Any character key
- * Moves focus to the next item in the menubar having a name that starts with the typed character. If none of the items have a name starting with the typed character, focus does not move.
- */
 
 
 

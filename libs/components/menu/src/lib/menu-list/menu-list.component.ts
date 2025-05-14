@@ -74,37 +74,48 @@ export class MenuListComponent {
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-      event.stopPropagation();
-      const items = this.menu()?.nativeElement.querySelectorAll('li');
-      let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
-      console.log('index',index);
-      if (event.key === 'Enter' || event.key === ' ') {
-        if(item.submenu && item?.submenu?.length > 0) {
-          item.isOpen = !item.isOpen;
-          console.log('item index', index);
-          items[index].classList.remove('focus-visible');
-          // REFACTOR IT LATER
-          setTimeout(() => {
-            this.subMenu()?.parentIndex.set(index);
-            this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].focus();
-            this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].classList.add('focus-visible');
-          })
-        } else {
-          this.selectItem(item);
-        }
-      } else if (event.key === 'Escape') {
-          this.openChange.emit({focusFirst: !this.isTopList(), focusIndex: this.parentIndex()});
-      } else if (event.key === 'ArrowDown') {
-          items[index].classList.remove('focus-visible');
-          index = (index + 1) % items.length;
-          items[index].focus();
-          items[index].classList.add('focus-visible');
-      } else if (event.key === 'ArrowUp') {
+    event.stopPropagation();
+    const items = this.menu()?.nativeElement.querySelectorAll('li');
+    let index = Array.from(items).indexOf(document.activeElement as HTMLElement);
+    if (event.key === 'Enter' || event.key === ' ') {
+      if (item.submenu && item?.submenu?.length > 0) {
+        item.isOpen = !item.isOpen;
+        console.log('item index', index);
         items[index].classList.remove('focus-visible');
-        index = (index - 1 + items.length) % items.length;
-        items[index].focus();
-        items[index].classList.add('focus-visible');
+        // REFACTOR IT LATER
+        setTimeout(() => {
+          this.subMenu()?.parentIndex.set(index);
+          this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+          this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].classList.add('focus-visible');
+        })
+      } else {
+        this.selectItem(item);
       }
+    } else if (event.key === 'Escape') {
+      this.openChange.emit({ focusFirst: !this.isTopList(), focusIndex: this.parentIndex() });
+    } else if (event.key === 'ArrowDown') {
+      items[index].classList.remove('focus-visible');
+      index = (index + 1) % items.length;
+      items[index].focus();
+      items[index].classList.add('focus-visible');
+    } else if (event.key === 'ArrowUp') {
+      items[index].classList.remove('focus-visible');
+      index = (index - 1 + items.length) % items.length;
+      items[index].focus();
+      items[index].classList.add('focus-visible');
+    } else if (event.key === 'ArrowRight') {
+      if (item.submenu && item?.submenu?.length > 0) {
+        item.isOpen = !item.isOpen;
+        console.log('item index', index);
+        items[index].classList.remove('focus-visible');
+        // REFACTOR IT LATER
+        setTimeout(() => {
+          this.subMenu()?.parentIndex.set(index);
+          this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+          this.subMenu()?.menu()?.nativeElement.querySelectorAll('li')[0].classList.add('focus-visible');
+        })
+      }
+    }
   }
 
   public selectItem(item: MenuItem): void {
