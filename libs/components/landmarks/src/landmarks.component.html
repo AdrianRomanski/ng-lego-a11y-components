@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Landmark Navigation Demo</title>
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      min-height: 100vh;
+      font-family: system-ui, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    header, footer {
+      background-color: #f0f4f8;
+      padding: 1.5rem;
+    }
+
+    header {
+      border-bottom: 2px solid #ccc;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #0366d6;
+      font-weight: 500;
+    }
+
+    main, aside {
+      padding: 1.5rem;
+    }
+
+    .layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      gap: 1rem;
+      background-color: #fff;
+    }
+
+    main {
+      background-color: #ffffff;
+    }
+
+    aside {
+      background-color: #f9f9f9;
+      border-left: 4px solid #0366d6;
+    }
+
+    footer {
+      border-top: 2px solid #ccc;
+      font-size: 0.875rem;
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin-top: 0;
+    }
+
+    @media (max-width: 768px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        border-left: none;
+        border-top: 2px solid #0366d6;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!--<div class="sr-only">-->
+  <header role="banner">
+    <nav role="navigation" aria-label="Main menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <main role="main">
+      <h1>Welcome to the site</h1>
+      <p>This is the main content of the view.</p>
+      <p>Screen reader users can jump here using landmark navigation.</p>
+    </main>
+
+    <aside role="complementary" aria-label="Filters">
+      <h2>Filters</h2>
+      <label><input type="checkbox" /> Only available</label><br />
+      <label><input type="checkbox" /> Include archived</label>
+    </aside>
+  </div>
+
+  <footer role="contentinfo">
+    <p>&copy; 2025 Adrian Romanski — Accessibility-first matters 🧠</p>
+  </footer>
+<!--</div>-->
+</body>
+</html>
