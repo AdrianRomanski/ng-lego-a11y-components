@@ -1,14 +1,16 @@
 .content-trigger {
   font-size: 88px;
-  border: 2px solid #ff4fc6;
-  background: linear-gradient(90deg, #ff4fc6 0%, #ff6ad5 100%);
-  color: #ffd700;
+  border: 5px solid #34A853;
+  background: #4285F4;
+  color: #FBBC05;
   border-radius: 10px;
   padding: 10px 20px;
   font-weight: bold;
+  margin-bottom: 4px;
+  cursor: pointer;
 
   &:focus-visible {
-    outline: 3px solid black;
+    outline: 3px solid #EA4335;
     outline-offset: 4px;
   }
 }
@@ -16,12 +18,13 @@
 .content-wrapper {
   font-size: 70px;
   padding: 10px;
-  border: 2px solid #ff4fc6;
-  background: #ffe6f4;
+  border: 5px solid #4285F4;
+  background: #34A853;
   border-radius: 10px;
   list-style: none;
-  color: black;
+  color: #FBBC05;
 }
+
 
 .content {
   margin-left: 5px;
@@ -29,10 +32,16 @@
   border-radius: 5px;
   position: relative;
   padding: 5px 5px 5px 30px;
+  color: #34A853;
+
   &:focus-visible {
-    outline: 3px solid black;
+    outline: 3px solid #4285F4;
     outline-offset: 4px;
-    background: #ffb3e6;
+    background: #E8F5E9;
+  }
+
+  &:hover {
+    background: #E8F5E9;
   }
 }
 
@@ -43,7 +52,9 @@ span {
   gap: 8px;
   position: relative;
   padding-left: 30px;
+  color: #FBBC05;
 }
+
 
 span.hot::before,
 span.cold::before {

@@ -6,6 +6,7 @@ import {
   WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ClickOutsideDirective } from './util/click-outside.directive';
 
 export interface Drink {
   name: string;
@@ -13,21 +14,26 @@ export interface Drink {
 }
 @Component({
   selector: 'lego-components-drinks',
-  imports: [CommonModule],
+  imports: [CommonModule, ClickOutsideDirective],
   template: `
-    <span class="content-trigger" (click)="open.set(true)">
+    <span
+      class="content-trigger"
+      legoComponentsClickOutside
+      (clickOutside)="open.set(false)"
+      (click)="open.set(!this.open())"
+    >
       Best Drinks
     </span>
     @if (open()) {
-      <div class="content-wrapper">
-        @for (drink of drinks(); track drink.name) {
-          <div class="content" (click)="onDrinkClick(drink)">
-            <span
-              [ngClass]="drink.isHot ? 'hot' : 'cold'"
-              class="content-text">{{ drink.name }}</span>
-          </div>
-        }
+    <div class="content-wrapper">
+      @for (drink of drinks(); track drink.name) {
+      <div class="content" (click)="onDrinkClick(drink)">
+        <span [ngClass]="drink.isHot ? 'hot' : 'cold'" class="content-text">{{
+          drink.name
+        }}</span>
       </div>
+      }
+    </div>
     }
   `,
   styleUrl: './drinks.component.scss',

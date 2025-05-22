@@ -5,12 +5,27 @@ const preview: Preview = {
   decorators: [componentWrapperDecorator((story) => `
     <div style="
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 90vh;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       padding: 2rem;
+      gap: 1.5rem;
     ">
+      <div>
+         <img
+            src="https://i.imageupload.app/ccc450daa9cae8d32acc.png"
+            alt="image"
+            style="
+              object-fit: cover;
+              border-radius: 0.5rem;
+              width: 40vw;
+              height: 32vh;
+              border: 5px solid lightslategray;
+            "
+          />
+      </div>
       <div style="
         display: flex;
         justify-content: center;
@@ -20,13 +35,16 @@ const preview: Preview = {
         background: white;
         padding: 2rem;
         border-radius: 1rem;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border: 5px solid #EA4335;
         max-width: 100%;
       ">
-        ${story}
+        <div style="color: #FBBC05;">
+          ${story}
+        </div>
       </div>
     </div>
   `)],
 };
+
 
 export default preview;
