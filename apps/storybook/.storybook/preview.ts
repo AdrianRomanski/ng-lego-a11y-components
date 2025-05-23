@@ -32,7 +32,7 @@ const preview: Preview = {
         background: white;
         padding: 2rem;
         border-radius: 1rem;
-        border: 5px solid #EA4335;
+        border: 5px solid lightslategray;
         max-width: 100%;
       ">
         <div style="color: #FBBC05;">

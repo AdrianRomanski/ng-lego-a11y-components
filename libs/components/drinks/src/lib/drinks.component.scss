@@ -10,7 +10,7 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 3px solid #EA4335;
+    outline: 6px solid #EA4335;
     outline-offset: 4px;
   }
 }
@@ -35,7 +35,7 @@
   color: #34A853;
 
   &:focus-visible {
-    outline: 3px solid #4285F4;
+    outline: 6px solid #EA4335;
     outline-offset: 4px;
     background: #E8F5E9;
   }
