@@ -110,7 +110,7 @@ describe('MenuListComponent', () => {
     /**
      *
      * Keyboard interactions
-      
+
      * Left Arrow
      * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last.
      * When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem.
@@ -248,21 +248,22 @@ describe('MenuListComponent', () => {
       expect(await harness.isItemFocused(0)).toBe(true);
     });
   })
+
+  /**
+   * Escape
+   * Close the menu that contains focus and return focus to the element or context, e.g., menu button or parent menuitem, from which the menu was opened.
+   */
+  it('should focus trigger after closing submenu', async () => {
+    await harness.focusItem(0);
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('Enter');
+    const subMenuHarness = await harness.getSubmenu();
+    expect(await subMenuHarness.isItemFocused(0)).toBe(true);
+    await subMenuHarness.pressKeyOnFocusedItem('Escape');
+    expect(await harness.isItemFocused(2)).toBe(true);
+  })
 });
 
-// this one have to be changed to -> should focus the parent after closing submenu
 
-// When in submenu it closes it, but main menu remains opened
-// it('should focus first item after closing submenu', async () => {
-//   await harness.pressKeyOnMenuButton('Enter');
-//   await harness.pressKeyOnListItem('Enter', 2);
-//   const menuComponent = fixture.componentInstance.menuComponent();
-//   const menuListComponent = menuComponent.menuListComponent();
-//   if(menuListComponent) {
-//     const spy = jest.spyOn(menuListComponent, 'focusFirstListItem');
-//     await harness.pressKeyInSubmenu('Escape', 0);
-//     expect(await harness.isItemFocused(0)).toBe(true);
-//     expect(spy).toHaveBeenCalled();
-//   }
-// })
 
