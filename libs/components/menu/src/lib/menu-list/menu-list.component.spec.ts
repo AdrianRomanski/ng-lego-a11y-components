@@ -68,12 +68,14 @@ describe('MenuListComponent', () => {
      * Submenus, also known as pop-up menus, also have the role menu.
      */
     it('should have menu role for list of menu items', async () => {
+      await harness.focusItem(0);
       const lists = await harness.getList();
       const attribute = await lists.getAttribute('role');
       expect(attribute).toBe('menu');
     });
 
     it('should have menu role for sub menus', async () => {
+      await harness.focusItem(0);
       await harness.clickSubmenu();
       const lists = await harness.getList();
       const attribute = await lists.getAttribute('role');
@@ -150,6 +152,7 @@ describe('MenuListComponent', () => {
      */
     it('should call select item when pressed enter, and its not submenu', async () => {
       const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+      await harness.focusItem(0);
       await harness.pressKeyOnListItem('Tab', 0);
       await harness.pressKeyOnListItem('Tab', 1);
       await harness.pressKeyOnListItem('Enter', 2);
@@ -159,6 +162,7 @@ describe('MenuListComponent', () => {
 
     it('should call select item when pressed space, and its not submenu', async () => {
       const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+      await harness.focusItem(0);
       await harness.pressKeyOnListItem('Tab', 0);
       await harness.pressKeyOnListItem('Tab', 1);
       await harness.pressKeyOnListItem(' ', 2);
@@ -168,6 +172,7 @@ describe('MenuListComponent', () => {
 
     it('should open submenu when pressed enter, and its submenu ', async () => {
       const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+      await harness.focusItem(0);
       await harness.pressKeyOnListItem('Tab', 0);
       await harness.pressKeyOnListItem('Tab', 1);
       await harness.pressKeyOnListItem('Enter', 2);
@@ -178,6 +183,7 @@ describe('MenuListComponent', () => {
 
     it('should open submenu when pressed space, and its submenu ', async () => {
       const spy =  jest.spyOn(component.menuListComponent(), 'selectItem');
+      await harness.focusItem(0);
       await harness.pressKeyOnListItem('Tab', 0);
       await harness.pressKeyOnListItem('Tab', 1);
       await harness.pressKeyOnListItem(' ', 2);
