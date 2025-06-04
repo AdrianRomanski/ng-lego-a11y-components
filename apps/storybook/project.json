@@ -7,13 +7,17 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/storybook",
         "index": "apps/storybook/src/index.html",
         "browser": "apps/storybook/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/storybook/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -50,7 +54,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "storybook:build:production"
@@ -63,7 +67,7 @@
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "storybook:build"
       }
@@ -73,7 +77,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/storybook/jest.config.ts"
       }
@@ -103,7 +109,9 @@
     },
     "build-storybook": {
       "executor": "@storybook/angular:build-storybook",
-      "outputs": ["{options.outputDir}"],
+      "outputs": [
+        "{options.outputDir}"
+      ],
       "options": {
         "outputDir": "dist/storybook/storybook",
         "configDir": "apps/storybook/.storybook",
@@ -124,7 +132,9 @@
     },
     "static-storybook": {
       "executor": "@nx/web:file-server",
-      "dependsOn": ["build-storybook"],
+      "dependsOn": [
+        "build-storybook"
+      ],
       "options": {
         "buildTarget": "storybook:build-storybook",
         "staticFilePath": "dist/storybook/storybook",
