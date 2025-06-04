@@ -76,7 +76,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
     "tslib": "^2.3.0",
-    "typescript": "~5.7.2",
+    "typescript": "~5.8.0",
     "typescript-eslint": "^8.19.0"
   }
 }
