@@ -113,11 +113,6 @@ describe('MenuListComponent', () => {
     /**
      *
      * Keyboard interactions
-
-
-     *
-     * Home
-     * If arrow key wrapping is not supported, moves focus to the first item in the current menu or menubar.
      *
      * End
      * If arrow key wrapping is not supported, moves focus to the last item in the current menu or menubar.
@@ -131,13 +126,7 @@ describe('MenuListComponent', () => {
      * Shift + Tab
      * Moves focus to the previous element in the tab sequence, and if the item that had focus is not in a menubar, closes its menu and all open parent menu containers.
      *
-     * If a menu is opened or a menu bar receives focus as a result of a context action, Escape or Enter may return focus to the invoking context.
-     *
-     * Some implementations of navigation menubars may have menuitem elements that both perform a function and open a submenu. In such implementations, Enter and Space perform a navigation function while Down Arrow, in a horizontal menubar, opens the submenu associated with that same menuitem.
-     *
-     * When items in a menubar are arranged vertically and items in menu containers are arranged horizontally the Down Arrow performs as Right Arrow is described above, the Up Arrow performs as Left Arrow is described above, and vice versa.
      */
-
 
     /**
      * Enter and Space
