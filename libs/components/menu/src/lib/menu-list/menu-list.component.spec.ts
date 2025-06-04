@@ -113,12 +113,7 @@ describe('MenuListComponent', () => {
      *
      * Keyboard interactions
 
-     * Left Arrow
-     * When focus is in a menubar, moves focus to the previous item, optionally wrapping from the first to the last.
-     * When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem.
-     * When focus is in a submenu of an item in a menubar, closes the submenu, moves focus to the previous item in the menubar,
-     * and, if focus is now on a menuitem with a submenu, either opens the submenu of that menuitem without moving focus into the submenu,
-     * or opens the submenu of that menuitem and places focus on the first item in the submenu.
+
      *
      * Home
      * If arrow key wrapping is not supported, moves focus to the first item in the current menu or menubar.
@@ -128,9 +123,6 @@ describe('MenuListComponent', () => {
      *
      * Any key that corresponds to a printable character (Optional)
      * Move focus to the next item in the current menu whose label begins with that printable character.
-     *
-     * Escape
-     * Close the menu that contains focus and return focus to the element or context, e.g., menu button or parent menuitem, from which the menu was opened.
      *
      * Tab
      * Moves focus to the next element in the tab sequence, and if the item that had focus is not in a menubar, closes its menu and all open parent menu containers.
@@ -234,6 +226,29 @@ describe('MenuListComponent', () => {
       await harness.pressKeyOnFocusedItem('ArrowRight');
       expect(component.menuListComponent().items()[2].isOpen).toBe(true);
       expect(await (await harness.getSubmenu()).isItemFocused(0)).toBe(true);
+    });
+
+    /**
+     * Left Arrow
+     * When focus is in a submenu of an item in a menu, closes the submenu and returns focus to the parent menuitem.
+     */
+    it('should return focus when pressed left arrow and in submenu', async () => {
+      await harness.focusItem(0);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowRight');
+      await harness.pressKeyOnFocusedItem('ArrowLeft');
+      expect(await harness.isItemFocused(2)).toBe(true);
+    });
+
+    it('should close the submenu when pressed left arrow in submenu', async () => {
+      await harness.focusItem(0);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowRight');
+      expect(component.menuListComponent().items()[2].isOpen).toBe(true);
+      await harness.pressKeyOnFocusedItem('ArrowLeft');
+      expect(component.menuListComponent().items()[2].isOpen).toBe(false);
     });
 
     /**

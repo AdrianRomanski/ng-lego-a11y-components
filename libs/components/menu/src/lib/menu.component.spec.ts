@@ -144,6 +144,8 @@ describe('TestMenuWrapperComponent', () => {
 
     /** Enter and space
      *  Open menu
+     *  If a menu is opened or a menu bar receives focus as a result of a context action, Escape or Enter may return focus to the invoking context.
+     *
      */
     it('should open the menu if pressed enter on menu button', async () => {
       expect(fixture.componentInstance.menuComponent().isOpen()).toBe(false);

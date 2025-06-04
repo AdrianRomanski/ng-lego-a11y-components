@@ -132,6 +132,15 @@ export class MenuListComponent {
         items[index].focus();
         break;
 
+      case 'ArrowLeft':
+        if(this.parentIndex() != -1) {
+          this.openChange.emit({
+            focusFirst: !this.isTopList(),
+            focusIndex: this.parentIndex(),
+          });
+        }
+        break;
+
       case 'ArrowRight':
         if (item.submenu?.length) {
           this.openSubmenu(item, index);
