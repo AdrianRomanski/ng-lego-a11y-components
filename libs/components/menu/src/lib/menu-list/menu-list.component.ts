@@ -146,6 +146,10 @@ export class MenuListComponent {
           this.openSubmenu(item, index);
         }
         break;
+
+      case 'Home':
+        items[0].focus();
+        break;
     }
   }
 

@@ -6,6 +6,7 @@ import { MenuListComponentHarness } from '../test/menu-list.component.harness';
 import { MenuItem } from '../menu.component';
 
 import * as functions from './../util/menu.functions';
+import { isAllClosed } from './../util/menu.functions';
 
 @Component({
   selector: 'lego-components-test-menu-list-wrapper',
@@ -283,6 +284,32 @@ describe('MenuListComponent', () => {
     expect(await subMenuHarness.isItemFocused(0)).toBe(true);
     await subMenuHarness.pressKeyOnFocusedItem('Escape');
     expect(await harness.isItemFocused(2)).toBe(true);
+  })
+
+  /**
+   * Home
+   * Moves focus to the first item in the current menu
+   */
+  it('should focus first item in main menu after pressing home if not in submenu', async () => {
+    await harness.focusItem(0);
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    expect(await harness.isItemFocused(2)).toBe(true);
+    await harness.pressKeyOnFocusedItem('Home');
+    expect(await harness.isItemFocused(0)).toBe(true);
+  })
+
+  it('should focus first item in submenu after pressing home in submenu', async () => {
+    await harness.focusItem(0);
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('Enter');
+    const subMenuHarness = await harness.getSubmenu();
+    expect(await subMenuHarness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    expect(await subMenuHarness.isItemFocused(1)).toBe(true);
+    await harness.pressKeyOnFocusedItem('Home');
+    expect(await subMenuHarness.isItemFocused(0)).toBe(true);
   })
 });
 
