@@ -2,9 +2,9 @@
   "name": "@ng-lego/components",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^19.1.0",
-    "@angular/core": "^19.1.0",
-    "@angular/cdk": "^19.1.0"
+    "@angular/common": "^20.0.1",
+    "@angular/core": "^20.0.1",
+    "@angular/cdk": "^20.0.1"
   },
   "sideEffects": false
 }

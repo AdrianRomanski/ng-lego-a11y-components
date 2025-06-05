@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuListComponent } from './menu-list.component';
 import { Component, viewChild } from '@angular/core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { MenuListComponentHarness } from '../test/menu-list.component.harness';
+import { MenuListComponentHarness } from '../test';
 import { MenuItem } from '../menu.component';
 
 import * as functions from './../util/menu.functions';
-import { isAllClosed } from './../util/menu.functions';
 
 @Component({
   selector: 'lego-components-test-menu-list-wrapper',
