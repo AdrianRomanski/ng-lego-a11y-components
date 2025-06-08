@@ -150,6 +150,9 @@ export class MenuListComponent {
       case 'Home':
         items[0].focus();
         break;
+      case 'End':
+        items[items.length-1].focus();
+        break;
     }
   }
 

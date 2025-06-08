@@ -113,8 +113,6 @@ describe('MenuListComponent', () => {
      *
      * Keyboard interactions
      *
-     * End
-     * If arrow key wrapping is not supported, moves focus to the last item in the current menu or menubar.
      *
      * Any key that corresponds to a printable character (Optional)
      * Move focus to the next item in the current menu whose label begins with that printable character.
@@ -298,6 +296,29 @@ describe('MenuListComponent', () => {
     expect(await subMenuHarness.isItemFocused(1)).toBe(true);
     await harness.pressKeyOnFocusedItem('Home');
     expect(await subMenuHarness.isItemFocused(0)).toBe(true);
+  })
+
+  /**
+   * End
+   * If arrow key wrapping is not supported, moves focus to the last item in the current menu or menubar.
+   */
+  it('should focus last item in menu after pressing end in menu', async () => {
+    await harness.focusItem(0);
+    expect(await harness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('End');
+    expect(await harness.isItemFocused(3)).toBe(true);
+  })
+
+
+  it('should focus last item in submenu after pressing end in submenu', async () => {
+    await harness.focusItem(0);
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('ArrowDown');
+    await harness.pressKeyOnFocusedItem('Enter');
+    const subMenuHarness = await harness.getSubmenu();
+    expect(await subMenuHarness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('End');
+    expect(await subMenuHarness.isItemFocused(1)).toBe(true);
   })
 });
 
