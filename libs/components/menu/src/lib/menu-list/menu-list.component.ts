@@ -105,7 +105,9 @@ export class MenuListComponent {
       document.activeElement as HTMLLIElement
     );
 
-    switch (event.key) {
+    const key = event.key;
+
+    switch (key) {
       case 'Enter':
       case ' ':
         if (item.submenu?.length) {
@@ -113,48 +115,56 @@ export class MenuListComponent {
         } else {
           this.selectItem(item);
         }
-        break;
+      break;
 
       case 'Escape':
         this.openChange.emit({
           focusFirst: !this.isTopList(),
           focusIndex: this.parentIndex(),
         });
-        break;
+      break;
 
       case 'ArrowDown':
         index = (index + 1) % items.length;
         items[index].focus();
-        break;
+      break;
 
       case 'ArrowUp':
         index = (index - 1 + items.length) % items.length;
         items[index].focus();
-        break;
+      break;
 
       case 'ArrowLeft':
-        if(this.parentIndex() != -1) {
+        if (this.parentIndex() !== -1) {
           this.openChange.emit({
             focusFirst: !this.isTopList(),
             focusIndex: this.parentIndex(),
           });
         }
-        break;
+      break;
 
       case 'ArrowRight':
         if (item.submenu?.length) {
           this.openSubmenu(item, index);
         }
-        break;
+      break;
 
       case 'Home':
         items[0].focus();
-        break;
+      break;
+
       case 'End':
-        items[items.length-1].focus();
-        break;
+        items[items.length - 1].focus();
+      break;
+
+      default:
+        if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+          this.focusNextItemByCharacter(key, index);
+        }
+      break;
     }
   }
+
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
     event.stopPropagation();
@@ -188,5 +198,29 @@ export class MenuListComponent {
 
   private get listItems(): NodeListOf<HTMLLIElement> | undefined {
     return this.menu()?.nativeElement.querySelectorAll('li');
+  }
+
+  private focusNextItemByCharacter(char: string, currentIndex: number): void {
+    const items = this.listItems;
+    if (!items) return;
+
+    const searchChar = char.toLowerCase();
+    const total = items.length;
+
+    const matchingIndexes: number[] = [];
+
+    for (let i = 0; i < total; i++) {
+      const label = items[i].textContent?.trim().toLowerCase() ?? '';
+      if (label.startsWith(searchChar)) {
+        matchingIndexes.push(i);
+      }
+    }
+
+    if (matchingIndexes.length === 0) return;
+
+    const currentInMatches = matchingIndexes.findIndex(i => i === currentIndex);
+    const nextIndex = matchingIndexes[(currentInMatches + 1) % matchingIndexes.length];
+
+    items[nextIndex].focus();
   }
 }

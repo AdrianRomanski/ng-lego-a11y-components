@@ -39,6 +39,11 @@ export class TestMenuListWrapperComponent {
       ],
     },
     { label: 'Battlegrounds', isOpen: false },
+    { label: 'Battlegrounds Classic', isOpen: false },
+    { label: 'Battlegrounds Rated', isOpen: false },
+    { label: '1 Arena', isOpen: false },
+    { label: '1 Arena', isOpen: false },
+    { label: '1 Arena', isOpen: false },
   ];
 }
 
@@ -112,7 +117,6 @@ describe('MenuListComponent', () => {
     /**
      *
      * Keyboard interactions
-     *
      *
      * Any key that corresponds to a printable character (Optional)
      * Move focus to the next item in the current menu whose label begins with that printable character.
@@ -319,6 +323,43 @@ describe('MenuListComponent', () => {
     expect(await subMenuHarness.isItemFocused(0)).toBe(true);
     await harness.pressKeyOnFocusedItem('End');
     expect(await subMenuHarness.isItemFocused(1)).toBe(true);
+  })
+
+  /**
+   * Any key that corresponds to a printable character (Optional)
+   * Move focus to the next item in the current menu whose label begins with that printable character.
+   */
+  it('should move focus to next item that is starting with entered character', async () => {
+    await harness.focusItem(0);
+    expect(await harness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('B');
+    expect(await harness.isItemFocused(3)).toBe(true);
+    await harness.pressKeyOnFocusedItem('B');
+    expect(await harness.isItemFocused(4)).toBe(true);
+    await harness.pressKeyOnFocusedItem('B');
+    expect(await harness.isItemFocused(5)).toBe(true);
+  })
+
+  it('should move focus to first item with starting character if there are no more items left', async () => {
+    await harness.focusItem(0);
+    expect(await harness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('B');
+    await harness.pressKeyOnFocusedItem('B');
+    await harness.pressKeyOnFocusedItem('B');
+    expect(await harness.isItemFocused(5)).toBe(true);
+    await harness.pressKeyOnFocusedItem('B');
+    expect(await harness.isItemFocused(3)).toBe(true);
+  })
+
+  it('should move focus to next item that is starting with entered number', async () => {
+    await harness.focusItem(0);
+    expect(await harness.isItemFocused(0)).toBe(true);
+    await harness.pressKeyOnFocusedItem('1');
+    expect(await harness.isItemFocused(6)).toBe(true);
+    await harness.pressKeyOnFocusedItem('1');
+    expect(await harness.isItemFocused(7)).toBe(true);
+    await harness.pressKeyOnFocusedItem('1');
+    expect(await harness.isItemFocused(8)).toBe(true);
   })
 });
 
