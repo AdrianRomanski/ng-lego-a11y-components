@@ -41,9 +41,9 @@ export class TestMenuListWrapperComponent {
     { label: 'Battlegrounds', isOpen: false },
     { label: 'Battlegrounds Classic', isOpen: false },
     { label: 'Battlegrounds Rated', isOpen: false },
-    { label: '1 Arena', isOpen: false },
-    { label: '1 Arena', isOpen: false },
-    { label: '1 Arena', isOpen: false },
+    { label: '1 Arena 1200', isOpen: false },
+    { label: '1 Arena 1500', isOpen: false },
+    { label: '1 Arena 1800', isOpen: false },
   ];
 }
 
