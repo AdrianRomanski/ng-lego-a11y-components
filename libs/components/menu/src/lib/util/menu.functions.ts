@@ -20,46 +20,6 @@ export function isAllClosed(menuItems: MenuItem[]): boolean {
   return true;
 }
 
-export function focusElementOutside(
-  containerToExclude: HTMLElement,
-  direction: 'next' | 'previous' = 'next'
-): void {
-  const focusableSelectors = [
-    'a[href]:not([tabindex="-1"]):not([disabled])',
-    'button:not([disabled]):not([tabindex="-1"])',
-    'textarea:not([disabled]):not([tabindex="-1"])',
-    'input:not([type="hidden"]):not([disabled]):not([tabindex="-1"])',
-    'select:not([disabled]):not([tabindex="-1"])',
-    '[tabindex]:not([tabindex="-1"]):not([disabled])',
-  ];
-
-  const focusableElements = Array.from(
-    document.querySelectorAll<HTMLElement>(focusableSelectors.join(','))
-  ).filter(el =>
-    !containerToExclude.contains(el) &&
-    (el.offsetParent !== null || getComputedStyle(el).position === 'fixed')
-  );
-
-  const current = document.activeElement as HTMLElement;
-
-  const sortedElements = [...focusableElements].sort((a, b) => {
-    if (a === b) return 0;
-    const position = a.compareDocumentPosition(b);
-    if (position & Node.DOCUMENT_POSITION_PRECEDING) return 1;
-    if (position & Node.DOCUMENT_POSITION_FOLLOWING) return -1;
-    return 0;
-  });
-
-  const index = sortedElements.findIndex(el => el === current);
-  const target =
-    direction === 'next'
-      ? sortedElements[index + 1] ?? sortedElements[0]
-      : sortedElements[index - 1] ?? sortedElements[sortedElements.length - 1];
-
-  if (target) {
-    target.focus();
-  }
-}
 
 export function focusOutside(
   container: HTMLElement,
