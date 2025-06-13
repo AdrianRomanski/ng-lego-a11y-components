@@ -20,16 +20,18 @@ import { closeAllSubmenus } from '../util/menu.functions';
     <ul #menu role="menu" tabindex="-1">
       @for (item of items(); track item.label) {
         <li
-          role="menuitem"
           tabindex="0"
           (click)="onListItemClick($event, item)"
           (keydown)="onListItemKeyDown($event, item)"
+          [attr.aria-label]="item.label"
           [attr.aria-haspopup]="item.submenu ? 'true' : null"
           [attr.aria-expanded]="item.isOpen ? 'true' : null"
+          [attr.role]="item.isOpen ? 'group' : 'menuitem'"
         >
           {{ item.label }}
           @if (item.submenu) {
             <svg
+              aria-hidden="true"
               width="15px"
               height="15px"
               viewBox="0 0 24 24"

@@ -64,25 +64,51 @@ describe('MenuListComponent', () => {
   });
 
 
-  describe('Aria', () => {
+  describe('Associated WAI-ARIA roles, states, and properties', () => {
     /**
-     * A menu generally represents a grouping of common actions or functions that the user can invoke.
-     * The menu role is appropriate when a list of menu items is presented in a manner similar to a menu on a desktop application.
-     * Submenus, also known as pop-up menus, also have the role menu.
+     *
+     * ## Menu List
+     *
+     * - **menu role**
+     *   A widget providing a list of choices. Required context role (or menubar)
+     *
+     * - **menubar role**
+     *   A presentation of a menu that usually remains visible and is usually
+     *   presented horizontally. Required context role (or menu)
+     *
+     * - **group role**
+     *   Can be used to identify a set of related menuitems within or otherwise owned by a menu or menubar
+     *
+     * - **aria-disabled**
+     *   Indicates the element is perceivable but disabled, so it is not operable
+     *
+     * - **aria-haspopup**
+     *   Indicates the availability and type of interactive popup that can be triggered by the menuitem
+     *
+     *
      */
-    it('should have menu role for list of menu items', async () => {
+    it('should have role menu for list of menu items', async () => {
       await harness.focusItem(0);
       const lists = await harness.getList();
       const attribute = await lists.getAttribute('role');
       expect(attribute).toBe('menu');
     });
 
-    it('should have menu role for sub menus', async () => {
+    it('should have role list item if submenu is closed', async () => {
       await harness.focusItem(0);
-      await harness.clickSubmenu();
-      const lists = await harness.getList();
-      const attribute = await lists.getAttribute('role');
-      expect(attribute).toBe('menu');
+      const items = await harness.getItems();
+      const attribute = await items[2].getAttribute('role');
+      expect(attribute).toBe('menuitem');
+    });
+
+    it('should have role list item if its submenu is open', async () => {
+      await harness.focusItem(0);
+      const items = await harness.getItems();
+      await harness.focusItem(2);
+      await harness.pressKeyOnFocusedItem('Enter');
+      fixture.detectChanges();
+      const attribute = await items[2].getAttribute('role');
+      expect(attribute).toBe('group');
     });
   })
 
