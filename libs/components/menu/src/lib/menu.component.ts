@@ -14,6 +14,7 @@ import { ClickOutsideDirective } from './util/click-outside.directive';
 export interface MenuItem {
   label: string;
   isOpen?: boolean;
+  disabled?:boolean;
   submenu?: MenuItem[];
 }
 

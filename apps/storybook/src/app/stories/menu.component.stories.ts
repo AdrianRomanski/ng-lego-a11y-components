@@ -28,6 +28,7 @@ export default meta;
 type Story = StoryObj<MenuComponent>;
 
 const menuItems: MenuItem[] = [
+  { label: 'Azeroth-1', isOpen: false, disabled: true },
   { label: 'Azeroth', isOpen: false },
   { label: 'Kalimdor', isOpen: false },
   {
@@ -50,7 +51,9 @@ const menuItems: MenuItem[] = [
         ],},
     ],
   },
-  { label: 'Battlegrounds', isOpen: false },
+  { label: 'Battlegrounds', isOpen: false, disabled: true },
+  { label: 'Battlegrounds', isOpen: false, disabled: false },
+  { label: 'Azeroth-2', isOpen: false, disabled: true },
 ];
 
 export const NestedFactions: Story = {

@@ -29,7 +29,7 @@ export class MenuListComponentHarness extends ComponentHarness {
 
   /**  Mouse */
   async clickSubmenu(): Promise<void> {
-    return (await this.items())[2].click();
+    return (await this.items())[3].click();
   }
 
   async clickOnSubListItem(index: number) {

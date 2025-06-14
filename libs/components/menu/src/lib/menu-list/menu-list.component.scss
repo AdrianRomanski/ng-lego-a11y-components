@@ -44,3 +44,11 @@ li {
   top: 0;
   display: block;
 }
+
+.disabled {
+  color: #6c757d;
+  cursor: not-allowed;
+  pointer-events: none;
+  background: none;
+  opacity: 0.6;
+}

@@ -20,13 +20,15 @@ import { closeAllSubmenus } from '../util/menu.functions';
     <ul #menu role="menu" tabindex="-1">
       @for (item of items(); track item.label) {
         <li
-          tabindex="0"
           (click)="onListItemClick($event, item)"
           (keydown)="onListItemKeyDown($event, item)"
+          [attr.tabindex]="item.disabled ? -1 : 0"
           [attr.aria-label]="item.label"
           [attr.aria-haspopup]="item.submenu ? 'true' : null"
           [attr.aria-expanded]="item.isOpen ? 'true' : null"
+          [attr.aria-disabled]="item.disabled"
           [attr.role]="item.isOpen ? 'group' : 'menuitem'"
+          [class.disabled]="item.disabled"
         >
           {{ item.label }}
           @if (item.submenu) {
@@ -66,6 +68,7 @@ export class MenuListComponent {
 
   menuItems = input.required<MenuItem[]>();
   isTopList = input.required<boolean>();
+  disabled = input<boolean>();
 
   openChange = output<SelectChange>();
 
@@ -103,38 +106,57 @@ export class MenuListComponent {
     const items = this.listItems;
     if (!items) return;
 
-    let index = Array.from(items).indexOf(
-      document.activeElement as HTMLLIElement
-    );
-
+    const itemArray = Array.from(items);
+    let index = itemArray.indexOf(document.activeElement as HTMLLIElement);
     const key = event.key;
+
+    const isDisabled = (el: Element | null) =>
+      el?.classList.contains('disabled');
+
+    const getNextEnabledIndex = (startIndex: number): number => {
+      let next = (startIndex + 1) % itemArray.length;
+      while (isDisabled(itemArray[next]) && next !== startIndex) {
+        next = (next + 1) % itemArray.length;
+      }
+      return next;
+    };
+
+    const getPreviousEnabledIndex = (startIndex: number): number => {
+      let prev = (startIndex - 1 + itemArray.length) % itemArray.length;
+      while (isDisabled(itemArray[prev]) && prev !== startIndex) {
+        prev = (prev - 1 + itemArray.length) % itemArray.length;
+      }
+      return prev;
+    };
 
     switch (key) {
       case 'Enter':
       case ' ':
-        if (item.submenu?.length) {
-          this.openSubmenu(item, index);
-        } else {
-          this.selectItem(item);
+        if (!isDisabled(itemArray[index])) {
+          if (item.submenu?.length) {
+            this.openSubmenu(item, index);
+          } else {
+            this.selectItem(item);
+          }
         }
-      break;
+        break;
 
       case 'Escape':
         this.openChange.emit({
           focusFirst: !this.isTopList(),
           focusIndex: this.parentIndex(),
         });
-      break;
+        break;
 
       case 'ArrowDown':
-        index = (index + 1) % items.length;
-        items[index].focus();
-      break;
+        index = getNextEnabledIndex(index);
+        itemArray[index].focus();
+        break;
 
       case 'ArrowUp':
-        index = (index - 1 + items.length) % items.length;
-        items[index].focus();
-      break;
+        index = getPreviousEnabledIndex(index);
+        itemArray[index].focus();
+        break;
 
       case 'ArrowLeft':
         if (this.parentIndex() !== -1) {
@@ -143,29 +165,42 @@ export class MenuListComponent {
             focusIndex: this.parentIndex(),
           });
         }
-      break;
+        break;
 
       case 'ArrowRight':
-        if (item.submenu?.length) {
+        if (!isDisabled(itemArray[index]) && item.submenu?.length) {
           this.openSubmenu(item, index);
         }
-      break;
+        break;
 
-      case 'Home':
-        items[0].focus();
-      break;
+      case 'Home': {
+        let first = 0;
+        while (first < itemArray.length && isDisabled(itemArray[first])) {
+          first++;
+        }
+        if (first < itemArray.length) itemArray[first].focus();
+        break;
+      }
 
-      case 'End':
-        items[items.length - 1].focus();
-      break;
+      case 'End': {
+        let last = itemArray.length - 1;
+        while (last >= 0 && isDisabled(itemArray[last])) {
+          last--;
+        }
+        if (last >= 0) itemArray[last].focus();
+        break;
+      }
 
       default:
         if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
-          this.focusNextItemByCharacter(key, index);
+          if(!this.items()[index].disabled) {
+            this.focusNextItemByCharacter(key, index);
+          }
         }
-      break;
+        break;
     }
   }
+
 
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
@@ -220,9 +255,16 @@ export class MenuListComponent {
 
     if (matchingIndexes.length === 0) return;
 
-    const currentInMatches = matchingIndexes.findIndex(i => i === currentIndex);
-    const nextIndex = matchingIndexes[(currentInMatches + 1) % matchingIndexes.length];
+    let start = matchingIndexes.findIndex(i => i === currentIndex);
+    start = start === -1 ? 0 : (start + 1) % matchingIndexes.length;
 
-    items[nextIndex].focus();
+    for (let i = 0; i < matchingIndexes.length; i++) {
+      const candidateIndex = matchingIndexes[(start + i) % matchingIndexes.length];
+      if (!this.items()[candidateIndex].disabled) {
+        items[candidateIndex].focus();
+        break;
+      }
+    }
   }
+
 }
