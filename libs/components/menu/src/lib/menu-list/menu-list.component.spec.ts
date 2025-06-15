@@ -122,6 +122,21 @@ describe('MenuListComponent', () => {
       expect(attribute).toBeNull();
     });
 
+    /**
+     * Haspopup
+     */
+    it('should set aria-haspopup="true" on list item with sub menu', async () => {
+      const items = await harness.getItems();
+      const attribute = await items[SUB_MENU].getAttribute('aria-haspopup');
+      expect(attribute).toBe('true');
+    });
+
+    it('should set aria-haspopup="null" on list item without sub menu', async () => {
+      const items = await harness.getItems();
+      const attribute = await items[2].getAttribute('aria-haspopup');
+      expect(attribute).toBe(null);
+    });
+
   })
 
   describe('Mouse Navigation', () => {
