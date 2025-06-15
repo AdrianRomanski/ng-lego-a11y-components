@@ -70,14 +70,6 @@ describe('MenuListComponent', () => {
 
   describe('Associated WAI-ARIA roles, states, and properties', () => {
     /**
-     *
-     * ## Menu List
-     * - **aria-haspopup**
-     *   Indicates the availability and type of interactive popup that can be triggered by the menuitem
-     *
-     */
-
-    /**
      * Menu
      */
     it('should set role="menu" on the list container element', async () => {
@@ -87,6 +79,9 @@ describe('MenuListComponent', () => {
       expect(attribute).toBe('menu');
     });
 
+    /**
+     * Menu Item
+     */
     it('should set role="menuitem" on items when submenu is closed', async () => {
       await harness.focusItem(FIRST_FOCUSABLE);
       const items = await harness.getItems();
@@ -137,6 +132,30 @@ describe('MenuListComponent', () => {
       expect(attribute).toBe(null);
     });
 
+    /**
+     * Expanded
+     */
+    it('should set aria-expanded="true" on list item with open sub menu', async () => {
+      await harness.focusItem(FIRST_FOCUSABLE);
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowDown');
+      await harness.pressKeyOnFocusedItem('ArrowRight');
+      const items = await harness.getItems();
+      const attribute = await items[SUB_MENU].getAttribute('aria-expanded');
+      expect(attribute).toBe('true');
+    });
+
+    it('should set aria-expanded="null" on list item with close sub menu', async () => {
+      const items = await harness.getItems();
+      const attribute = await items[SUB_MENU].getAttribute('aria-expanded');
+      expect(attribute).toBe(null);
+    });
+
+    it('should set aria-expanded="null" on list item without submenu', async () => {
+      const items = await harness.getItems();
+      const attribute = await items[2].getAttribute('aria-expanded');
+      expect(attribute).toBe(null);
+    });
   })
 
   describe('Mouse Navigation', () => {
