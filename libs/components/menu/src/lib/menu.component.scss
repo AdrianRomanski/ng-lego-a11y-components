@@ -1,31 +1,107 @@
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 18px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+/* --- LEGO BRICK BUTTON --- */
+.lego-brick.realistic {
+  transform: rotateX(45deg);
+  transform-style: preserve-3d;
+  position: relative;
+  width: clamp(180px, 30vw, 300px);
+  height: clamp(100px, 16vw, 160px);
+  background: #1976d2;
   border-radius: 6px;
-  transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  margin-bottom: 4px;
+  padding: 0.5em;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  outline: none;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    scale 0.1s ease;
+  border: 3px solid #0d47a1;
+  color: white;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: bold;
+  z-index: 1;
+}
 
-  &:hover {
-    background: #0056b3;
-  }
+/* Shadow visible only when the menu is closed */
+button.lego-brick.realistic[aria-expanded="false"] {
+  box-shadow: 0 32px 0 #0d47a1;
+}
 
-  &:focus {
-    outline: none;
-    background: #0056b3;
-  }
+/* Text inside shadow */
+button.lego-brick.realistic[aria-expanded="false"]::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 96%;
+  left: 50%;
+  transform: translate(-50%, 10px) skewX(-20deg);
+  color: white;
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  text-shadow:
+    0 2px 0 #0d47a1,
+    0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: -1;
+  transition: transform 0.1s ease, opacity 0.1s ease;
+}
 
-  &:focus-visible {
-    outline: 3px solid #007bff;
-    outline-offset: 4px;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-  }
+/* Hide text on active */
+.lego-brick.realistic:active::after {
+  opacity: 0;
+  transform: translate(-50%, 20px) skewX(-20deg);
+}
 
-  &:active {
-    background: #004085;
-  }
+.lego-brick.realistic:active {
+  transform: rotateX(45deg) translateY(4px) scale(0.98);
+  box-shadow:
+    inset -2px -2px 6px rgba(255, 255, 255, 0.3),
+    inset 2px 2px 8px rgba(0, 0, 0, 0.2),
+    0 4px 0 #0d47a1,
+    0 8px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* --- STUDS GRID --- */
+.studs {
+  list-style: none;
+  padding-inline-start: 0;
+  margin-block-start: clamp(6px, 1vw, 10px);
+  margin-block-end: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: clamp(4px, 0.5vw, 12px);
+  width: 100%;
+  height: 100%;
+  margin-bottom: 5px;
+}
+
+/* --- STUD ITEM --- */
+.stud {
+  margin-left: clamp(2px, 0.5vw, 8px);
+  width: clamp(24px, 4vw, 40px);
+  height: clamp(28px, 5vw, 44px);
+  border-radius: 50% / 30%;
+  background-color: #1565c0;
+  position: relative;
+  box-shadow:
+    inset 0 -10px 15px rgba(0, 0, 0, 0.3),
+    0 10px 10px rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  transform: rotateX(15deg) translateY(-0.1em);
+}
+
+/* Top ellipse highlight */
+.stud::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  height: 30%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
 }

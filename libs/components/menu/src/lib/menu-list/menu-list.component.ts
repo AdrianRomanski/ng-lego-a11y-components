@@ -17,7 +17,9 @@ import { closeAllSubmenus } from '../util/menu.functions';
   selector: 'lego-components-menu-list',
   imports: [CommonModule],
   template: `
-    <ul #menu role="menu" tabindex="-1">
+    <ul #menu
+        aria-label="Zones"
+        role="menu" tabindex="-1">
       @for (item of items(); track item.label) {
         <li
           (click)="onListItemClick($event, item)"
