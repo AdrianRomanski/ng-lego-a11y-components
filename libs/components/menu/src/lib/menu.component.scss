@@ -3,8 +3,6 @@
   transform: rotateX(45deg);
   transform-style: preserve-3d;
   position: relative;
-  width: clamp(180px, 30vw, 300px);
-  height: clamp(100px, 16vw, 160px);
   background: #1976d2;
   border-radius: 6px;
   padding: 0.5em;
@@ -64,44 +62,4 @@ button.lego-brick.realistic[aria-expanded="false"]::after {
 }
 
 /* --- STUDS GRID --- */
-.studs {
-  list-style: none;
-  padding-inline-start: 0;
-  margin-block-start: clamp(6px, 1vw, 10px);
-  margin-block-end: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: clamp(4px, 0.5vw, 12px);
-  width: 100%;
-  height: 100%;
-  margin-bottom: 5px;
-}
 
-/* --- STUD ITEM --- */
-.stud {
-  margin-left: clamp(2px, 0.5vw, 8px);
-  width: clamp(24px, 4vw, 40px);
-  height: clamp(28px, 5vw, 44px);
-  border-radius: 50% / 30%;
-  background-color: #1565c0;
-  position: relative;
-  box-shadow:
-    inset 0 -10px 15px rgba(0, 0, 0, 0.3),
-    0 10px 10px rgba(0, 0, 0, 0.4);
-  z-index: 1;
-  transform: rotateX(15deg) translateY(-0.1em);
-}
-
-/* Top ellipse highlight */
-.stud::before {
-  content: '';
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-  height: 30%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  pointer-events: none;
-}

@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
-  Component, effect, Input,
-  input, output,
+  Component,
+  effect,
+  input,
+  output,
   signal,
   Signal,
   viewChild
@@ -10,7 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MenuListComponent } from './menu-list';
 import { closeAllSubmenus } from './util/menu.functions';
 import { ClickOutsideDirective } from './util/click-outside.directive';
-import { range } from 'rxjs';
+import { StudsComponent } from '@ng-lego/ui';
 
 export interface MenuItem {
   label: string;
@@ -27,7 +29,12 @@ export interface SelectChange {
 
 @Component({
   selector: 'lego-components-components-menu',
-  imports: [CommonModule, MenuListComponent, ClickOutsideDirective],
+  imports: [
+    CommonModule,
+    StudsComponent,
+    MenuListComponent,
+    ClickOutsideDirective,
+  ],
   template: `
       <button
         class="lego-brick realistic"
@@ -37,13 +44,8 @@ export interface SelectChange {
         legoComponentsClickOutside
         (clickOutside)="onOutsideClick($event)"
         (click)="onMenuTriggerClick()"
-        (keydown)="onMenuTriggerKeyDown($event)"
-      >
-        <ul class="studs" aria-hidden="true" role="presentation">
-          @for (i of [].constructor(8); track i) {
-            <li class="stud" role="presentation"></li>
-          }
-        </ul>
+        (keydown)="onMenuTriggerKeyDown($event)">
+        <lego-ui-studs/>
       </button>
       @if (isOpen()) {
         <lego-components-menu-list
@@ -59,7 +61,8 @@ export interface SelectChange {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuComponent {
-  public menuListComponent: Signal<MenuListComponent | undefined> = viewChild<MenuListComponent>('menuList');
+  public menuListComponent: Signal<MenuListComponent | undefined> =
+    viewChild<MenuListComponent>('menuList');
 
   public menuItems = input.required<MenuItem[]>();
 
@@ -70,12 +73,12 @@ export class MenuComponent {
 
   constructor() {
     effect(() => {
-      if(this.isOpen()) {
+      if (this.isOpen()) {
         this.menuListComponent()?.focusListItem(0);
       }
     });
     effect(() => {
-      this.items.set(this.menuItems())
+      this.items.set(this.menuItems());
     });
   }
 
@@ -96,16 +99,14 @@ export class MenuComponent {
   }
 
   protected onOpenChange(selectChange: SelectChange): void {
-    if(selectChange.item){
+    if (selectChange.item) {
       this.selectItem.emit(selectChange.item.label);
     }
     this.items.set(closeAllSubmenus(this.items()));
-    if(selectChange.focusFirst) {
+    if (selectChange.focusFirst) {
       this.menuListComponent()?.focusListItem(selectChange.focusIndex || 0);
     } else {
       this.isOpen.set(false);
     }
   }
-
-  protected readonly range = range;
 }
