@@ -1,8 +1,8 @@
 {
-  "name": "lego-components-util",
+  "name": "lego-util",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/util/src",
-  "prefix": "lib",
+  "prefix": "lego-util",
   "projectType": "library",
   "tags": ["type:util"],
   "targets": {

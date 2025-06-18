@@ -9,10 +9,12 @@ import {
   viewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MenuListComponent } from './menu-list';
 import { closeAllSubmenus } from './util/menu.functions';
-import { ClickOutsideDirective } from './util/click-outside.directive';
+
 import { StudsComponent } from '@ng-lego/ui';
+import { ClickOutsideDirective } from '@ng-lego/util/directives';
 
 export interface MenuItem {
   label: string;
@@ -34,28 +36,30 @@ export interface SelectChange {
     StudsComponent,
     MenuListComponent,
     ClickOutsideDirective,
+    ClickOutsideDirective,
   ],
   template: `
-      <button
-        class="lego-brick realistic"
-        aria-label="Zones"
-        aria-haspopup="true"
-        [attr.aria-expanded]="isOpen()"
-        legoComponentsClickOutside
-        (clickOutside)="onOutsideClick($event)"
-        (click)="onMenuTriggerClick()"
-        (keydown)="onMenuTriggerKeyDown($event)">
-        <lego-ui-studs/>
-      </button>
-      @if (isOpen()) {
-        <lego-components-menu-list
-          #menuList
-          [isTopList]="true"
-          [menuItems]="items()"
-          (openChange)="onOpenChange($event)"
-        >
-        </lego-components-menu-list>
-      }
+    <button
+      class="lego-brick realistic"
+      aria-label="Zones"
+      aria-haspopup="true"
+      [attr.aria-expanded]="isOpen()"
+      legoUtilClickOutside
+      (clickOutside)="onOutsideClick($event)"
+      (click)="onMenuTriggerClick()"
+      (keydown)="onMenuTriggerKeyDown($event)"
+    >
+      <lego-ui-studs />
+    </button>
+    @if (isOpen()) {
+    <lego-components-menu-list
+      #menuList
+      [isTopList]="true"
+      [menuItems]="items()"
+      (openChange)="onOpenChange($event)"
+    >
+    </lego-components-menu-list>
+    }
   `,
   styleUrl: './menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
