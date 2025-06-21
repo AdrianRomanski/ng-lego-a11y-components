@@ -207,10 +207,16 @@ export class MenuListComponent {
 
   protected onListItemClick(event: MouseEvent, item: MenuItem): void {
     event.stopPropagation();
-    if (item?.submenu?.length !== undefined) {
-      if (item?.submenu?.length > 0) {
-        item.isOpen = !item.isOpen;
+    const currentItems = this.items();
+    console.log('item', item);
+    if (item?.submenu?.length) {
+      for (const menuItem of currentItems) {
+        if(menuItem.label !== item.label) {
+          menuItem.isOpen = false;
+        }
       }
+      item.isOpen = !item.isOpen;
+      this.items.set([...currentItems]);
     } else {
       this.selectItem(item);
     }
