@@ -6,7 +6,7 @@ import { ClickOutsideDirective } from './click-outside.directive';
   imports: [ClickOutsideDirective],
   template: `
     <div
-       legoComponentsClickOutside
+       legoUtilClickOutside
        (clickOutside)="onOutsideClick()">
     </div>`,
 })
