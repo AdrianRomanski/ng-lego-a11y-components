@@ -4,7 +4,9 @@
   "peerDependencies": {
     "@angular/common": "^19.1.8",
     "@angular/core": "^19.1.8",
-    "@angular/cdk": "^19.2.18"
+    "@angular/cdk": "^19.2.18",
+    "@ng-lego/ui": "0.0.1",
+    "@ng-lego/util": "0.0.1"
   },
   "sideEffects": false
 }
