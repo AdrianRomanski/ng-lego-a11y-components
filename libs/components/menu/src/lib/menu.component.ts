@@ -100,6 +100,7 @@ export class MenuComponent {
   protected onOutsideClick(event: Event): void {
     event.stopPropagation();
     this.isOpen.set(false);
+    this.items.set(closeAllSubmenus(this.items()));
   }
 
   protected onOpenChange(selectChange: SelectChange): void {
