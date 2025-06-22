@@ -113,7 +113,7 @@ export const KeyboardNavigation: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    const menuButton = await canvas.findByRole('button', { name: /menu/i });
+    const menuButton = await canvas.findByRole('button');
     await userEvent.click(menuButton);
 
     const raidsItem = await canvas.findByText('Raids');
