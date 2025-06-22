@@ -8,6 +8,7 @@ import {
   viewChild,
   signal,
   effect,
+  computed
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, SelectChange } from '../menu.component';
@@ -19,7 +20,10 @@ import { closeAllSubmenus } from '../util/menu.functions';
   template: `
     <ul #menu
         aria-label="Zones"
-        role="menu" tabindex="-1">
+        role="menu"
+        tabindex="-1"
+        [style.--menu-after-top]="topOffset()"
+    >
       @for (item of items(); track item.label) {
         <li
           (click)="onListItemClick($event, item)"
@@ -77,6 +81,33 @@ export class MenuListComponent {
   parentIndex = signal<number>(-1);
   items = signal<MenuItem[]>([]);
   focusedSubmenuIndex = signal<number | null>(null);
+
+  topOffset = computed(() => {
+    const count = this.items().length;
+
+    switch (count) {
+      case 0:
+      case 1:
+        return '80%';
+      case 2:
+        return '90%';
+      case 3:
+        return '93%';
+      case 4:
+        return '95%';
+      case 5:
+        return '96%';
+      default:
+        return this.calculateTopOffset(count);
+    }
+  });
+
+  private calculateTopOffset(count: number): string {
+    const base = 96;
+    const extraItems = count - 5;
+    const top = base + extraItems * 0.5;
+    return `${top}%`;
+  }
 
   constructor() {
     effect(() => {
