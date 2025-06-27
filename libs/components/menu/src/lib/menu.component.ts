@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
-  input,
+  input, linkedSignal,
   output,
   signal,
   Signal,
@@ -73,16 +73,14 @@ export class MenuComponent {
   public selectItem = output<string>();
 
   public isOpen = signal(false);
-  public items = signal<MenuItem[]>([]);
+
+  public items = linkedSignal(() => this.menuItems());
 
   constructor() {
     effect(() => {
       if (this.isOpen()) {
         this.menuListComponent()?.focusListItem(0);
       }
-    });
-    effect(() => {
-      this.items.set(this.menuItems());
     });
   }
 

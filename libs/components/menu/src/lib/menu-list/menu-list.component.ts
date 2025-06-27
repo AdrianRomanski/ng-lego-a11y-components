@@ -8,7 +8,7 @@ import {
   viewChild,
   signal,
   effect,
-  computed
+  computed, linkedSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MenuItem, SelectChange } from '../menu.component';
@@ -83,16 +83,13 @@ export class MenuListComponent {
   openChange = output<SelectChange>();
 
   parentIndex = signal<number>(-1);
-  items = signal<MenuItem[]>([]);
   focusedSubmenuIndex = signal<number | null>(null);
+
+  items = linkedSignal(() => this.menuItems());
 
   topOffset = computed(() => getTopOffset(this.items().length));
 
   constructor() {
-    effect(() => {
-      this.items.set(this.menuItems());
-    });
-
     effect(() => {
       const submenu = this.subMenu();
       const index = this.focusedSubmenuIndex();
