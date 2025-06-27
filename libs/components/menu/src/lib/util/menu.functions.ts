@@ -59,6 +59,27 @@ export function focusOutside(
   nextOutside?.focus();
 }
 
+export function isDisabled(el: Element | null): boolean | undefined {
+  return el?.classList.contains('disabled');
+}
+
+export function getNextEnabledIndex(startIndex: number, listItems: HTMLLIElement[]): number {
+  let next = (startIndex + 1) % listItems.length;
+  while (isDisabled(listItems[next]) && next !== startIndex) {
+    next = (next + 1) % listItems.length;
+  }
+  return next;
+}
+
+export function getPreviousEnabledIndex(startIndex: number, listItems: HTMLLIElement[]): number {
+  let prev = (startIndex - 1 + listItems.length) % listItems.length;
+  while (isDisabled(listItems[prev]) && prev !== startIndex) {
+    prev = (prev - 1 + listItems.length) % listItems.length;
+  }
+  return prev;
+}
+
+
 
 
 
