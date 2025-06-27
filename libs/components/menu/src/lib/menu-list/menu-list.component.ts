@@ -13,8 +13,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { MenuItem, SelectChange } from '../menu.component';
 import {
-  closeAllSubmenus,
-  getNextEnabledIndex, getPreviousEnabledIndex,
+  closeAllSubmenus, focusFirstItem, focusLastItem, focusNextItem, focusNextItemByCharacter, focusPreviousItem,
+getTopOffset,
   isDisabled
 } from '../util/menu.functions';
 
@@ -86,7 +86,7 @@ export class MenuListComponent {
   items = signal<MenuItem[]>([]);
   focusedSubmenuIndex = signal<number | null>(null);
 
-  topOffset = computed(() => this.getTopOffset);
+  topOffset = computed(() => getTopOffset(this.items().length));
 
   constructor() {
     effect(() => {
@@ -114,18 +114,18 @@ export class MenuListComponent {
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
-    event.stopPropagation();
     const items = this.listItems;
     if (!items) return;
 
-    const itemArray = Array.from(items);
-    let index = itemArray.indexOf(document.activeElement as HTMLLIElement);
+    event.stopPropagation();
     const key = event.key;
+    const listItems = Array.from(items);
+    const index = listItems.indexOf(document.activeElement as HTMLLIElement);
 
     switch (key) {
       case 'Enter':
       case ' ':
-        if (!isDisabled(itemArray[index])) {
+        if (!isDisabled(listItems[index])) {
           if (item.submenu?.length) {
             this.openSubmenu(item, index);
           } else {
@@ -135,52 +135,36 @@ export class MenuListComponent {
         break;
 
       case 'Escape':
-        this.openChange.emit({
-          focusFirst: !this.isTopList(),
-          focusIndex: this.parentIndex(),
-        });
+        this.closeSubmenus();
         break;
 
       case 'ArrowDown':
-        index = getNextEnabledIndex(index, itemArray);
-        itemArray[index].focus();
+        focusNextItem(index, listItems);
         break;
 
       case 'ArrowUp':
-        index = getPreviousEnabledIndex(index, itemArray);
-        itemArray[index].focus();
+        focusPreviousItem(index, listItems);
         break;
 
       case 'ArrowLeft':
         if (this.parentIndex() !== -1) {
-          this.openChange.emit({
-            focusFirst: !this.isTopList(),
-            focusIndex: this.parentIndex(),
-          });
+          this.closeSubmenus();
         }
         break;
 
       case 'ArrowRight':
-        if (!isDisabled(itemArray[index]) && item.submenu?.length) {
+        if (!isDisabled(listItems[index]) && item.submenu?.length) {
           this.openSubmenu(item, index);
         }
         break;
 
       case 'Home': {
-        let first = 0;
-        while (first < itemArray.length && isDisabled(itemArray[first])) {
-          first++;
-        }
-        if (first < itemArray.length) itemArray[first].focus();
+        focusFirstItem(listItems);
         break;
       }
 
       case 'End': {
-        let last = itemArray.length - 1;
-        while (last >= 0 && isDisabled(itemArray[last])) {
-          last--;
-        }
-        if (last >= 0) itemArray[last].focus();
+        focusLastItem(listItems);
         break;
       }
 
@@ -191,8 +175,8 @@ export class MenuListComponent {
           !event.metaKey &&
           !event.altKey
         ) {
-          if (!this.items()[index].disabled) {
-            this.focusNextItemByCharacter(key, index);
+          if (this.listItems) {
+            focusNextItemByCharacter(key, index, this.listItems, this.items());
           }
         }
         break;
@@ -238,62 +222,10 @@ export class MenuListComponent {
     return this.menu()?.nativeElement.querySelectorAll('li');
   }
 
-  private focusNextItemByCharacter(char: string, currentIndex: number): void {
-    const items = this.listItems;
-    if (!items) return;
-
-    const searchChar = char.toLowerCase();
-    const total = items.length;
-
-    const matchingIndexes: number[] = [];
-
-    for (let i = 0; i < total; i++) {
-      const label = items[i].textContent?.trim().toLowerCase() ?? '';
-      if (label.startsWith(searchChar)) {
-        matchingIndexes.push(i);
-      }
-    }
-
-    if (matchingIndexes.length === 0) return;
-
-    let start = matchingIndexes.findIndex((i) => i === currentIndex);
-    start = start === -1 ? 0 : (start + 1) % matchingIndexes.length;
-
-    for (let i = 0; i < matchingIndexes.length; i++) {
-      const candidateIndex =
-        matchingIndexes[(start + i) % matchingIndexes.length];
-      if (!this.items()[candidateIndex].disabled) {
-        items[candidateIndex].focus();
-        break;
-      }
-    }
-  }
-
-
-  private get getTopOffset(): string {
-    const count = this.items().length;
-
-    switch (count) {
-      case 0:
-      case 1:
-        return '80%';
-      case 2:
-        return '90%';
-      case 3:
-        return '93%';
-      case 4:
-        return '95%';
-      case 5:
-        return '96%';
-      default:
-        return this.calculateTopOffset(count);
-    }
-  }
-
-  private calculateTopOffset(count: number): string {
-    const base = 96;
-    const extraItems = count - 5;
-    const top = base + extraItems * 0.5;
-    return `${top}%`;
+  private closeSubmenus(): void {
+    this.openChange.emit({
+      focusFirst: !this.isTopList(),
+      focusIndex: this.parentIndex(),
+    });
   }
 }
