@@ -39,13 +39,12 @@ import { ClickOutsideDirective } from '@ng-lego/util/directives';
       <lego-ui-studs />
     </button>
     @if (isOpen()) {
-    <lego-components-menu-list
-      #menuList
-      [topList]="true"
-      [initialItems]="items()"
-      (selectChange)="onOpenChange($event)"
-    >
-    </lego-components-menu-list>
+      <lego-components-menu-list
+        #menuList
+        [topList]="true"
+        [initialItems]="items()"
+        (selectChange)="onOpenChange($event)"
+      />
     }
   `,
   styleUrl: './menu.component.scss',

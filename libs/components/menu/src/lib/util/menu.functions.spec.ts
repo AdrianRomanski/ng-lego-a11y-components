@@ -1,4 +1,5 @@
-import { closeAllSubmenus, focusOutside, isAllClosed } from './menu.functions';
+import { closeAllSubmenus, isAllClosed } from './menu.functions';
+import { focusOutside } from './focus.functions';
 
 describe('closeAllSubmenus', (): void => {
   it('should set isOpen to false for all menu items and submenus', () => {

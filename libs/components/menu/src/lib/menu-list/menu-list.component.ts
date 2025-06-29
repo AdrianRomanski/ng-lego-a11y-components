@@ -14,16 +14,16 @@ import {
 import { CommonModule } from '@angular/common';
 
 import {
-  closeAllSubmenus,
   focusFirstItem,
   focusLastItem,
   focusNextItem,
   focusNextItemByCharacter,
   focusPreviousItem,
-  getTopOffset,
   isDisabled
-} from '../util/menu.functions';
+} from '../util/focus.functions';
 import { MenuItem, SelectChange } from '../util/menu.model';
+import { getTopOffset } from '../util/styllng.functions';
+import { closeAllSubmenus } from '../util/menu.functions';
 
 @Component({
   selector: 'lego-components-menu-list',
