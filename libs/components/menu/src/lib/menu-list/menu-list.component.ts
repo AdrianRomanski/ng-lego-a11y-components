@@ -89,7 +89,7 @@ export class MenuListComponent {
   selectChange = output<SelectChange>();
 
   parentIndex = signal<number>(-1);
-  focusedSubmenuIndex = signal<number | undefined>(undefined);
+  focusedSubmenuIndex = signal<number | null>(null);
 
   items = linkedSignal(() => this.initialItems());
 
@@ -125,7 +125,7 @@ export class MenuListComponent {
           this.selectItem(item);
         }
         break;
-  
+
       case 'Escape':
         this.closeSubmenus();
         break;
@@ -145,7 +145,7 @@ export class MenuListComponent {
         break;
 
       case 'ArrowRight':
-        if (item.submenu?.length) {
+        if (item.submenu) {
           this.openSubmenu(item, index);
         }
         break;
@@ -221,11 +221,11 @@ export class MenuListComponent {
     }
   }
 
-  private focusSubmenu(submenu?: MenuListComponent, index?: number): void {
-    if (submenu && index) {
+  private focusSubmenu(submenu: MenuListComponent | undefined, index: number | null): void {
+    if (submenu && index != null) {
       submenu.parentIndex.set(index);
       submenu.focusListItem(0);
-      this.focusedSubmenuIndex.set(undefined);
+      this.focusedSubmenuIndex.set(null);
     }
   }
 

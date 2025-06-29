@@ -52,7 +52,7 @@ const menuItems: MenuItem[] = [
     ],
   },
   { label: 'Battlegrounds', isOpen: false, disabled: true },
-  { label: 'Battlegrounds', isOpen: false, disabled: false },
+  { label: 'Battlegrounds 2', isOpen: false, disabled: false },
   { label: 'Azeroth-2', isOpen: false, disabled: true },
 ];
 
