@@ -12,22 +12,10 @@ import { CommonModule } from '@angular/common';
 
 import { MenuListComponent } from './menu-list';
 import { closeAllSubmenus } from './util/menu.functions';
+import { MenuItem, SelectChange } from './util/menu.model';
 
 import { StudsComponent } from '@ng-lego/ui';
 import { ClickOutsideDirective } from '@ng-lego/util/directives';
-
-export interface MenuItem {
-  label: string;
-  isOpen?: boolean;
-  disabled?:boolean;
-  submenu?: MenuItem[];
-}
-
-export interface SelectChange {
-  focusFirst?: boolean;
-  item?: MenuItem;
-  focusIndex?: number;
-}
 
 @Component({
   selector: 'lego-components-components-menu',
@@ -35,7 +23,6 @@ export interface SelectChange {
     CommonModule,
     StudsComponent,
     MenuListComponent,
-    ClickOutsideDirective,
     ClickOutsideDirective,
   ],
   template: `

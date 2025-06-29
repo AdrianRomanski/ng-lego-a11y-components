@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MenuItem, SelectChange } from '../menu.component';
 import {
   closeAllSubmenus,
   focusFirstItem,
@@ -24,6 +23,7 @@ import {
   getTopOffset,
   isDisabled
 } from '../util/menu.functions';
+import { MenuItem, SelectChange } from '../util/menu.model';
 
 @Component({
   selector: 'lego-components-menu-list',
