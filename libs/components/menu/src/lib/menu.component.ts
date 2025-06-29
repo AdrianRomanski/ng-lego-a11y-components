@@ -28,7 +28,6 @@ import { ClickOutsideDirective } from '@ng-lego/util/directives';
   ],
   template: `
     <button
-      class="lego-brick realistic"
       aria-label="Zones"
       aria-haspopup="true"
       [attr.aria-expanded]="isOpen()"

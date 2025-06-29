@@ -1,5 +1,4 @@
-/* --- LEGO BRICK BUTTON --- */
-.lego-brick.realistic {
+button {
   transform: rotateX(45deg);
   transform-style: preserve-3d;
   position: relative;
@@ -22,12 +21,12 @@
 }
 
 /* Shadow visible only when the menu is closed */
-button.lego-brick.realistic[aria-expanded="false"] {
+button[aria-expanded="false"] {
   box-shadow: 0 32px 0 #0d47a1;
 }
 
 /* Text inside shadow */
-button.lego-brick.realistic[aria-expanded="false"]::after {
+button[aria-expanded="false"]::after {
   content: attr(aria-label);
   position: absolute;
   top: 96%;
@@ -47,12 +46,12 @@ button.lego-brick.realistic[aria-expanded="false"]::after {
 }
 
 /* Hide text on active */
-.lego-brick.realistic:active::after {
+button:active::after {
   opacity: 0;
   transform: translate(-50%, 20px) skewX(-20deg);
 }
 
-.lego-brick.realistic:active {
+button:active {
   transform: rotateX(45deg) translateY(4px) scale(0.98);
   box-shadow:
     inset -2px -2px 6px rgba(255, 255, 255, 0.3),
@@ -60,6 +59,3 @@ button.lego-brick.realistic[aria-expanded="false"]::after {
     0 4px 0 #0d47a1,
     0 8px 12px rgba(0, 0, 0, 0.4);
 }
-
-/* --- STUDS GRID --- */
-
