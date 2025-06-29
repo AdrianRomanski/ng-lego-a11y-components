@@ -18,6 +18,13 @@ button {
   font-size: clamp(18px, 2vw, 28px);
   font-weight: bold;
   z-index: 1;
+
+  &:focus-visible {
+    outline: 3px solid #007bff;
+    outline-offset: 4px;
+    border-radius: 12px;
+    background: #e7f1ff;
+  }
 }
 
 /* Shadow visible only when the menu is closed */

@@ -9,4 +9,5 @@ export interface SelectChange {
   focusFirst?: boolean;
   item?: MenuItem;
   focusIndex?: number;
+  focusTrigger?:boolean;
 }

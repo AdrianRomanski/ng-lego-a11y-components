@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
+  effect, ElementRef,
   input,
   linkedSignal,
   output,
@@ -28,6 +28,7 @@ import { ClickOutsideDirective } from '@ng-lego/util/directives';
   ],
   template: `
     <button
+      #trigger
       aria-label="Zones"
       aria-haspopup="true"
       [attr.aria-expanded]="isOpen()"
@@ -53,6 +54,7 @@ import { ClickOutsideDirective } from '@ng-lego/util/directives';
 export class MenuComponent {
   public menuListComponent: Signal<MenuListComponent | undefined> =
     viewChild<MenuListComponent>('menuList');
+  public trigger = viewChild.required<ElementRef>('trigger');
 
   public menuItems = input.required<MenuItem[]>();
 
@@ -90,6 +92,9 @@ export class MenuComponent {
   protected onOpenChange(selectChange: SelectChange): void {
     if (selectChange.item) {
       this.selectItem.emit(selectChange.item.label);
+    }
+    if(selectChange.focusTrigger) {
+      this.trigger().nativeElement.focus();
     }
     this.items.set(closeAllSubmenus(this.items()));
     if (selectChange.focusFirst) {

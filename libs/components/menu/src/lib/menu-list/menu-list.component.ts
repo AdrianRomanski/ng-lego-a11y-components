@@ -210,6 +210,7 @@ export class MenuListComponent {
     this.selectChange.emit({
       focusFirst: !this.topList(),
       focusIndex: this.parentIndex(),
+      focusTrigger: true,
     });
   }
 
