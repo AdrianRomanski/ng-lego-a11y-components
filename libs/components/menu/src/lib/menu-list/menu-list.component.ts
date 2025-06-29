@@ -19,11 +19,10 @@ import {
   focusNextItem,
   focusNextItemByCharacter,
   focusPreviousItem,
-  isDisabled
 } from '../util/focus.functions';
 import { MenuItem, SelectChange } from '../util/menu.model';
 import { getTopOffset } from '../util/styllng.functions';
-import { closeAllSubmenus } from '../util/menu.functions';
+import { closeAllSubmenus } from '../util/submenu.functions';
 
 @Component({
   selector: 'lego-components-menu-list',
@@ -120,15 +119,13 @@ export class MenuListComponent {
     switch (key) {
       case 'Enter':
       case ' ':
-        if (!isDisabled(listItems[index])) {
-          if (item.submenu?.length) {
-            this.openSubmenu(item, index);
-          } else {
-            this.selectItem(item);
-          }
+        if (item.submenu?.length) {
+          this.openSubmenu(item, index);
+        } else {
+          this.selectItem(item);
         }
         break;
-
+  
       case 'Escape':
         this.closeSubmenus();
         break;

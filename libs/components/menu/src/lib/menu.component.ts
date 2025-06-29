@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
-  input, linkedSignal,
+  input,
+  linkedSignal,
   output,
   signal,
   Signal,
@@ -11,7 +12,7 @@ import {
 import { CommonModule } from '@angular/common';
 
 import { MenuListComponent } from './menu-list';
-import { closeAllSubmenus } from './util/menu.functions';
+import { closeAllSubmenus } from './util/submenu.functions';
 import { MenuItem, SelectChange } from './util/menu.model';
 
 import { StudsComponent } from '@ng-lego/ui';

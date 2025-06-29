@@ -22,7 +22,8 @@
       ],
       "@ng-lego/ui": ["libs/ui/src/index.ts"],
       "@ng-lego/util": ["libs/util/src/index.ts"],
-      "@ng-lego/util/directives": ["libs/util/directives/src/index.ts"]
+      "@ng-lego/util/directives": ["libs/util/directives/src/index.ts"],
+      "@ng-lego/util/functions": ["libs/util/functions/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -3,8 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {TestbedHarnessEnvironment} from '@angular/cdk/testing/testbed';
 
 import { MenuComponentHarness } from './test';
-import { MenuComponent, MenuItem } from './menu.component';
-import { isAllClosed } from './util/menu.functions';
+import { MenuComponent } from './menu.component';
+import { isAllClosed } from './util/submenu.functions';
+import { MenuItem } from './util/menu.model';
 
 @Component({
   selector: 'lego-components-test-menu-wrapper',
