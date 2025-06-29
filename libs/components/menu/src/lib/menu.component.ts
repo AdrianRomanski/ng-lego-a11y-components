@@ -54,9 +54,9 @@ export interface SelectChange {
     @if (isOpen()) {
     <lego-components-menu-list
       #menuList
-      [isTopList]="true"
-      [menuItems]="items()"
-      (openChange)="onOpenChange($event)"
+      [topList]="true"
+      [initialItems]="items()"
+      (selectChange)="onOpenChange($event)"
     >
     </lego-components-menu-list>
     }

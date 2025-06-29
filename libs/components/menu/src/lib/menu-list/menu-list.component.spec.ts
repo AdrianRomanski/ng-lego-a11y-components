@@ -10,8 +10,8 @@ import { MenuItem } from '../menu.component';
   imports: [MenuListComponent],
   template: `
     <lego-components-menu-list
-      [menuItems]="menuItems"
-      [isTopList]="false"
+      [initialItems]="menuItems"
+      [topList]="false"
     />
   `,
 })
@@ -161,7 +161,7 @@ describe('MenuListComponent', () => {
   describe('Mouse Navigation', () => {
     it('should set submenu to open state after clicking on it', async () => {
       await harness.clickSubmenu();
-      expect(component.menuListComponent().menuItems()[SUB_MENU].isOpen).toBe(true);
+      expect(component.menuListComponent().initialItems()[SUB_MENU].isOpen).toBe(true);
     });
   })
 

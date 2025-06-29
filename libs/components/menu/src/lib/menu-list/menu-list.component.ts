@@ -8,13 +8,20 @@ import {
   viewChild,
   signal,
   effect,
-  computed, linkedSignal
+  computed,
+  linkedSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { MenuItem, SelectChange } from '../menu.component';
 import {
-  closeAllSubmenus, focusFirstItem, focusLastItem, focusNextItem, focusNextItemByCharacter, focusPreviousItem,
-getTopOffset,
+  closeAllSubmenus,
+  focusFirstItem,
+  focusLastItem,
+  focusNextItem,
+  focusNextItemByCharacter,
+  focusPreviousItem,
+  getTopOffset,
   isDisabled
 } from '../util/menu.functions';
 
@@ -24,15 +31,13 @@ getTopOffset,
   template: `
     <ul
       #menu
-      aria-label="Zones"
       role="menu"
       tabindex="-1"
+      aria-label="Zones"
       [style.--menu-after-top]="topOffset()"
     >
       @for (item of items(); track item.label) {
       <li
-        (click)="onListItemClick($event, item)"
-        (keydown)="onListItemKeyDown($event, item)"
         [attr.tabindex]="item.disabled ? -1 : 0"
         [attr.aria-label]="item.label"
         [attr.aria-haspopup]="item.submenu ? 'true' : null"
@@ -40,6 +45,8 @@ getTopOffset,
         [attr.aria-disabled]="item.disabled"
         [attr.role]="item.isOpen ? 'group' : 'menuitem'"
         [class.disabled]="item.disabled"
+        (keydown)="onListItemKeyDown($event, item)"
+        (click)="onListItemClick($event, item)"
       >
         {{ item.label }}
         @if (item.submenu) {
@@ -60,9 +67,9 @@ getTopOffset,
         <lego-components-menu-list
           #submenu
           class="submenu"
-          [isTopList]="false"
-          [menuItems]="item.submenu"
-          (openChange)="onOpenChange($event)"
+          [topList]="false"
+          [initialItems]="item.submenu"
+          (selectChange)="onOpenChange($event)"
         />
         }
       </li>
@@ -76,30 +83,21 @@ export class MenuListComponent {
   menu: Signal<ElementRef> = viewChild.required('menu');
   subMenu: Signal<MenuListComponent | undefined> = viewChild('submenu');
 
-  menuItems = input.required<MenuItem[]>();
-  isTopList = input.required<boolean>();
+  initialItems = input.required<MenuItem[]>();
+  topList = input.required<boolean>();
   disabled = input<boolean>();
 
-  openChange = output<SelectChange>();
+  selectChange = output<SelectChange>();
 
   parentIndex = signal<number>(-1);
-  focusedSubmenuIndex = signal<number | null>(null);
+  focusedSubmenuIndex = signal<number | undefined>(undefined);
 
-  items = linkedSignal(() => this.menuItems());
+  items = linkedSignal(() => this.initialItems());
 
   topOffset = computed(() => getTopOffset(this.items().length));
 
   constructor() {
-    effect(() => {
-      const submenu = this.subMenu();
-      const index = this.focusedSubmenuIndex();
-
-      if (submenu && index !== null) {
-        submenu.parentIndex.set(index);
-        submenu.focusListItem(0);
-        this.focusedSubmenuIndex.set(null);
-      }
-    });
+    effect(() => this.focusSubmenu(this.subMenu(), this.focusedSubmenuIndex()));
   }
 
   public focusListItem(index: number): void {
@@ -107,7 +105,7 @@ export class MenuListComponent {
   }
 
   public selectItem(item: MenuItem): void {
-    this.openChange.emit({ item });
+    this.selectChange.emit({ item });
   }
 
   protected onListItemKeyDown(event: KeyboardEvent, item: MenuItem): void {
@@ -150,7 +148,7 @@ export class MenuListComponent {
         break;
 
       case 'ArrowRight':
-        if (!isDisabled(listItems[index]) && item.submenu?.length) {
+        if (item.submenu?.length) {
           this.openSubmenu(item, index);
         }
         break;
@@ -184,11 +182,7 @@ export class MenuListComponent {
     event.stopPropagation();
     const currentItems = this.items();
     if (item?.submenu?.length) {
-      for (const menuItem of currentItems) {
-        if (menuItem.label !== item.label) {
-          menuItem.isOpen = false;
-        }
-      }
+      this.closeCurrentItemsSubmenus(currentItems, item);
       item.isOpen = !item.isOpen;
       this.items.set([...currentItems]);
     } else {
@@ -198,12 +192,12 @@ export class MenuListComponent {
 
   protected onOpenChange(openChange: SelectChange): void {
     if (openChange.focusFirst) {
-      if (!this.isTopList()) {
+      if (!this.topList()) {
         const index = openChange.focusIndex !== -1 ? openChange.focusIndex : 0;
         this.focusListItem(index || 0);
         this.items.set(closeAllSubmenus(this.items()));
       } else {
-        this.openChange.emit(openChange);
+        this.selectChange.emit(openChange);
       }
     } else if (openChange.item) {
       this.selectItem(openChange.item);
@@ -215,14 +209,30 @@ export class MenuListComponent {
     this.focusedSubmenuIndex.set(index);
   }
 
-  private get listItems(): NodeListOf<HTMLLIElement> | undefined {
-    return this.menu()?.nativeElement.querySelectorAll('li');
-  }
-
   private closeSubmenus(): void {
-    this.openChange.emit({
-      focusFirst: !this.isTopList(),
+    this.selectChange.emit({
+      focusFirst: !this.topList(),
       focusIndex: this.parentIndex(),
     });
+  }
+
+  private closeCurrentItemsSubmenus(currentItems: MenuItem[], item: MenuItem) {
+    for (const menuItem of currentItems) {
+      if (menuItem.label !== item.label) {
+        menuItem.isOpen = false;
+      }
+    }
+  }
+
+  private focusSubmenu(submenu?: MenuListComponent, index?: number): void {
+    if (submenu && index) {
+      submenu.parentIndex.set(index);
+      submenu.focusListItem(0);
+      this.focusedSubmenuIndex.set(undefined);
+    }
+  }
+
+  private get listItems(): NodeListOf<HTMLLIElement> | undefined {
+    return this.menu()?.nativeElement.querySelectorAll('li');
   }
 }
