@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/angular';
 import { componentWrapperDecorator } from '@storybook/angular';
+
 const preview: Preview = {
   decorators: [componentWrapperDecorator((story) => `
     <div style="
@@ -12,11 +13,12 @@ const preview: Preview = {
       padding: 2rem;
       gap: 1.5rem;
     ">
-      <div>
+      <div style="display: flex; justify-content: center">
          <img
-            src="https://i.imageupload.app/7d23130aea90c2e2ab19.png"
+            src="https://i.imageupload.app/94dd4c466dfbdfdccc54.png"
             alt="image"
             style="
+              width: 30%;
               object-fit: fill;
               border-radius: 0.5rem;
               border: 5px solid lightslategray;
