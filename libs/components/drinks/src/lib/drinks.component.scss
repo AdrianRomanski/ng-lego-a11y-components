@@ -1,8 +1,8 @@
 .content-trigger {
   font-size: 88px;
-  border: 5px solid #34A853;
-  background: #4285F4;
-  color: #FBBC05;
+  border: 5px solid #8BC53F;
+  background: #4B2582;
+  color: #FFFFFF;
   border-radius: 10px;
   padding: 10px 20px;
   font-weight: bold;
@@ -10,7 +10,7 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 6px solid #EA4335;
+    outline: 6px solid #C62B80;
     outline-offset: 4px;
   }
 }
@@ -18,13 +18,12 @@
 .content-wrapper {
   font-size: 70px;
   padding: 10px;
-  border: 5px solid #4285F4;
-  background: #34A853;
+  border: 5px solid #8BC53F;
+  background: #4B2582;
   border-radius: 10px;
   list-style: none;
-  color: #FBBC05;
+  color: #FFFFFF;
 }
-
 
 .content {
   margin-left: 5px;
@@ -32,16 +31,16 @@
   border-radius: 5px;
   position: relative;
   padding: 5px 5px 5px 30px;
-  color: #34A853;
+  color: #8BC53F;
 
   &:focus-visible {
-    outline: 6px solid #EA4335;
+    outline: 6px solid #C62B80;
     outline-offset: 4px;
-    background: #E8F5E9;
+    background: #EEE5F3;
   }
 
   &:hover {
-    background: #E8F5E9;
+    background: #6236a2;
   }
 }
 
@@ -52,9 +51,8 @@ span {
   gap: 8px;
   position: relative;
   padding-left: 30px;
-  color: #FBBC05;
+  color: #FFFFFF;
 }
-
 
 span.hot::before,
 span.cold::before {
