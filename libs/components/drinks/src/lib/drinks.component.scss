@@ -1,12 +1,12 @@
-.content-trigger {
-  font-size: 88px;
+button {
+  font-size: 76px;
   border: 5px solid #8BC53F;
   background: #4B2582;
   color: #FFFFFF;
   border-radius: 10px;
   padding: 10px 20px;
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   cursor: pointer;
 
   &:focus-visible {
@@ -15,7 +15,8 @@
   }
 }
 
-.content-wrapper {
+ul {
+  margin-block-start: 10px;
   font-size: 70px;
   padding: 10px;
   border: 5px solid #8BC53F;
@@ -25,7 +26,7 @@
   color: #FFFFFF;
 }
 
-.content {
+li {
   margin-left: 5px;
   cursor: pointer;
   border-radius: 5px;
@@ -36,7 +37,7 @@
   &:focus-visible {
     outline: 6px solid #C62B80;
     outline-offset: 4px;
-    background: #EEE5F3;
+    background: #6236a2;
   }
 
   &:hover {
@@ -44,7 +45,7 @@
   }
 }
 
-span {
+.content-text {
   font-size: 54px;
   display: inline-flex;
   align-items: center;
@@ -54,8 +55,8 @@ span {
   color: #FFFFFF;
 }
 
-span.hot::before,
-span.cold::before {
+.content-text.hot::before,
+.content-text.cold::before {
   content: '';
   position: absolute;
   left: -5px;
@@ -64,10 +65,10 @@ span.cold::before {
   font-size: 24px;
 }
 
-span.hot::before {
+.content-text.hot::before {
   content: '☕';
 }
 
-span.cold::before {
+.content-text.cold::before {
   content: '🥤';
 }
