@@ -25,23 +25,23 @@ export interface Drink {
       Best Drinks
     </span>
     @if (open()) {
-    <div
-      class="content-wrapper"
-    >
-      @for (drink of drinks(); track drink.name) {
-        <div
-          class="content"
-          (click)="onDrinkClick(drink)"
-        >
-          <span
-            class="content-text"
-            [ngClass]="drink.isHot ? 'hot' : 'cold'"
+      <div
+        class="content-wrapper"
+      >
+        @for (drink of drinks(); track drink.name) {
+          <div
+            class="content"
+            (click)="onDrinkClick(drink)"
           >
-            {{drink.name }}
-          </span>
-        </div>
-      }
-    </div>
+            <span
+              class="content-text"
+              [ngClass]="drink.isHot ? 'hot' : 'cold'"
+            >
+              {{drink.name }}
+            </span>
+          </div>
+        }
+      </div>
     }
   `,
   styleUrl: './drinks.component.scss',
