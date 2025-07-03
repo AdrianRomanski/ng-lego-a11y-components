@@ -9,6 +9,12 @@ import {
 import { CommonModule } from '@angular/common';
 import { ClickOutsideDirective } from './util/click-outside.directive';
 
+const DRINKS: Drink[] =[
+  { name: 'Coffee', isHot: true },
+  { name: 'Cola', isHot: false },
+  { name: 'Beer', isHot: false },
+];
+
 export interface Drink {
   name: string;
   isHot: boolean;
@@ -41,12 +47,7 @@ export interface Drink {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrinksComponent {
-  drinks: Signal<Drink[]> = signal([
-    { name: 'Coffee', isHot: true },
-    { name: 'Cola', isHot: false },
-    { name: 'Beer', isHot: false },
-  ]);
-
+  drinks: Signal<Drink[]> = signal(DRINKS);
   open: WritableSignal<boolean> = signal(false);
 
   selectDrink = output<Drink>();
