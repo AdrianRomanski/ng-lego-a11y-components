@@ -10,4 +10,12 @@ export default meta;
 
 type Story = StoryObj<DrinksComponent>;
 
-export const BestDrinks: Story = {}
+export const BestDrinks: Story = {
+  args: {
+    drinks: [
+      { name: 'Coffee', isHot: true },
+      { name: 'Cola', isHot: false },
+      { name: 'Beer', isHot: false },
+    ]
+  }
+}

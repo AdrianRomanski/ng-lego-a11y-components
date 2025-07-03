@@ -1,19 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  input,
   output,
   signal,
-  Signal,
-  WritableSignal
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClickOutsideDirective } from './util/click-outside.directive';
-
-const DRINKS: Drink[] =[
-  { name: 'Coffee', isHot: true },
-  { name: 'Cola', isHot: false },
-  { name: 'Beer', isHot: false },
-];
 
 export interface Drink {
   name: string;
@@ -32,13 +25,21 @@ export interface Drink {
       Best Drinks
     </span>
     @if (open()) {
-    <div class="content-wrapper">
+    <div
+      class="content-wrapper"
+    >
       @for (drink of drinks(); track drink.name) {
-      <div class="content" (click)="onDrinkClick(drink)">
-        <span [ngClass]="drink.isHot ? 'hot' : 'cold'" class="content-text">{{
-          drink.name
-        }}</span>
-      </div>
+        <div
+          class="content"
+          (click)="onDrinkClick(drink)"
+        >
+          <span
+            class="content-text"
+            [ngClass]="drink.isHot ? 'hot' : 'cold'"
+          >
+            {{drink.name }}
+          </span>
+        </div>
       }
     </div>
     }
@@ -47,10 +48,11 @@ export interface Drink {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrinksComponent {
-  drinks: Signal<Drink[]> = signal(DRINKS);
-  open: WritableSignal<boolean> = signal(false);
+  drinks = input.required<Drink[]>();
 
   selectDrink = output<Drink>();
+
+  open = signal(false);
 
   protected onDrinkClick(drink: Drink): void {
     this.selectDrink.emit(drink);
