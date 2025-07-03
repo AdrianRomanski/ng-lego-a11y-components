@@ -1,7 +1,7 @@
 .content-trigger {
   font-size: 88px;
-  border: 5px solid #8BC53F;
-  background: #4B2582;
+  border: 5px solid #F5369B;
+  background: #8C2EFF;
   color: #FFFFFF;
   border-radius: 10px;
   padding: 10px 20px;
@@ -10,7 +10,7 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 6px solid #C62B80;
+    outline: 6px solid #F5369B;
     outline-offset: 4px;
   }
 }
@@ -18,8 +18,8 @@
 .content-wrapper {
   font-size: 70px;
   padding: 10px;
-  border: 5px solid #8BC53F;
-  background: #4B2582;
+  border: 5px solid #F5369B;
+  background: #8C2EFF;
   border-radius: 10px;
   list-style: none;
   color: #FFFFFF;
@@ -31,16 +31,16 @@
   border-radius: 5px;
   position: relative;
   padding: 5px 5px 5px 30px;
-  color: #8BC53F;
+  color: #F5369B;
 
   &:focus-visible {
-    outline: 6px solid #C62B80;
+    outline: 6px solid #F5369B;
     outline-offset: 4px;
     background: #EEE5F3;
   }
 
   &:hover {
-    background: #6236a2;
+    background: #A766F8;
   }
 }
 

@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  Component, output,
+  Component,
+  output,
   signal,
   Signal,
   WritableSignal

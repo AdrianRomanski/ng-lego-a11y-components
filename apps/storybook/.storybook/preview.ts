@@ -13,9 +13,9 @@ const preview: Preview = {
       padding: 2rem;
       gap: 1.5rem;
     ">
-      <div style="display: flex; justify-content: center">
+      <div style="display: flex; justify-content: center; padding: 1rem">
          <img
-            src="https://i.imageupload.app/94dd4c466dfbdfdccc54.png"
+            src="https://i.imageupload.app/a9dbe7b02de8013d2d10.png"
             alt="image"
             style="
               width: 30%;
