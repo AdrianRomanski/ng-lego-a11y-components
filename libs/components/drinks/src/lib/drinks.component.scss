@@ -1,4 +1,4 @@
-.content-trigger {
+button {
   font-size: 88px;
   border: 5px solid #dc0a2d;
   background: #ffcc00;
@@ -10,12 +10,13 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 6px solid #dc0a2d;
+    outline: 6px solid black;
     outline-offset: 4px;
   }
 }
 
 .content-wrapper {
+  margin-block-start: 10px;
   font-size: 70px;
   padding: 10px;
   border: 5px solid #dc0a2d;
