@@ -15,10 +15,10 @@ const preview: Preview = {
     ">
       <div style="display: flex; justify-content: center; padding: 1rem">
          <img
-            src="https://i.imageupload.app/b1ef210a35612537def4.jpeg"
+            src="https://i.imageupload.app/86ddc0f144b66246f8d3.jpeg"
             alt="image"
             style="
-              width: 100%;
+              width: 50%;
               object-fit: fill;
               border-radius: 0.5rem;
               border: 5px solid lightslategray;
