@@ -21,7 +21,7 @@ import {
   focusPreviousItem,
 } from '../util/focus.functions';
 import { MenuItem, SelectChange } from '../util/menu.model';
-import { getTopOffset } from '../util/styllng.functions';
+import { getTopOffset } from '../util/styling.functions';
 import { closeAllSubmenus } from '../util/submenu.functions';
 
 @Component({
