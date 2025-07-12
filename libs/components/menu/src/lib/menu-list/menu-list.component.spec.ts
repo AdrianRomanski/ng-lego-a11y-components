@@ -3,7 +3,7 @@ import { MenuListComponent } from './menu-list.component';
 import { Component, viewChild } from '@angular/core';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MenuListComponentHarness } from '../test';
-import { MenuItem } from '../menu.component';
+import { MenuItem } from '../util/menu.model';
 
 @Component({
   selector: 'lego-components-test-menu-list-wrapper',
