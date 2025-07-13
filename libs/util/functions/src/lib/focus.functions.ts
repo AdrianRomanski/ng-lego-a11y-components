@@ -1,5 +1,5 @@
 export function isDisabled(el: Element | null): boolean | undefined {
-  return el?.classList.contains('disabled');
+  return el?.classList.contains('disabled') || el?.hasAttribute('aria-disabled');
 }
 
 export function focusOutside(

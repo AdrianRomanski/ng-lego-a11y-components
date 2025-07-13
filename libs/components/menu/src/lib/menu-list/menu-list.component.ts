@@ -168,7 +168,7 @@ export class MenuListComponent {
           !event.altKey
         ) {
           if (this.listItems) {
-            focusNextItemByCharacter(key, index, this.listItems, this.items());
+            focusNextItemByCharacter(key, index, Array.from(this.listItems), this.items());
           }
         }
         break;

@@ -36,7 +36,7 @@ export function focusFirstItem(listItems: HTMLLIElement[]): void {
 export function focusNextItemByCharacter(
   char: string,
   currentIndex: number,
-  listItems: NodeListOf<HTMLLIElement>,
+  listItems: HTMLLIElement[],
   menuItems: MenuItem[]
 ): void {
   const searchChar = char.toLowerCase();
