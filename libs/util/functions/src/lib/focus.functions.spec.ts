@@ -1,4 +1,34 @@
-import { focusOutside } from './focus.functions';
+import { focusOutside, isDisabled } from './focus.functions';
+
+describe('isDisabled', () => {
+  it('should return true if element has class "disabled"', () => {
+    const el = document.createElement('button');
+    el.classList.add('disabled');
+    expect(isDisabled(el)).toBe(true);
+  });
+
+  it('should return true if element has attribute aria-disabled', () => {
+    const el = document.createElement('button');
+    el.setAttribute('aria-disabled', 'true');
+    expect(isDisabled(el)).toBe(true);
+  });
+
+  it('should return true if both class "disabled" and aria-disabled are present', () => {
+    const el = document.createElement('button');
+    el.classList.add('disabled');
+    el.setAttribute('aria-disabled', 'true');
+    expect(isDisabled(el)).toBe(true);
+  });
+
+  it('should return false if element has neither class "disabled" nor aria-disabled', () => {
+    const el = document.createElement('button');
+    expect(isDisabled(el)).toBe(false);
+  });
+
+  it('should return undefined if element is null', () => {
+    expect(isDisabled(null)).toBeUndefined();
+  });
+});
 
 describe('focusOutside', () => {
   let container: HTMLElement;
