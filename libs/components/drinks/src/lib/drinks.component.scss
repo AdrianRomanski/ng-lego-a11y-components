@@ -1,8 +1,19 @@
+// =============================
+// WaysConf-inspired Palette
+// =============================
+$bg-primary: #3842f4;        // Purple background
+$text-color: #000000;        // Black text
+$accent-color: #000000;      // Black accent (borders, outlines)
+$bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
+
+// =============================
+// Components
+// =============================
 .content-trigger {
   font-size: 88px;
-  border: 5px solid #dc0a2d;
-  background: #ffcc00;
-  color: #000000;
+  border: 5px solid $accent-color;
+  background: $bg-primary;
+  color: $text-color;
   border-radius: 10px;
   padding: 10px 20px;
   font-weight: bold;
@@ -10,7 +21,7 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 6px solid #dc0a2d;
+    outline: 6px solid $accent-color;
     outline-offset: 4px;
   }
 }
@@ -18,11 +29,11 @@
 .content-wrapper {
   font-size: 70px;
   padding: 10px;
-  border: 5px solid #dc0a2d;
-  background: #ffcc00;
+  border: 5px solid $accent-color;
+  background: $bg-primary;
   border-radius: 10px;
   list-style: none;
-  color: #000000;
+  color: $text-color;
 }
 
 .content {
@@ -31,16 +42,16 @@
   border-radius: 5px;
   position: relative;
   padding: 5px 5px 5px 30px;
-  color: #dc0a2d;
+  color: $text-color;
 
   &:focus-visible {
-    outline: 6px solid #dc0a2d;
+    outline: 6px solid $accent-color;
     outline-offset: 4px;
-    background: #f2f2f2;
+    background: $bg-hover;
   }
 
   &:hover {
-    background: #ffe5e9;
+    background: $bg-hover;
   }
 }
 
@@ -51,7 +62,7 @@ span {
   gap: 8px;
   position: relative;
   padding-left: 30px;
-  color: #000000;
+  color: $text-color;
 }
 
 span.hot::before,
