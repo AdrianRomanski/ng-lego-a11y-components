@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build-storybook": "nx run storybook-lib:build-storybook",
-    "start-storybook": "nx run storybook-lib:start-storybook",
-    "test-storybook": "nx run storybook-lib:test-storybook",
+    "build-storybook": "nx run storybook-:build-storybook",
+    "start-storybook": "nx run storybook:start-storybook",
+    "test-storybook": "nx run storybook:test-storybook",
     "coverage": "jest --coverage"
   },
   "private": true,

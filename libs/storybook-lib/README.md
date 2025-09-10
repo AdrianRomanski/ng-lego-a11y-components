@@ -1,7 +1,7 @@
-# storybook-lib
+# storybook
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Running unit tests
 
-Run `nx test storybook-lib` to execute the unit tests.
+Run `nx test storybook` to execute the unit tests.

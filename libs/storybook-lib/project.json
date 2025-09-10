@@ -1,7 +1,7 @@
 {
-  "name": "storybook-lib",
+  "name": "storybook",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/storybook-lib/src",
+  "sourceRoot": "libs/storybook/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": [],
@@ -10,14 +10,14 @@
       "executor": "@nx/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/storybook-lib/ng-package.json"
+        "project": "libs/storybook/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/storybook-lib/tsconfig.lib.prod.json"
+          "tsConfig": "libs/storybook/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/storybook-lib/tsconfig.lib.json"
+          "tsConfig": "libs/storybook/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"
@@ -26,7 +26,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/storybook-lib/jest.config.ts"
+        "jestConfig": "libs/storybook/jest.config.ts"
       }
     },
     "lint": {
@@ -36,8 +36,8 @@
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "port": 4400,
-        "configDir": "libs/storybook-lib/.storybook",
-        "browserTarget": "storybook-lib:build-storybook",
+        "configDir": "libs/storybook/.storybook",
+        "browserTarget": "storybook:build-storybook",
         "compodoc": false
       },
       "configurations": {
@@ -50,9 +50,9 @@
       "executor": "@storybook/angular:build-storybook",
       "outputs": ["{options.outputDir}"],
       "options": {
-        "outputDir": "dist/storybook/storybook-lib",
-        "configDir": "libs/storybook-lib/.storybook",
-        "browserTarget": "storybook-lib:build-storybook",
+        "outputDir": "dist/storybook/storybook",
+        "configDir": "libs/storybook/.storybook",
+        "browserTarget": "storybook:build-storybook",
         "compodoc": false
       },
       "configurations": {
@@ -64,20 +64,20 @@
     "test-storybook": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "test-storybook -c libs/storybook-lib/.storybook --url=http://localhost:4400"
+        "command": "test-storybook -c libs/storybook/.storybook --url=http://localhost:4400"
       }
     },
     "static-storybook": {
       "executor": "@nx/web:file-server",
       "dependsOn": ["build-storybook"],
       "options": {
-        "buildTarget": "storybook-lib:build-storybook",
-        "staticFilePath": "dist/storybook/storybook-lib",
+        "buildTarget": "storybook:build-storybook",
+        "staticFilePath": "dist/storybook/storybook",
         "spa": true
       },
       "configurations": {
         "ci": {
-          "buildTarget": "storybook-lib:build-storybook:ci"
+          "buildTarget": "storybook:build-storybook:ci"
         }
       }
     }

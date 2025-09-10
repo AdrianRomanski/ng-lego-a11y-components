@@ -1,8 +1,8 @@
 export default {
-  displayName: 'storybook-lib',
+  displayName: 'storybook',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/libs/storybook-lib',
+  coverageDirectory: '../../coverage/libs/storybook',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
