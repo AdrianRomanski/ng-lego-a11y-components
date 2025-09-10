@@ -6,7 +6,7 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ClickOutsideDirective } from './util/click-outside.directive';
+import { ClickOutsideDirective } from '../../../src/util/click-outside.directive';
 
 export interface Drink {
   name: string;

@@ -18,7 +18,7 @@ const preview: Preview = {
             src="https://i.imageupload.app/50cb7f0e724c29589a70.webp"
             alt="image"
             style="
-              width: 75%;
+              width: 35%;
               object-fit: fill;
               border-radius: 0.5rem;
               border: 5px solid lightslategray;

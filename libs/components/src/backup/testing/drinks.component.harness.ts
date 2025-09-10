@@ -1,17 +1,17 @@
-import { AsyncFactoryFn, ComponentHarness, TestElement } from '@angular/cdk/testing';
+import { ComponentHarness, LocatorFnResult } from '@angular/cdk/testing';
 
 export class DrinksComponentHarness extends ComponentHarness {
   static hostSelector = 'lego-components-drinks';
 
-  private get button(): AsyncFactoryFn<TestElement> {
+  private get button(): () => Promise<LocatorFnResult<[string]>> {
     return this.locatorFor('button');
   }
 
-  private get listItems(): AsyncFactoryFn<TestElement[]> {
+  private get listItems(): () => Promise<LocatorFnResult<[string]>[]> {
     return this.locatorForAll('li');
   }
 
-  private get menu(): AsyncFactoryFn<TestElement> {
+  private get menu(): () => Promise<LocatorFnResult<[string]>> {
     return this.locatorFor('ul');
   }
 
