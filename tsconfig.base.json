@@ -20,6 +20,7 @@
       "@ng-lego/components/menu/test": [
         "libs/components/menu/src/test/index.ts"
       ],
+      "@ng-lego/storybook-lib": ["libs/storybook-lib/src/index.ts"],
       "@ng-lego/ui": ["libs/ui/src/index.ts"],
       "@ng-lego/util": ["libs/util/src/index.ts"],
       "@ng-lego/util/directives": ["libs/util/directives/src/index.ts"],
