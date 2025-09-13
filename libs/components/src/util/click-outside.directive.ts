@@ -10,6 +10,7 @@ export class ClickOutsideDirective {
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
+    console.log('clicked');
     if (!this._elementRef.nativeElement.contains(event.target)) {
       this.clickOutside.emit(event);
     }

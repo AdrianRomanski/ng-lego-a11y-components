@@ -16,7 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@ng-lego/components/demo": ["libs/components/demo/src/index.ts"],
-      "@ng-lego/components/drinks": ["libs/components/drinks/src/index.ts"],
+      "@ng-lego/components/drinks": ["libs/components/drinks/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

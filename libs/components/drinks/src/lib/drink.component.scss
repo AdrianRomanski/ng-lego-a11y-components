@@ -1,0 +1,114 @@
+$bg-primary: #3842f4;        // Purple background
+$text-color: #000000;        // Black text
+$accent-color: #000000;      // Black accent (borders, outlines)
+$bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
+
+.content {
+  margin-left: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  padding: 5px 5px 5px 30px;
+  color: $text-color;
+
+  &:focus-visible {
+    outline: 6px solid $accent-color;
+    outline-offset: 4px;
+    background: $bg-hover;
+  }
+
+  &:hover {
+    background: $bg-hover;
+  }
+}
+
+span {
+  font-size: 54px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-left: 30px;
+  color: $text-color;
+}
+
+span.hot::before,
+span.cold::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+}
+
+span.hot::before {
+  content: '☕';
+}
+
+span.cold::before {
+  content: '🥤';
+}
+.custom-checkbox {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #333;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.custom-checkbox:checked {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  width: 8px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.custom-radio {
+  width: 30px;
+  height: 30px;
+  margin-right: 15px;
+
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #333;
+  border-radius: 50%;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.custom-radio:checked {
+  border-color: #4caf50;
+  background-color: #4caf50;
+}
+
+.custom-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}

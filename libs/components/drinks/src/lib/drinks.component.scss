@@ -1,14 +1,8 @@
-// =============================
-// WaysConf-inspired Palette
-// =============================
 $bg-primary: #3842f4;        // Purple background
 $text-color: #000000;        // Black text
 $accent-color: #000000;      // Black accent (borders, outlines)
 $bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
 
-// =============================
-// Components
-// =============================
 .content-trigger {
   font-size: 88px;
   border: 5px solid $accent-color;
@@ -36,49 +30,6 @@ $bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
   color: $text-color;
 }
 
-.content {
-  margin-left: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  position: relative;
-  padding: 5px 5px 5px 30px;
-  color: $text-color;
 
-  &:focus-visible {
-    outline: 6px solid $accent-color;
-    outline-offset: 4px;
-    background: $bg-hover;
-  }
 
-  &:hover {
-    background: $bg-hover;
-  }
-}
 
-span {
-  font-size: 54px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  padding-left: 30px;
-  color: $text-color;
-}
-
-span.hot::before,
-span.cold::before {
-  content: '';
-  position: absolute;
-  left: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-}
-
-span.hot::before {
-  content: '☕';
-}
-
-span.cold::before {
-  content: '🥤';
-}
