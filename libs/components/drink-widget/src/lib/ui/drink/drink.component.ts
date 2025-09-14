@@ -2,7 +2,7 @@ import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'lego-components-drink',
+  selector: 'drink',
   imports: [CommonModule],
   template: `<span [ngClass]="hot() ? 'hot' : 'cold'">
               {{ name() }}

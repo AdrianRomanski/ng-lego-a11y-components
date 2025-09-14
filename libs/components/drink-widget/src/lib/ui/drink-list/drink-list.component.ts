@@ -19,7 +19,7 @@ import { Drink, DrinkSelectionMode } from '../../drink.model';
           [checked]="drink().isSelected"
         />
       }
-      <lego-components-drink
+      <drink
         [name]="drink().name"
         [hot]="drink().isHot"
       />

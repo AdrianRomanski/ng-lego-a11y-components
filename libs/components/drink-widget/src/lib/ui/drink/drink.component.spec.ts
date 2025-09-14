@@ -1,21 +1,35 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, viewChild } from '@angular/core';
 import { DrinkComponent } from './drink.component';
 
-describe('DrinkTextComponent', () => {
-  let component: DrinkComponent;
-  let fixture: ComponentFixture<DrinkComponent>;
+@Component({
+  selector: 'drink-test-wrapper',
+  imports: [DrinkComponent],
+  template: `
+    <drink
+      hot=true
+      name='Coffee'
+    />`,
+})
+export class DrinkTestWrapper {
+  component = viewChild.required(DrinkComponent);
+}
+
+describe('DrinkComponent', () => {
+  let instance: DrinkTestWrapper;
+  let fixture: ComponentFixture<DrinkTestWrapper>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DrinkComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DrinkComponent);
-    component = fixture.componentInstance;
+    fixture = TestBed.createComponent(DrinkTestWrapper);
+    instance = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(instance).toBeTruthy();
   });
 });
