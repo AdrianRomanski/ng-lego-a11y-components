@@ -1,0 +1,27 @@
+span {
+  font-size: 54px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-left: 30px;
+  color: #000000;
+}
+
+span.hot::before,
+span.cold::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+}
+
+span.hot::before {
+  content: '☕';
+}
+
+span.cold::before {
+  content: '🥤';
+}

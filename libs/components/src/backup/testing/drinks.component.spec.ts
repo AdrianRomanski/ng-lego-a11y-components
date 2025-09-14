@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DrinksComponent } from '../../../drinks/src/lib/drinks.component';
+import { DrinkWidget } from '../../../drink-widget/src/lib/drink-widget';
 import { DrinksComponentHarness } from './index';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { Component, viewChild } from '@angular/core';
@@ -7,7 +7,7 @@ import { Component, viewChild } from '@angular/core';
 @Component({
   selector: 'lego-components-drinks-test-wrapper',
   standalone: true,
-  imports: [DrinksComponent],
+  imports: [DrinkWidget],
   template: `
     <lego-components-drinks
       [drinks]="drinks">
@@ -15,7 +15,7 @@ import { Component, viewChild } from '@angular/core';
   `
 })
 export class TestDrinksComponent {
-    component = viewChild.required(DrinksComponent);
+    component = viewChild.required(DrinkWidget);
 
     drinks = [
       { name: 'Coffee', isHot: true },

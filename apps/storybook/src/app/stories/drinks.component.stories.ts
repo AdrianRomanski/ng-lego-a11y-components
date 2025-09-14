@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/angular';
-import { DrinksComponent } from '@ng-lego/components/drinks';
+import { DrinkWidget } from '@ng-lego/components/drinks';
 
-const meta: Meta<DrinksComponent> = {
-  component: DrinksComponent,
-  title: 'DrinksComponent'
+const meta: Meta<DrinkWidget> = {
+  component: DrinkWidget,
+  title: 'DrinkWidget'
 }
 
 export default meta;
 
-type Story = StoryObj<DrinksComponent>;
+type Story = StoryObj<DrinkWidget>;
 
 export const BestDrinks: Story = {
   args: {
