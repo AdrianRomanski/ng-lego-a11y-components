@@ -9,21 +9,20 @@ import { Drink, DrinkSelectionMode } from '../../drink.model';
   template: `
     <div (click)="onDrinkClick(drink())" class="content">
       @if (selectionMode() === 'checkbox') {
-      <input
-        type="checkbox"
-        class="custom-checkbox"
-        readonly
-        [checked]="drink().isSelected"
-      />
+        <input
+          type="checkbox"
+          [checked]="drink().isSelected"
+        />
       } @else if (selectionMode() === 'radio') {
-      <input
-        type="radio"
-        class="custom-radio"
-        readonly
-        [checked]="drink().isSelected"
-      />
+        <input
+          type="radio"
+          [checked]="drink().isSelected"
+        />
       }
-      <lego-components-drink [name]="drink().name" [hot]="drink().isHot" />
+      <lego-components-drink
+        [name]="drink().name"
+        [hot]="drink().isHot"
+      />
     </div>
   `,
   styleUrl: './drink-list.component.scss',

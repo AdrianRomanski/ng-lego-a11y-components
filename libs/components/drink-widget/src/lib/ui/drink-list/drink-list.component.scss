@@ -1,7 +1,7 @@
-$bg-primary: #3842f4;        // Purple background
-$text-color: #000000;        // Black text
-$accent-color: #000000;      // Black accent (borders, outlines)
-$bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
+$bg-primary: #3842f4;
+$text-color: #000000;
+$accent-color: #000000;
+$bg-hover: lighten($bg-primary, 15%);
 
 .content {
   margin-left: 5px;
@@ -22,34 +22,8 @@ $bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
   }
 }
 
-span {
-  font-size: 54px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
-  padding-left: 30px;
-  color: $text-color;
-}
-
-span.hot::before,
-span.cold::before {
-  content: '';
-  position: absolute;
-  left: -5px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 24px;
-}
-
-span.hot::before {
-  content: '☕';
-}
-
-span.cold::before {
-  content: '🥤';
-}
-.custom-checkbox {
+/* ✅ Checkbox styles */
+input[type='checkbox'] {
   width: 30px;
   height: 30px;
   margin-right: 15px;
@@ -64,12 +38,12 @@ span.cold::before {
   transition: background-color 0.2s, border-color 0.2s;
 }
 
-.custom-checkbox:checked {
+input[type='checkbox']:checked {
   background-color: #4caf50;
   border-color: #4caf50;
 }
 
-.custom-checkbox:checked::after {
+input[type='checkbox']:checked::after {
   content: '';
   position: absolute;
   left: 8px;
@@ -81,7 +55,8 @@ span.cold::before {
   transform: rotate(45deg);
 }
 
-.custom-radio {
+/* ✅ Radio styles */
+input[type='radio'] {
   width: 30px;
   height: 30px;
   margin-right: 15px;
@@ -96,12 +71,12 @@ span.cold::before {
   transition: border-color 0.2s, background-color 0.2s;
 }
 
-.custom-radio:checked {
+input[type='radio']:checked {
   border-color: #4caf50;
   background-color: #4caf50;
 }
 
-.custom-radio:checked::after {
+input[type='radio']:checked::after {
   content: '';
   position: absolute;
   top: 50%;

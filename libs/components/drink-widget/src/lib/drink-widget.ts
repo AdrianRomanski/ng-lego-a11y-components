@@ -39,7 +39,7 @@ import { Drink, DrinkSelectionMode } from './drink.model';
 })
 export class DrinkWidget {
   drinks = input.required<Drink[]>();
-  selectionMode = input<DrinkSelectionMode>('span');
+  selectionMode = input<DrinkSelectionMode>('checkbox');
 
   open = signal(false);
   localDrinks = linkedSignal<Drink[]>(this.drinks);
