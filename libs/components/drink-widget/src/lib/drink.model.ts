@@ -1,4 +1,4 @@
-export type DrinkSelectionMode = 'span' | 'checkbox' | 'radio';
+export type DrinkSelectionMode = 'default' | 'checkbox' | 'radio';
 
 export interface Drink {
   name: string;

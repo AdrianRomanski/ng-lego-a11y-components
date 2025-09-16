@@ -15,31 +15,21 @@
 ## 2. Add Appropriate Roles
 - **Problem**: Screen readers don’t know if this is an item, a checkbox, or a radio.
 - **Task**:
-  - Add a role="menu".
   - In checkbox mode: each item should have role="menuitemcheckbox".
   - In radio mode: each item should have role="menuitemradio".
   - In neutral mode: each item should have role="menuitem".
 
-## 3. Announce Drink Selection
-- **Problem**: Visual state (checked/selected) is not announced by screen readers.
-- **Task**: Checked and selected state is announced by screen readers
+## 3. Add Labels and Checked State
+- **Problem**: Checked state is not announced
+- **Task**: Add aria-checked (defensive coding, in most cases checked should be enough)
 
 - **Expected screen reader output:**
   - “Coffee, menu item checkbox, checked”
   - “Tea, menu item radio, not selected”
 
-## 4 Keyboard Navigation
-- **Problem**: Currently selection works only with mouse clicks.
-- **Task**: Make the menu navigable with the keyboard.
-
-- **Minimal functionality**
-  - Navigation with arrows
-  - Selecting/Deselecting Drink
-  - Closing Menu
-
-## 6. Component Harness
+## 4. Component Harness
 - **Create component harness**
-  - Define a harness class for your component (DrinkComponent or DrinkWidget).
+  - Define a harness class for your component (DrinkSelectionComponent).
   - Extend ComponentHarness.
 - **Initialize hostSelector**
   - Set the hostSelector property to match the component’s selector.
@@ -52,6 +42,4 @@
 - **Roles Applied Correctly** 
   - Verify menu and menu items expose correct roles (menu, menuitem, menuitemcheckbox, menuitemradio).
 - **Selection State**
-  - Ensure checked/selected state is exposed to assistive tech (aria-checked, aria-selected).
-- **Keyboard Navigation**
-  - Ensure Arrow keys, Enter/Space, and Escape work as expected.
+  - Ensure checked/selected state is exposed to assistive tech (aria-checked).

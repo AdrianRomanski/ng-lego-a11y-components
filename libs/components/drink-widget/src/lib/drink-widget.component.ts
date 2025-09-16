@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClickOutsideDirective } from '../../../src/util/click-outside.directive';
-import { DrinkListComponent } from './ui/drink-list/drink-list.component';
+import { DrinkSelectionComponent } from './ui/drink-selection/drink-selection.component';
 import { Drink, DrinkSelectionMode } from './drink.model';
 
 @Component({
   selector: 'drink-widget',
-  imports: [CommonModule, ClickOutsideDirective, DrinkListComponent],
+  imports: [CommonModule, ClickOutsideDirective, DrinkSelectionComponent],
   template: `
     <div observeDocumentClick
          (outsideClick)="open.set(false)"
@@ -23,20 +23,20 @@ import { Drink, DrinkSelectionMode } from './drink.model';
       @if (open()) {
         <div class="content-wrapper">
           @for (drink of localDrinks(); track drink.name) {
-            <drink-list
+            <drink-selection
               [drink]="drink"
               [selectionMode]="selectionMode()"
               (drinkClick)="onDrinkClick($event)">
-            </drink-list>
+            </drink-selection>
           }
         </div>
       }
     </div>
   `,
-  styleUrl: './drink-widget.scss',
+  styleUrl: './drink-widget.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DrinkWidget {
+export class DrinkWidgetComponent {
   drinks = input.required<Drink[]>();
   selectionMode = input<DrinkSelectionMode>('checkbox');
 
@@ -47,7 +47,7 @@ export class DrinkWidget {
 
   protected onDrinkClick(drink: Drink): void {
     switch (this.selectionMode()) {
-      case 'span': {
+      case 'default': {
        this.open.set(false);
        break;
       }

@@ -1,6 +1,11 @@
-$bg-primary: #3842f4;
 $text-color: #000000;
 $accent-color: #000000;
+$accent-color-2: 	#189ad3;
+
+.content {
+  display: flex;
+  align-items: center;
+}
 
 input[type='checkbox'] {
   width: 30px;

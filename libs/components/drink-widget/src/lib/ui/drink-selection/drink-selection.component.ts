@@ -4,18 +4,13 @@ import { DrinkComponent } from '../drink/drink.component';
 import { Drink, DrinkSelectionMode } from '../../drink.model';
 
 @Component({
-  selector: 'drink-list',
+  selector: 'drink-selection',
   imports: [CommonModule, DrinkComponent],
   template: `
     <div (click)="onDrinkClick(drink())" class="content">
-      @if (selectionMode() === 'checkbox') {
+      @if (selectionMode() != 'default') {
         <input
-          type="checkbox"
-          [checked]="drink().isSelected"
-        />
-      } @else if (selectionMode() === 'radio') {
-        <input
-          type="radio"
+          [type]="selectionMode()"
           [checked]="drink().isSelected"
         />
       }
@@ -25,9 +20,9 @@ import { Drink, DrinkSelectionMode } from '../../drink.model';
       />
     </div>
   `,
-  styleUrl: './drink-list.component.scss',
+  styleUrl: './drink-selection.component.scss',
 })
-export class DrinkListComponent {
+export class DrinkSelectionComponent {
   drink = input.required<Drink>();
   selectionMode = input<DrinkSelectionMode>('radio');
 

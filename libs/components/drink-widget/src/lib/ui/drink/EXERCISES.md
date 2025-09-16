@@ -20,7 +20,7 @@
 
 ## 4. Component Harness
 - **Create component harness** 
-  - Define a harness class for your component (DrinkComponent or DrinkWidget).
+  - Define a harness class for your component (DrinkComponent).
   - Extend ComponentHarness.
 - **Initialize hostSelector**
   - Set the hostSelector property to match the component’s selector.

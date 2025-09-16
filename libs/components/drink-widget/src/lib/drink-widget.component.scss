@@ -2,6 +2,7 @@ $drink-orange: #ff9800;
 $drink-yellow: #ffd54f;
 $text-color: #000000;
 $accent-color: #000000;
+$accent-color-2: 	#189ad3;
 
 .content-trigger {
   width: 128px;
@@ -35,14 +36,14 @@ $accent-color: #000000;
     background: linear-gradient(135deg, darken($drink-orange, 8%), darken($drink-yellow, 8%));
   }
 
-  &:focus {
+  &:focus-visible {
     outline: 3px solid $accent-color;
     outline-offset: 3px;
   }
 }
 
 .content-wrapper {
-  margin-top: 30px;
+  margin-top: 40px;
   padding: 22px;
   border-radius: 12px;
   list-style: none;

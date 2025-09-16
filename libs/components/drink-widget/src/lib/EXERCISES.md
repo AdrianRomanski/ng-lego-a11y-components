@@ -7,7 +7,7 @@
 - [Menu](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles/menu_role) 
 
 ## 1. Correct Semantics
-- **Problem**: Trigger is just a <span> (not interactive).
+- **Problem**: Trigger is just a <span> (not interactive) content wrapper is a div
 - **Task:** use correct semantic elements
 
 ## 2. Add Appropriate Role
@@ -23,6 +23,26 @@
 - **Task**:
   - Focus First item when opening menu with keyboard
   - Ensure visible focus styles on items.
+
+## 4. Keyboard Navigation
+- **Problem**: Currently selection works only with mouse clicks.
+- **Task**: Make the menu navigable with the keyboard.
+
+- **Minimal functionality**
+  - Navigation with arrows
+  - Selecting/Deselecting Drink
+  - Closing Menu
+
+## 6. Component Harness
+- **Create component harness**
+  - Define a harness class for your component (DrinkWidgetComponent).
+  - Extend ComponentHarness.
+- **Initialize hostSelector**
+  - Set the hostSelector property to match the component’s selector.
+- **Create Locators**
+  - Add methods to locate and interact with elements inside the component.
+- **Load Component Harness**
+  - Ensure menu harness initializes correctly.
 
 ## 5. Testing
 - **Trigger Semantics**
