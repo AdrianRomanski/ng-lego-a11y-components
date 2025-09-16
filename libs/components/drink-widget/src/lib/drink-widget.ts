@@ -19,7 +19,6 @@ import { Drink, DrinkSelectionMode } from './drink.model';
          (outsideClick)="open.set(false)"
     >
       <span class="content-trigger" (click)="open.set(!this.open())">
-        Best Drinks
       </span>
       @if (open()) {
         <div class="content-wrapper">

@@ -1,35 +1,57 @@
-$bg-primary: #3842f4;        // Purple background
-$text-color: #000000;        // Black text
-$accent-color: #000000;      // Black accent (borders, outlines)
-$bg-hover: lighten($bg-primary, 15%); // Lighter purple for hover/focus
+$drink-orange: #ff9800;
+$drink-yellow: #ffd54f;
+$text-color: #000000;
+$accent-color: #000000;
 
 .content-trigger {
-  font-size: 88px;
-  border: 5px solid $accent-color;
-  background: $bg-primary;
-  color: $text-color;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-weight: bold;
-  margin-bottom: 4px;
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  border: 4px solid #000;
   cursor: pointer;
 
-  &:focus-visible {
-    outline: 6px solid $accent-color;
-    outline-offset: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, $drink-orange, $drink-yellow);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+
+  transition: background 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+
+  &::before {
+    content: "🍹";
+    font-size: 10rem;
+    line-height: 1;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, lighten(red, 8%), lighten($drink-yellow, 8%));
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+  &:active {
+    transform: scale(0.9);
+    background: linear-gradient(135deg, darken($drink-orange, 8%), darken($drink-yellow, 8%));
+  }
+
+  &:focus {
+    outline: 3px solid $accent-color;
+    outline-offset: 3px;
   }
 }
 
 .content-wrapper {
-  font-size: 70px;
-  padding: 10px;
-  border: 5px solid $accent-color;
-  background: $bg-primary;
-  border-radius: 10px;
+  margin-top: 30px;
+  padding: 22px;
+  border-radius: 12px;
   list-style: none;
   color: $text-color;
+
+  background: linear-gradient(135deg, $drink-yellow, $drink-orange);
+  border: 3px solid $accent-color;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+
+  position: absolute;
+  font-size: 1.5rem;
 }
-
-
-
-

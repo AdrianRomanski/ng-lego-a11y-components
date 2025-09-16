@@ -8,23 +8,25 @@ const preview: Preview = {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 90vh;
+      min-height: 85vh;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
       padding: 2rem;
       gap: 1.5rem;
+      border: 5px solid black;
+      border-radius: 1rem;
     ">
-      <div style="display: flex; justify-content: center; padding: 1rem">
-         <img
-            src="https://i.imageupload.app/50cb7f0e724c29589a70.webp"
-            alt="image"
-            style="
-              width: 35%;
-              object-fit: fill;
-              border-radius: 0.5rem;
-              border: 5px solid lightslategray;
-            "
-          />
-      </div>
+<!--      <div style="display: flex; justify-content: center; padding: 1rem">-->
+<!--         <img-->
+<!--            src="https://i.imageupload.app/50cb7f0e724c29589a70.webp"-->
+<!--            alt="image"-->
+<!--            style="-->
+<!--              width: 35%;-->
+<!--              object-fit: fill;-->
+<!--              border-radius: 0.5rem;-->
+<!--              border: 5px solid lightslategray;-->
+<!--            "-->
+<!--          />-->
+<!--      </div>-->
       <div style="
         display: flex;
         justify-content: center;
@@ -34,7 +36,7 @@ const preview: Preview = {
         background: white;
         padding: 2rem;
         border-radius: 1rem;
-        border: 5px solid lightslategray;
+        border: 5px solid black;
         max-width: 100%;
       ">
         <div style="color: #FBBC05;">
