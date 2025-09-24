@@ -16,7 +16,7 @@ export class DrinkTestWrapper {
 }
 
 describe('DrinkComponent', () => {
-  let instance: DrinkTestWrapper;
+  let testWrapper: DrinkTestWrapper;
   let fixture: ComponentFixture<DrinkTestWrapper>;
 
   beforeEach(async () => {
@@ -25,11 +25,11 @@ describe('DrinkComponent', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(DrinkTestWrapper);
-    instance = fixture.componentInstance;
+    testWrapper = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(instance).toBeTruthy();
+    expect(testWrapper).toBeTruthy();
   });
 });
