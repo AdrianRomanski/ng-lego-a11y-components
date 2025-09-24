@@ -1,19 +1,14 @@
-p {
-  font-size: 54px;
+span {font-size: 54px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   position: relative;
   color: #000000;
   margin: 0;
-
-  span {
-    font-size: 24px;
-  }
 }
 
-p.hot::before,
-p.cold::before {
+span.hot::before,
+span.cold::before {
   content: '';
   position: absolute;
   left: -5px;
@@ -22,10 +17,10 @@ p.cold::before {
   font-size: 24px;
 }
 
-p.hot::before {
+span.hot::before {
   content: '🔥';
 }
 
-p.cold::before {
+span.cold::before {
   content: '🧊';
 }
