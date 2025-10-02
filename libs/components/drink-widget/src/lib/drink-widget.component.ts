@@ -18,10 +18,20 @@ import { Drink, DrinkSelectionMode } from './drink.model';
     <div observeDocumentClick
          (outsideClick)="open.set(false)"
     >
-      <span class="content-trigger" (click)="open.set(!this.open())">
-      </span>
+      <button
+        id="drink-trigger"
+        aria-label="Drinks"
+        aria-haspopup="menu"
+        aria-controls="drinks"
+        class="content-trigger"
+            (click)="open.set(!this.open())">
+      </button>
       @if (open()) {
-        <div class="content-wrapper">
+        <ul
+          aria-labelledby="drink-trigger"
+          id="drinks"
+          role="menu"
+          class="content-wrapper">
           @for (drink of localDrinks(); track drink.name) {
             <drink-selection
               [drink]="drink"
@@ -29,7 +39,7 @@ import { Drink, DrinkSelectionMode } from './drink.model';
               (drinkClick)="onDrinkClick($event)">
             </drink-selection>
           }
-        </div>
+        </ul>
       }
     </div>
   `,
