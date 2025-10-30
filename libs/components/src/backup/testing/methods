@@ -1,0 +1,14 @@
+      let index = Array.from(this.listItems).indexOf(document.activeElement as HTMLLIElement);
+
+      if(event.key === 'ArrowDown') {
+        index = (index + 1) % this.listItems.length;
+        this.listItems[index].focus();
+      } else if (event.key === 'ArrowUp'){
+        index = (index -1 + this.listItems.length) % this.listItems.length;
+        this.listItems[index].focus();
+    }
+  }
+
+  private get listItems() {
+    return this.menu()?.nativeElement.querySelectorAll('li');
+  }

@@ -4,9 +4,15 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'drink',
   imports: [CommonModule],
-  template: `<span [ngClass]="hot() ? 'hot' : 'cold'">
-              {{ name() }}
-             </span>`,
+  template: `
+    <p>
+      <strong [attr.aria-label]="hot() ? 'Please take care is very hot' : 'nicely and chilled'"></strong>
+      <span aria-hidden="true">{{hot() ? '🔥' : '🧊'}}</span>
+      <span>
+      {{ name() }}
+      </span>
+    </p>
+`,
   styleUrl: './drink.component.scss',
 })
 export class DrinkComponent {
