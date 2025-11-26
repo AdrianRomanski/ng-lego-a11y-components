@@ -1,10 +1,10 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, effect, ElementRef,
   input,
   linkedSignal,
-  output,
-  signal
+  output, Signal,
+  signal, viewChild
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClickOutsideDirective } from '../../../src/util/click-outside.directive';
@@ -18,18 +18,33 @@ import { Drink, DrinkSelectionMode } from './drink.model';
     <div observeDocumentClick
          (outsideClick)="open.set(false)"
     >
-      <span class="content-trigger" (click)="open.set(!this.open())">
-      </span>
+      <button
+          id="trigger"
+          aria-label="Best Cheap Drinks"
+          aria-controls="menu"
+          aria-haspopup="menu"
+          class="content-trigger"
+          (click)="open.set(!this.open())"
+      >
+      </button>
       @if (open()) {
-        <div class="content-wrapper">
+        <ul
+          tabindex="-1"
+          #menu
+          aria-labelledby="trigger"
+          id="menu"
+          role="menu"
+          class="content-wrapper">
           @for (drink of localDrinks(); track drink.name) {
             <drink-selection
               [drink]="drink"
               [selectionMode]="selectionMode()"
-              (drinkClick)="onDrinkClick($event)">
+              (drinkClick)="onDrinkClick($event)"
+              (keydown)="onDrinkKeyDown($event)"
+            >
             </drink-selection>
           }
-        </div>
+        </ul>
       }
     </div>
   `,
@@ -37,6 +52,8 @@ import { Drink, DrinkSelectionMode } from './drink.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DrinkWidgetComponent {
+  menu: Signal<ElementRef | undefined> = viewChild('menu');
+
   drinks = input.required<Drink[]>();
   selectionMode = input<DrinkSelectionMode>('checkbox');
 
@@ -44,6 +61,14 @@ export class DrinkWidgetComponent {
   localDrinks = linkedSignal<Drink[]>(this.drinks);
 
   drinksSelected = output<Drink[]>();
+
+  constructor() {
+    effect(() => {
+      if(this.open() && this.menu()) {
+        this.menu()?.nativeElement.querySelectorAll('li')[0].focus();
+      }
+    });
+  }
 
   protected onDrinkClick(drink: Drink): void {
     switch (this.selectionMode()) {
@@ -67,5 +92,27 @@ export class DrinkWidgetComponent {
       }
     }
     this.drinksSelected.emit(this.localDrinks().filter((d) => d.isSelected));
+  }
+
+  protected onDrinkKeyDown(event: KeyboardEvent) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    let index = Array.from(this.getItems())
+      .indexOf(document.activeElement as HTMLLIElement);
+
+    if(event.key === 'ArrowDown') {
+      index = (index + 1) % this.getItems().length;
+      this.getItems()[index].focus();
+    } else if (event.key === 'ArrowUp') {
+      index = (index - 1 + this.getItems().length) % this.getItems().length;
+      this.getItems()[index].focus();
+    }
+
+
+  }
+
+  private getItems() {
+    return this.menu()?.nativeElement.querySelectorAll('li');
   }
 }

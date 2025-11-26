@@ -36,10 +36,17 @@ $accent-color-2: 	#189ad3;
     background: linear-gradient(135deg, darken($drink-orange, 8%), darken($drink-yellow, 8%));
   }
 
-  &:focus-visible {
-    outline: 3px solid $accent-color;
-    outline-offset: 3px;
+  &:focus-within {
+    outline: 3px solid deeppink;
+    outline-offset: 4px;
   }
+
+  &:focus-visible {
+    outline: 3px solid lightskyblue;
+    outline-offset: 4px;
+  }
+
+
 }
 
 .content-wrapper {

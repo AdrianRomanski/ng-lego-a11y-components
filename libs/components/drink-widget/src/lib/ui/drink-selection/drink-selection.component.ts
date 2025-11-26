@@ -7,7 +7,10 @@ import { Drink, DrinkSelectionMode } from '../../drink.model';
   selector: 'drink-selection',
   imports: [CommonModule, DrinkComponent],
   template: `
-    <div (click)="onDrinkClick(drink())" class="content">
+    <li
+      tabindex="-1"
+      role="menuitemcheckbox"
+      (click)="onDrinkClick(drink())" class="content">
       @if (selectionMode() != 'default') {
         <input
           [type]="selectionMode()"
@@ -18,7 +21,7 @@ import { Drink, DrinkSelectionMode } from '../../drink.model';
         [name]="drink().name"
         [hot]="drink().isHot"
       />
-    </div>
+    </li>
   `,
   styleUrl: './drink-selection.component.scss',
 })
